@@ -5,10 +5,10 @@
  */
 package vista;
 
-import java.util.Iterator;
+/*import java.util.Iterator;
 import java.util.List;
 import modelo.ProductoPojo;
-import modelo.RegistroPojo;
+import modelo.RegistroPojo;*/
 
 /**
  *
