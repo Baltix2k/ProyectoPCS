@@ -1,10 +1,3 @@
-/**
- * Asignación del programa: InventarioNuevo                          
- * @author: Ricardo Ruíz Alarcón                          
- * Fecha: 17/03/2020                                      
- * Descripción: Clase que genera la conexion a la base de datos.
-**/
-
 package modelo;
 
 import java.sql.Connection;
@@ -16,7 +9,7 @@ public class ConexionDB {
     //Libreria MySQL
     public String driver = "com.mysql.jdbc.Driver";
     //Nombre base de datos
-    public String database = "inventario";
+    public String database = "practicas_profesionales";
     //Host
     public String hostname = "localhost";
     //Puerto
@@ -26,7 +19,7 @@ public class ConexionDB {
     //Nombre de usuario
     public String username = "root";
     //Clave de usuario
-    public String password = "mmm";
+    public String password = "gatodeportivo";
 
     /**
      * Genera conexion a la base de datos de acuerdo a los datos que se encuentran en los atributos.

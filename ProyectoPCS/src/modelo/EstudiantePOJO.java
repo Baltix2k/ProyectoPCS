@@ -3,15 +3,17 @@ package modelo;
 public class EstudiantePOJO {
     String apellidoMaterno;
     String apellidoPaterno;
+    String nombre;
     String correoPersonal;
     String estado;
     String matricula;
     float promedio;
     String telefono;
     
-    public EstudiantePOJO(String apellidoMaterno, String apellidoPaterno, String correoPersonal, String estado, String matricula, float promedio, String telefono) {
+    public EstudiantePOJO(String apellidoMaterno, String apellidoPaterno, String nombre, String correoPersonal, String estado, String matricula, float promedio, String telefono) {
         this.apellidoMaterno = apellidoMaterno;
         this.apellidoPaterno = apellidoPaterno;
+        this.nombre = nombre;
         this.correoPersonal = correoPersonal;
         this.estado = estado;
         this.matricula = matricula;
@@ -19,6 +21,14 @@ public class EstudiantePOJO {
         this.telefono = telefono;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
