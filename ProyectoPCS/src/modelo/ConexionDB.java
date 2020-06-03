@@ -19,7 +19,7 @@ public class ConexionDB {
     //Nombre de usuario
     public String username = "root";
     //Clave de usuario
-    public String password = "gatodeportivo";
+    public String password = "mmm";
 
     /**
      * Genera conexion a la base de datos de acuerdo a los datos que se encuentran en los atributos.
