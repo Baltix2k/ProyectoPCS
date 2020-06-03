@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="942.0" style="-fx-background-color: #17223B;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.consultarProgresoController">
+   <children>
+      <Pane prefHeight="74.0" prefWidth="942.0" style="-fx-background-color: #155263;">
+         <children>
+            <Label layoutX="226.0" layoutY="13.0" prefHeight="49.0" prefWidth="466.0" text="PRÁCTICAS PROFESIONALES" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="HP Simplified" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="8.0" layoutY="81.0" prefHeight="33.0" prefWidth="926.0" style="-fx-background-color: #1fab89;">
+         <children>
+            <Label layoutX="318.0" layoutY="-5.0" prefHeight="44.0" prefWidth="265.0" text="CONSULTAR PROGRESO" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <TableView layoutX="42.0" layoutY="269.0" prefHeight="162.0" prefWidth="803.0" style="-fx-background-color: #155263;">
+         <columns>
+            <TableColumn prefWidth="195.0" text="Documento" />
+            <TableColumn prefWidth="222.0" text="Nombre de archivo" />
+            <TableColumn prefWidth="193.0" text="Fecha de carga" />
+            <TableColumn prefWidth="237.0" text="Estado de entrega" />
+         </columns>
+      </TableView>
+      <ScrollBar fx:id="sb1" layoutX="844.0" layoutY="269.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
+      <TableView layoutX="42.0" layoutY="497.0" prefHeight="162.0" prefWidth="849.0" style="-fx-background-color: #155263;">
+         <columns>
+            <TableColumn prefWidth="180.0" text="Reporte" />
+            <TableColumn prefWidth="222.0" text="Nombre de archivo" />
+            <TableColumn prefWidth="139.0" text="Fecha de carga" />
+            <TableColumn prefWidth="133.0" text="Horas reportadas" />
+            <TableColumn prefWidth="178.0" text="Estado de entrega" />
+         </columns>
+      </TableView>
+      <ScrollBar fx:id="sb2" layoutX="889.0" layoutY="497.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
+      <Label fx:id="lbnomb" layoutX="42.0" layoutY="124.0" prefHeight="44.0" prefWidth="97.0" text="Nombre: " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbmatr" layoutX="42.0" layoutY="168.0" prefHeight="44.0" prefWidth="104.0" text="Matricula: " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lborg" layoutX="511.0" layoutY="124.0" prefHeight="44.0" prefWidth="141.0" text="Organización:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbproy" layoutX="511.0" layoutY="168.0" prefHeight="44.0" prefWidth="97.0" text="Proyecto:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbdocs" layoutX="42.0" layoutY="225.0" prefHeight="44.0" prefWidth="157.0" text="DOCUMENTOS" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbreps" layoutX="42.0" layoutY="453.0" prefHeight="44.0" prefWidth="157.0" text="REPORTES" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbhorascub" layoutX="42.0" layoutY="725.0" prefHeight="44.0" prefWidth="157.0" text="Horas cubiertas:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtfdhorascub" layoutX="205.0" layoutY="723.0" prefHeight="48.0" prefWidth="63.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtfdhorasporcub" layoutX="477.0" layoutY="723.0" prefHeight="48.0" prefWidth="63.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label fx:id="lbhorasporcub" layoutX="306.0" layoutY="725.0" prefHeight="44.0" prefWidth="171.0" text="Horas por cubrir:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtfdnomb" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="265.0" />
+      <TextField fx:id="txtfdmatr" layoutX="160.0" layoutY="178.0" prefHeight="25.0" prefWidth="265.0" />
+      <TextField fx:id="txtfdorg" layoutX="650.0" layoutY="134.0" prefHeight="25.0" prefWidth="265.0" />
+      <TextField fx:id="txtfproyecto" layoutX="650.0" layoutY="178.0" prefHeight="25.0" prefWidth="265.0" />
+      <Button fx:id="btnsalir" layoutX="782.0" layoutY="732.0" mnemonicParsing="false" onAction="#salir" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #155263;" text="Salir" textFill="#fffefe">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+      <Accordion layoutX="-243.0" layoutY="44.0">
+        <panes>
+          <TitledPane animated="false" text="untitled 1">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="untitled 3">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</AnchorPane>
