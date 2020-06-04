@@ -1,19 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
-/*import java.util.Iterator;
-import java.util.List;
-import modelo.ProductoPojo;
-import modelo.RegistroPojo;*/
-
-/**
- *
- * @author ricar
- */
 public class Mensajes {
 
     Teclado teclado;
@@ -31,14 +17,21 @@ public class Mensajes {
 
     public void menu() {
         System.out.println("Elige una opcion:");
-        System.out.println("1) Agregar");
-        System.out.println("2) Mostrar");
-        System.out.println("3) Modificar");
-        System.out.println("4) Eliminar");
-        System.out.println("5) Menu ventas");
-        System.out.println("6) Añadir cantidad");
-        System.out.println("7) Quitar cantidad");
-        System.out.println("8) Salir");
+        System.out.println("1) Consultar progreso");
+        System.out.println("2) Entregar reporte");
+        System.out.println("3) Asignar estudiante a proyecto");
+        System.out.println("4) Salir");
+    }
+    
+    public void consultarMensaje() {
+        System.out.println("1 Consular progreso:"); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public String leerMatricula() {
+        String matricula;
+        System.out.println("Introduce la matricula del alumno");
+        matricula = teclado.leerCadena();
+        return matricula;
     }
     
     public void menuVentas() {
@@ -147,7 +140,7 @@ public class Mensajes {
         clave = teclado.leerDouble();
         return clave;
     }
-
+/*
     public void mostrarProductos(List<ProductoPojo> lista) {
         System.out.println("\t Los productos son: ");
         Iterator<ProductoPojo> iteradorE = lista.iterator();
@@ -171,4 +164,5 @@ public class Mensajes {
             System.out.println(" \n Resultado Fallido al " + operacion + "\n");
         }
     }
+*/
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="942.0" style="-fx-background-color: #17223B;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.MenuController">
+   <children>
+      <Pane prefHeight="74.0" prefWidth="942.0" style="-fx-background-color: #155263;">
+         <children>
+            <Label layoutX="226.0" layoutY="13.0" prefHeight="49.0" prefWidth="466.0" text="PRÁCTICAS PROFESIONALES" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="HP Simplified" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="8.0" layoutY="81.0" prefHeight="33.0" prefWidth="926.0" style="-fx-background-color: #1fab89;">
+         <children>
+            <Label layoutX="318.0" layoutY="-5.0" prefHeight="44.0" prefWidth="265.0" text="CONSULTAR PROGRESO" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="btn1" layoutX="294.0" layoutY="253.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Asignar proyecto a estudiante" textFill="#fffefe">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn2" layoutX="294.0" layoutY="326.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Entregar reporte" textFill="#fffefe">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn3" layoutX="294.0" layoutY="395.0" mnemonicParsing="false" onAction="#consultarProgreso" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Consultar progreso" textFill="#fffefe">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

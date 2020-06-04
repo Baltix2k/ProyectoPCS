@@ -1,7 +1,7 @@
---Tablas--
 CREATE TABLE Organizacion(
-    calle VARCHAR(50) NOT NULL,
+    calle VARCHAR(30) NOT NULL,
     codigoPostal VARCHAR(5) NOT NULL,
+    colonia VARCHAR(30) NOT NULL,
     correo VARCHAR(30) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     numExt VARCHAR(4) NOT NULL,
@@ -48,11 +48,11 @@ CREATE TABLE Inscripcion(
     bloque INTEGER NOT NULL,
     cupo INTEGER NOT NULL,
     estatus VARCHAR(10),
-    fecha DATE
+    fecha DATE,
     nrc INTEGER NOT NULL,
     periodo VARCHAR(20) NOT NULL,
     seccion INTEGER,
-    tipo VARCHAR(25) NOT NULL
+    tipo VARCHAR(25) NOT NULL,
     PRIMARY KEY(matricula,claveProyecto)
 );
 
@@ -84,16 +84,15 @@ CREATE TABLE Archivo(
 );
 
 CREATE TABLE Reporte(
-    rutaUbicacion VARCHAR(100) NOT NULL
+    rutaUbicacion VARCHAR(100) NOT NULL,
     fechaEntrega DATE,
     horasReportadas INTEGER,
-    mes VARCHAR(10)
+    mes VARCHAR(10),
     numero INTEGER,
     tipoReporte VARCHAR(20),
     PRIMARY KEY(rutaUbicacion)
 );
 
---Llaves foraneas--
 ALTER TABLE Proyecto ADD CONSTRAINT 
 fk_proyecto_1 FOREIGN KEY (nombreOrganizacion) 
 REFERENCES Organizacion (nombre);
@@ -128,14 +127,12 @@ REFERENCES Inscripcion (claveProyecto);
 
 ALTER TABLE Archivo ADD CONSTRAINT 
 fk_arch_1 FOREIGN KEY (claveExp) 
-REFERENCES Archivo (clave);
-
+REFERENCES Expediente (clave);
 
 ALTER TABLE Reporte ADD CONSTRAINT 
 fk_reporte_1 FOREIGN KEY (rutaUbicacion) 
 REFERENCES Archivo (rutaUbicacion);
 
---Datos--
 INSERT INTO Estudiante VALUES
 ('Baltazar', 'Islas','Omar', 'omar@gmail.com','Inscrito','S18012180',9.2,'2283661974'),
 ('Alarcon', 'Santos', 'Emilio Antonio','emilio@gmail.com','Inscrito','S18012181',8.7,'2281776654'),

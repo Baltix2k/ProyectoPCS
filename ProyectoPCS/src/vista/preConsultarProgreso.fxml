@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="942.0" style="-fx-background-color: #17223B;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.preConsultarProgresoController">
+   <children>
+      <Pane prefHeight="74.0" prefWidth="942.0" style="-fx-background-color: #155263;">
+         <children>
+            <Label layoutX="226.0" layoutY="13.0" prefHeight="49.0" prefWidth="466.0" text="PRÁCTICAS PROFESIONALES" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="HP Simplified" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="8.0" layoutY="81.0" prefHeight="33.0" prefWidth="926.0" style="-fx-background-color: #1fab89;">
+         <children>
+            <Label layoutX="318.0" layoutY="-5.0" prefHeight="44.0" prefWidth="265.0" text="CONSULTAR PROGRESO" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="btnconsultar" layoutX="761.0" layoutY="732.0" mnemonicParsing="false" onAction="#consultar" prefHeight="44.0" prefWidth="147.0" style="-fx-background-color: #155263;" text="Consultar" textFill="#fffefe">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txfdmatricula" layoutX="169.0" layoutY="168.0" prefHeight="48.0" prefWidth="265.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btncancelar" layoutX="600.0" layoutY="732.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="44.0" prefWidth="147.0" style="-fx-background-color: #155263;" text="Cancelar" textFill="#fffefe">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+      <Label fx:id="labelmatricula" layoutX="53.0" layoutY="170.0" prefHeight="44.0" prefWidth="104.0" text="Matricula:" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
