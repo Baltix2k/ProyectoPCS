@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -34,8 +32,8 @@
       </Pane>
       <TableView layoutX="42.0" layoutY="269.0" prefHeight="162.0" prefWidth="803.0" style="-fx-background-color: #155263;">
          <columns>
-            <TableColumn prefWidth="195.0" text="Documento" />
-            <TableColumn prefWidth="222.0" text="Nombre de archivo" />
+            <TableColumn prefWidth="195.0" text="Titulo" />
+            <TableColumn prefWidth="222.0" text="Ruta de ubicación" />
             <TableColumn prefWidth="193.0" text="Fecha de carga" />
             <TableColumn prefWidth="237.0" text="Estado de entrega" />
          </columns>
@@ -43,7 +41,7 @@
       <ScrollBar fx:id="sb1" layoutX="844.0" layoutY="269.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
       <TableView layoutX="42.0" layoutY="497.0" prefHeight="162.0" prefWidth="849.0" style="-fx-background-color: #155263;">
          <columns>
-            <TableColumn prefWidth="180.0" text="Reporte" />
+            <TableColumn prefWidth="180.0" text="Titulo" />
             <TableColumn prefWidth="222.0" text="Nombre de archivo" />
             <TableColumn prefWidth="139.0" text="Fecha de carga" />
             <TableColumn prefWidth="133.0" text="Horas reportadas" />
@@ -71,7 +69,7 @@
             <Font name="Segoe UI" size="22.0" />
          </font>
       </Label>
-      <Label fx:id="lbdocs" layoutX="42.0" layoutY="225.0" prefHeight="44.0" prefWidth="157.0" text="DOCUMENTOS" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="lbdocs" layoutX="42.0" layoutY="225.0" prefHeight="44.0" prefWidth="157.0" text="ARCHIVO" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="22.0" />
          </font>
@@ -86,12 +84,12 @@
             <Font name="Segoe UI" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfdhorascub" layoutX="205.0" layoutY="723.0" prefHeight="48.0" prefWidth="63.0">
+      <TextField fx:id="txtfdhorascub" editable="false" layoutX="205.0" layoutY="723.0" prefHeight="48.0" prefWidth="63.0">
          <font>
             <Font size="20.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtfdhorasporcub" layoutX="477.0" layoutY="723.0" prefHeight="48.0" prefWidth="63.0">
+      <TextField fx:id="txtfdhorasporcub" editable="false" layoutX="477.0" layoutY="723.0" prefHeight="48.0" prefWidth="63.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -101,28 +99,14 @@
             <Font name="Segoe UI" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="txtfdnomb" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="265.0" />
-      <TextField fx:id="txtfdmatr" layoutX="160.0" layoutY="178.0" prefHeight="25.0" prefWidth="265.0" />
-      <TextField fx:id="txtfdorg" layoutX="650.0" layoutY="134.0" prefHeight="25.0" prefWidth="265.0" />
-      <TextField fx:id="txtfproyecto" layoutX="650.0" layoutY="178.0" prefHeight="25.0" prefWidth="265.0" />
+      <TextField fx:id="txtfdnomb" editable="false" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="265.0" />
+      <TextField fx:id="txtfdmatr" editable="false" layoutX="160.0" layoutY="178.0" prefHeight="25.0" prefWidth="265.0" />
+      <TextField fx:id="txtfdorg" editable="false" layoutX="650.0" layoutY="134.0" prefHeight="25.0" prefWidth="265.0" />
+      <TextField fx:id="txtfproyecto" editable="false" layoutX="650.0" layoutY="178.0" prefHeight="25.0" prefWidth="265.0" />
       <Button fx:id="btnsalir" layoutX="782.0" layoutY="732.0" mnemonicParsing="false" onAction="#salir" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #155263;" text="Salir" textFill="#fffefe">
          <font>
             <Font name="Segoe UI" size="23.0" />
          </font>
       </Button>
-      <Accordion layoutX="-243.0" layoutY="44.0">
-        <panes>
-          <TitledPane animated="false" text="untitled 1">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" text="untitled 3">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-        </panes>
-      </Accordion>
    </children>
 </AnchorPane>

@@ -1,5 +1,8 @@
 package modelo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class EstudiantePOJO {
     String apellidoMaterno;
     String apellidoPaterno;
@@ -84,5 +87,5 @@ public class EstudiantePOJO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
+      
 }

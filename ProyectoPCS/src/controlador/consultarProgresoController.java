@@ -21,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import modelo.EstudianteDAO;
+import modelo.EstudiantePOJO;
 
 /**
  * FXML Controller class
@@ -62,22 +64,26 @@ public class consultarProgresoController implements Initializable {
     private TextField txtfproyecto;
     @FXML
     private Button btnsalir;
-
+    @FXML
+    private TextField txtfdhorascub;
+    
+    private EstudianteDAO eDAO;
+    
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb) { 
     }
+    
 
-    /*    public void closeWindows() {
-
+    @FXML
+    private void salir(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuController.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
 
             Parent root = loader.load();
-            
+
             MenuController controlador = loader.getController();
 
             Scene scene = new Scene(root);
@@ -92,12 +98,6 @@ public class consultarProgresoController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }
-     */
-    @FXML
-    private void salir(ActionEvent event) {
-        
     }
 
     void closeWindows() {
@@ -120,5 +120,13 @@ public class consultarProgresoController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    void initData(EstudiantePOJO ePOJO) {
+        this.eDAO = new EstudianteDAO();
+        this.txtfdnomb.setText(ePOJO.getNombre() + " " + ePOJO.getApellidoPaterno() + " " + ePOJO.getApellidoMaterno());
+        this.txtfdmatr.setText(ePOJO.getMatricula());
+        this.txtfdorg.setText(this.eDAO.recuperarNombreOrganizacion(ePOJO.getMatricula()));
+        this.txtfproyecto.setText(this.eDAO.recuperarNombreProyecto(ePOJO.getMatricula()));
     }
 }

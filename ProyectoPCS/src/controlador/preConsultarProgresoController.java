@@ -37,6 +37,8 @@ public class preConsultarProgresoController implements Initializable {
     @FXML
     private Button btncancelar;
 
+    private EstudianteDAO eDAO;
+    
     /**
      * Initializes the controller class.
      */
@@ -71,25 +73,23 @@ public class preConsultarProgresoController implements Initializable {
 
     @FXML
     private void consultar(ActionEvent event) {
+        this.eDAO = new EstudianteDAO();
         
         try {
-            //String matricula = this.txfdmatricula.getText();
-            //EstudianteDAO eDAO = new EstudianteDAO();
-            //EstudiantePOJO ePOJO = eDAO.recuperar(matricula);
-            //String nomOrg = eDAO.recuperarNombreOrganizacion(ePOJO.getMatricula());
-            //String nomProy = eDAO.recuperarNombreProyecto(ePOJO.getMatricula());
-            
-            
+            String matricula = this.txfdmatricula.getText();
+            EstudiantePOJO ePOJO = eDAO.recuperar(matricula);          
             
             // Cargo la vista
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/consultarProgreso.fxml"));
-
+            
             // Cargo el padre
             Parent root = loader.load();
 
             // Obtengo el controlador
             consultarProgresoController controlador = loader.getController();
-
+            
+            controlador.initData(ePOJO);
+                       
             // Creo la scene y el stage
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -118,8 +118,25 @@ public class preConsultarProgresoController implements Initializable {
 
     @FXML
     private void cancelar(ActionEvent event) {
-        Stage myStage = (Stage) this.btncancelar.getScene().getWindow();
-        myStage.close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
+
+            Parent root = loader.load();
+            
+            MenuController controlador = loader.getController();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.show();
+
+            Stage myStage = (Stage) this.btncancelar.getScene().getWindow();
+            myStage.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
