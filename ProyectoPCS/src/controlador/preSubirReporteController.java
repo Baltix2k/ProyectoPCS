@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
 
-public class preConsultarProgresoController implements Initializable {
+public class preSubirReporteController implements Initializable {
 
     @FXML
     private TextField txfdmatricula;
@@ -35,13 +35,11 @@ public class preConsultarProgresoController implements Initializable {
     @FXML
     private Button btncancelar;
     @FXML
-    private Button btnconsultar;
+    private Button btnAceptar;
     
     private EstudianteDAO eDAO;
     
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -72,6 +70,51 @@ public class preConsultarProgresoController implements Initializable {
     }
 
     @FXML
+    private void aceptar(ActionEvent event) {
+        this.eDAO = new EstudianteDAO();
+        
+        try {
+            String matricula = this.txfdmatricula.getText();
+            EstudiantePOJO ePOJO = eDAO.recuperar(matricula);          
+            
+            // Cargo la vista
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/SubirReporteVista.fxml"));
+            
+            // Cargo el padre
+            Parent root = loader.load();
+
+            // Obtengo el controlador
+            SubirReporteController controlador = loader.getController();
+            
+            //controlador.initData(ePOJO);
+                       
+            // Creo la scene y el stage
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            // Asocio el stage con el scene
+            stage.setScene(scene);
+            stage.show();
+
+            // Indico que debe hacer al cerrar
+            stage.setOnCloseRequest(e -> controlador.closeWindows());
+
+            // Ciero la ventana donde estoy
+            Stage myStage = (Stage) this.btnAceptar.getScene().getWindow();
+            myStage.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException ex2) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Matricula no encontrada");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
     private void cancelar(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
@@ -94,48 +137,4 @@ public class preConsultarProgresoController implements Initializable {
         }
     }
 
-    @FXML
-    private void consultar(ActionEvent event) {
-        this.eDAO = new EstudianteDAO();
-        
-        try {
-            String matricula = this.txfdmatricula.getText();
-            EstudiantePOJO ePOJO = eDAO.recuperar(matricula);          
-            
-            // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/consultarProgreso.fxml"));
-            
-            // Cargo el padre
-            Parent root = loader.load();
-
-            // Obtengo el controlador
-            consultarProgresoController controlador = loader.getController();
-            
-            controlador.initData(ePOJO);
-                       
-            // Creo la scene y el stage
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-
-            // Asocio el stage con el scene
-            stage.setScene(scene);
-            stage.show();
-
-            // Indico que debe hacer al cerrar
-            stage.setOnCloseRequest(e -> controlador.closeWindows());
-
-            // Ciero la ventana donde estoy
-            Stage myStage = (Stage) this.btnconsultar.getScene().getWindow();
-            myStage.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(preConsultarProgresoController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NumberFormatException ex2) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Matricula no encontrada");
-            alert.showAndWait();
-        }
-    }
 }
