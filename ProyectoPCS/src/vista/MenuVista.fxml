@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="942.0" style="-fx-background-color: #17223B;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="942.0" style="-fx-background-color: #17223B;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.MenuController">
    <children>
       <Pane prefHeight="74.0" prefWidth="942.0" style="-fx-background-color: #155263;">
          <children>
@@ -30,17 +30,17 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="btn1" layoutX="294.0" layoutY="253.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Asignar proyecto a estudiante" textFill="#fffefe">
+      <Button fx:id="btn1" layoutX="294.0" layoutY="186.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Asignar proyecto a estudiante" textFill="#fffefe">
          <font>
             <Font name="Segoe UI" size="23.0" />
          </font>
       </Button>
-      <Button fx:id="btn2" layoutX="294.0" layoutY="326.0" mnemonicParsing="false" onAction="#subirReporte" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Entregar reporte" textFill="#fffefe">
+      <Button fx:id="btn2" layoutX="294.0" layoutY="259.0" mnemonicParsing="false" onAction="#subirReporte" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Entregar reporte" textFill="#fffefe">
          <font>
             <Font name="Segoe UI" size="23.0" />
          </font>
       </Button>
-      <Button fx:id="btn3" layoutX="294.0" layoutY="395.0" mnemonicParsing="false" onAction="#consultarProgreso" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Consultar progreso" textFill="#fffefe">
+      <Button fx:id="btn3" layoutX="294.0" layoutY="328.0" mnemonicParsing="false" onAction="#consultarProgreso" prefHeight="44.0" prefWidth="354.0" style="-fx-background-color: #155263;" text="Consultar progreso" textFill="#fffefe">
          <font>
             <Font name="Segoe UI" size="23.0" />
          </font>
