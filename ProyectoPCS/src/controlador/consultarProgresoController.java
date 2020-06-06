@@ -31,6 +31,7 @@ import modelo.ArchivoDAO;
 import modelo.ArchivoPOJO;
 import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
+import modelo.ReporteDAO;
 import modelo.ReportePOJO;
 
 /**
@@ -78,6 +79,7 @@ public class consultarProgresoController implements Initializable {
 
     private EstudianteDAO eDAO;
     private ArchivoDAO aDAO;
+    private ReporteDAO rDAO;
 
     @FXML
     private TableView<ArchivoPOJO> tableArchivo;
@@ -90,19 +92,18 @@ public class consultarProgresoController implements Initializable {
     @FXML
     private TableView<ReportePOJO> tableReporte;
     @FXML
-    private TableColumn<?, ?> reporteTitulo;
+    private TableColumn<ReportePOJO, String> reporteTitulo;
     @FXML
-    private TableColumn<?, ?> reporteRuta;
+    private TableColumn<ReportePOJO, String> reporteRuta;
     @FXML
-    private TableColumn<?, ?> reporteFecha;
+    private TableColumn<ReportePOJO, LocalDate> reporteFecha;
     @FXML
-    private TableColumn<?, ?> reporteHoras;
+    private TableColumn<ReportePOJO, Integer> reporteHoras;
     @FXML
-    private TableColumn<?, ?> reporteTipo;
+    private TableColumn<ReportePOJO, String> reporteTipo;
 
     ObservableList<ArchivoPOJO> archivos;
-
-    private int posicionArchivoEnTabla;
+    ObservableList<ReportePOJO> reportes;
 
     /**
      * Initializes the controller class.
@@ -169,8 +170,18 @@ public class consultarProgresoController implements Initializable {
         archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         archivoRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
         archivoFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
-
+        
         ObservableList<ArchivoPOJO> obsArchivo = aDAO.getArchivos(ePOJO.getMatricula());
         this.tableArchivo.setItems(obsArchivo);
+        
+        this.rDAO = new ReporteDAO();
+        reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        reporteRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
+        reporteFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+        reporteHoras.setCellValueFactory(new PropertyValueFactory<>("horasReportadas"));
+        reporteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
+        
+        ObservableList<ReportePOJO> obsReporte = rDAO.getReportes(ePOJO.getMatricula());
+        this.tableReporte.setItems(obsReporte);
     }
 }
