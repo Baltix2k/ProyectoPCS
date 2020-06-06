@@ -9,6 +9,7 @@ import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -113,7 +114,7 @@ public class SubirReporteController implements Initializable {
         ReporteDAO rep = new ReporteDAO();
         ReportePOJO repP = new ReportePOJO();
         archP.setTitulo(file.getName());
-        archP.setFechaEntrega(LocalDate.parse(txtFecha.getText()));
+        archP.setFechaEntrega(LocalDate.parse(txtFecha.getText(),DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         repP.setHorasReportadas(parseInt(txtHoras.getText()));
         repP.setTipoReporte(combxTipo.getValue());
         try{
