@@ -80,4 +80,52 @@ public class EstudianteDAO {
         }
         return nombreProyecto;
     }
+    
+    public int recuperarClaveProyecto(String matricula){
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        int claveProyecto = 0;        
+        String sql = "SELECT inscripcion.claveProyecto FROM inscripcion WHERE matricula = '" + matricula + "';";
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                claveProyecto = rs.getInt(1);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: Clase EstudianteDAO, método recuperarClaveProyecto)");
+            ex.printStackTrace();
+        }
+        return claveProyecto;
+    }
+    
+    public int recuperaClaveExpediente(String matricula){
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        int claveExpediente = 0;        
+        String sql = "SELECT expediente.clave FROM expediente WHERE matricula = '" + matricula + "'AND claveProyecto = "+this.recuperarClaveProyecto(matricula)+";";
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                claveExpediente = rs.getInt(1);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: Clase EstudianteDAO, método recuperarClaveProyecto)");
+            ex.printStackTrace();
+        }
+        return claveExpediente;
+    }
 }
