@@ -65,8 +65,9 @@ public class SubirReporteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         combxTipo.setItems(tiposReporte);
-        Date FechaActual = new Date();
-        txtFecha.setText(df.format(FechaActual));
+        
+        LocalDate fecha = LocalDate.now();
+        txtFecha.setText(fecha.toString());
     }    
 
     @FXML
@@ -114,7 +115,9 @@ public class SubirReporteController implements Initializable {
         ReporteDAO rep = new ReporteDAO();
         ReportePOJO repP = new ReportePOJO();
         archP.setTitulo(file.getName());
-        archP.setFechaEntrega(LocalDate.parse(txtFecha.getText(),DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        System.out.println(txtFecha.getText());
+        String fecha = txtFecha.getText();
+        archP.setFechaEntrega(LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         repP.setHorasReportadas(parseInt(txtHoras.getText()));
         repP.setTipoReporte(combxTipo.getValue());
         try{

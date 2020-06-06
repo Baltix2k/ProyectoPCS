@@ -32,9 +32,9 @@ public class ArchivoDAO {
                 
                 
                 System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
-                ArchivoPOJO c = new ArchivoPOJO(titulo, rutaubicacion, fechaEntrega);
+                //ArchivoPOJO c = new ArchivoPOJO(titulo, rutaubicacion, fechaEntrega);
                 
-                obs.add(c);
+                //obs.add(c);
             }
             stm.close();
             rs.close();

@@ -89,7 +89,7 @@ public class preSubirReporteController implements Initializable {
             
             controlador.initData(matricula, eDAO.recuperaClaveExpediente(matricula));
             
-            controlador.initData(ePOJO);
+            //controlador.initData(ePOJO);
                        
             // Creo la scene y el stage
             Scene scene = new Scene(root);

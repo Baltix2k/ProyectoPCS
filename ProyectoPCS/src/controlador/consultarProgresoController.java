@@ -181,7 +181,7 @@ public class consultarProgresoController implements Initializable {
         reporteHoras.setCellValueFactory(new PropertyValueFactory<>("horasReportadas"));
         reporteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
         
-        ObservableList<ReportePOJO> obsReporte = rDAO.getReportes(ePOJO.getMatricula());
-        this.tableReporte.setItems(obsReporte);
+        //ObservableList<ReportePOJO> obsReporte = rDAO.getReportes(ePOJO.getMatricula());
+        //this.tableReporte.setItems(obsReporte);
     }
 }
