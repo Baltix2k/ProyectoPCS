@@ -96,7 +96,6 @@ public class SubirReporteController implements Initializable {
     @FXML
     private void aceptar(ActionEvent event) {
         
-        
     }
 
     public void closeWindows() {
