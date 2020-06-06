@@ -1,22 +1,28 @@
 package modelo;
 
-public class ArchivoPOJO {
-    String estado;
-    String rutaUbicacion;
-    String titulo;
+import java.time.LocalDate;
 
-    public ArchivoPOJO(String estado, String rutaUbicacion, String titulo) {
-        this.estado = estado;
+public class ArchivoPOJO {
+    String titulo;
+    String rutaUbicacion;
+    LocalDate fechaEntrega;
+
+    public ArchivoPOJO(String titulo, String rutaUbicacion, LocalDate fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
         this.rutaUbicacion = rutaUbicacion;
         this.titulo = titulo;
     }
 
-    public String getEstado() {
-        return estado;
+    public ArchivoPOJO() {
+        
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public LocalDate getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(LocalDate fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public String getRutaUbicacion() {

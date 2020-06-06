@@ -7,9 +7,12 @@ package controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,10 +22,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import modelo.ArchivoDAO;
+import modelo.ArchivoPOJO;
 import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
+import modelo.ReportePOJO;
 
 /**
  * FXML Controller class
@@ -66,16 +75,43 @@ public class consultarProgresoController implements Initializable {
     private Button btnsalir;
     @FXML
     private TextField txtfdhorascub;
-    
+
     private EstudianteDAO eDAO;
-    
+    private ArchivoDAO aDAO;
+
+    @FXML
+    private TableView<ArchivoPOJO> tableArchivo;
+    @FXML
+    private TableColumn<ArchivoPOJO, String> archivoTitulo;
+    @FXML
+    private TableColumn<ArchivoPOJO, String> archivoRuta;
+    @FXML
+    private TableColumn<ArchivoPOJO, LocalDate> archivoFecha;
+    @FXML
+    private TableView<ReportePOJO> tableReporte;
+    @FXML
+    private TableColumn<?, ?> reporteTitulo;
+    @FXML
+    private TableColumn<?, ?> reporteRuta;
+    @FXML
+    private TableColumn<?, ?> reporteFecha;
+    @FXML
+    private TableColumn<?, ?> reporteHoras;
+    @FXML
+    private TableColumn<?, ?> reporteTipo;
+
+    ObservableList<ArchivoPOJO> archivos;
+
+    private int posicionArchivoEnTabla;
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) { 
+    public void initialize(URL url, ResourceBundle rb) {
+        //final ObservableList<ArchivoPOJO> tablaArchivo1 = tableArchivo.getSelectionModel().getSelectedItems();
+        //tablaArchivo1.addListener(selector);
     }
-    
 
     @FXML
     private void salir(ActionEvent event) {
@@ -128,5 +164,13 @@ public class consultarProgresoController implements Initializable {
         this.txtfdmatr.setText(ePOJO.getMatricula());
         this.txtfdorg.setText(this.eDAO.recuperarNombreOrganizacion(ePOJO.getMatricula()));
         this.txtfproyecto.setText(this.eDAO.recuperarNombreProyecto(ePOJO.getMatricula()));
+
+        this.aDAO = new ArchivoDAO();
+        archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        archivoRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
+        archivoFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+
+        ObservableList<ArchivoPOJO> obsArchivo = aDAO.getArchivos(ePOJO.getMatricula());
+        this.tableArchivo.setItems(obsArchivo);
     }
 }

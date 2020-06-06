@@ -30,22 +30,21 @@
             </Label>
          </children>
       </Pane>
-      <TableView layoutX="42.0" layoutY="269.0" prefHeight="162.0" prefWidth="803.0" style="-fx-background-color: #155263;">
+      <TableView fx:id="tableArchivo" layoutX="42.0" layoutY="269.0" prefHeight="162.0" prefWidth="849.0" style="-fx-background-color: #155263;">
          <columns>
-            <TableColumn prefWidth="195.0" text="Titulo" />
-            <TableColumn prefWidth="222.0" text="Ruta de ubicación" />
-            <TableColumn prefWidth="193.0" text="Fecha de carga" />
-            <TableColumn prefWidth="237.0" text="Estado de entrega" />
+            <TableColumn fx:id="archivoTitulo" prefWidth="277.0" text="Titulo" />
+            <TableColumn fx:id="archivoRuta" prefWidth="289.0" text="Ruta de ubicación" />
+            <TableColumn fx:id="archivoFecha" prefWidth="236.0" text="Fecha de entrega" />
          </columns>
       </TableView>
-      <ScrollBar fx:id="sb1" layoutX="844.0" layoutY="269.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
-      <TableView layoutX="42.0" layoutY="497.0" prefHeight="162.0" prefWidth="849.0" style="-fx-background-color: #155263;">
+      <ScrollBar fx:id="sb1" layoutX="889.0" layoutY="269.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
+      <TableView fx:id="tableReporte" layoutX="42.0" layoutY="497.0" prefHeight="162.0" prefWidth="849.0" style="-fx-background-color: #155263;">
          <columns>
-            <TableColumn prefWidth="180.0" text="Titulo" />
-            <TableColumn prefWidth="222.0" text="Nombre de archivo" />
-            <TableColumn prefWidth="139.0" text="Fecha de carga" />
-            <TableColumn prefWidth="133.0" text="Horas reportadas" />
-            <TableColumn prefWidth="178.0" text="Estado de entrega" />
+            <TableColumn fx:id="reporteTitulo" prefWidth="160.0" text="Titulo" />
+            <TableColumn fx:id="reporteRuta" prefWidth="209.0" text="Ruta de ubicación" />
+            <TableColumn fx:id="reporteFecha" prefWidth="172.0" text="Fecha de entrega" />
+            <TableColumn fx:id="reporteHoras" prefWidth="133.0" text="Horas reportadas" />
+            <TableColumn fx:id="reporteTipo" prefWidth="178.0" text="Tipo de reporte" />
          </columns>
       </TableView>
       <ScrollBar fx:id="sb2" layoutX="889.0" layoutY="497.0" orientation="VERTICAL" prefHeight="162.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
