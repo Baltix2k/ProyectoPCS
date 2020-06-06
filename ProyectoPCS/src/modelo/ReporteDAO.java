@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
  * @author ricar
  */
 public class ReporteDAO {
-    public ObservableList<ReportePOJO> getReportes(String matricula) {
+    /*public ObservableList<ReportePOJO> getReportes(String matricula) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -46,5 +46,26 @@ public class ReporteDAO {
         }
 
         return obs;
+    }*/
+    
+    public void subirReporte(ReportePOJO report){
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        ArchivoDAO arch = new ArchivoDAO();
+        int clave = arch.obtenerClaveArchivo();
+        String sql = "INSERT INTO Reporte VALUES ("+clave+","+report.getHorasReportadas()+","+report.getTipoReporte()+");";
+
+        ConexionDB cc = new ConexionDB();
+        try{
+            con = cc.conectarMySQL();
+            stm = con.createStatement();
+            stm.execute(sql);
+            stm.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println("Error al cargar reporte, metodo subirReporte");
+            e.printStackTrace();
+        }
     }
 }

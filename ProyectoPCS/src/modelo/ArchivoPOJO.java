@@ -3,13 +3,14 @@ package modelo;
 import java.time.LocalDate;
 
 public class ArchivoPOJO {
+    byte[] archivo;
     String titulo;
-    String rutaUbicacion;
     LocalDate fechaEntrega;
 
-    public ArchivoPOJO(String titulo, String rutaUbicacion, LocalDate fechaEntrega) {
+    public ArchivoPOJO(String titulo, byte[] archivo, LocalDate fechaEntrega) {
+        this.archivo = archivo;
         this.fechaEntrega = fechaEntrega;
-        this.rutaUbicacion = rutaUbicacion;
+        //this.rutaUbicacion = rutaUbicacion;
         this.titulo = titulo;
     }
 
@@ -25,14 +26,6 @@ public class ArchivoPOJO {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public String getRutaUbicacion() {
-        return rutaUbicacion;
-    }
-
-    public void setRutaUbicacion(String rutaUbicacion) {
-        this.rutaUbicacion = rutaUbicacion;
-    }
-
     public String getTitulo() {
         return titulo;
     }
@@ -40,6 +33,15 @@ public class ArchivoPOJO {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
+    
+    public byte[] getArchivo() {
+        return archivo;
+    }
+    
+    public void setArchivo(byte[] archivo) {
+        this.archivo = archivo;
+    }
+    
     
     
 }

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,4 +45,49 @@ public class ArchivoDAO {
 
         return obs;
     }
+    
+    public void subirArchivo(ArchivoPOJO arch,String matricula, int claveExp) {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        LocalDate fecha = arch.getFechaEntrega();//For reference
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        String fechaString = fecha.format(formatter);
+        
+        String sql = "INSERT INTO Archivo VALUES (NULL,"+arch.getArchivo()+","+claveExp+","+arch.getTitulo()+","+fechaString+");";
+
+        ConexionDB cc = new ConexionDB();
+        try{
+            con = cc.conectarMySQL();
+            stm = con.createStatement();
+            stm.execute(sql);
+            stm.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println("Error al cargar archivo, metodo subirArchivo");
+            e.printStackTrace();
+        } 
+    }
+    
+    public int obtenerClaveArchivo(){
+        int clave = 0;
+        Statement stm = null;
+        Connection con = null;
+        ResultSet rs = null;
+        String sql = "SELECT idArchivo FROM Archivo;";
+        try{
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while(rs.next()){
+                clave = rs.getInt(1);
+            }
+            stm.close();
+            con.close();
+        }catch(Exception e){
+            System.out.println("Error al obtener idArchivo, método obtenerClaveArchivo");
+            e.printStackTrace();
+        }
+        return clave;
+    }  
 }

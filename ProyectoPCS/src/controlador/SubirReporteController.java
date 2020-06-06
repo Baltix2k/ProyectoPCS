@@ -1,9 +1,14 @@
 package controlador;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,6 +28,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import modelo.ArchivoDAO;
+import modelo.ArchivoPOJO;
+import modelo.ReporteDAO;
+import modelo.ReportePOJO;
 
 /**
  * FXML Controller class
@@ -45,6 +54,10 @@ public class SubirReporteController implements Initializable {
     @FXML
     private TextField txtFecha;
     
+    private File file;
+    private String matricula;
+    private int claveExp;
+    
     ObservableList<String> tiposReporte = FXCollections.observableArrayList("Inicial","Mensual","Final");
     DateFormat df = DateFormat.getDateInstance();
     
@@ -58,9 +71,9 @@ public class SubirReporteController implements Initializable {
     @FXML
     private void subirArchivo(ActionEvent event) {
         FileChooser fc = new FileChooser();
-        File f = fc.showOpenDialog(null);
-        if(f != null){
-            labArchivo.setText("Archivo: " + f.getName());
+        file = fc.showOpenDialog(null);
+        if(file != null){
+            labArchivo.setText("Archivo: " + file.getName());
         }
     }
 
@@ -94,8 +107,25 @@ public class SubirReporteController implements Initializable {
     }
 
     @FXML
-    private void aceptar(ActionEvent event) {
-        
+    private void aceptar(ActionEvent event) throws FileNotFoundException {
+        ArchivoDAO arch = new ArchivoDAO();
+        ArchivoPOJO archP = new ArchivoPOJO();
+        ReporteDAO rep = new ReporteDAO();
+        ReportePOJO repP = new ReportePOJO();
+        archP.setTitulo(file.getName());
+        archP.setFechaEntrega(LocalDate.parse(txtFecha.getText()));
+        repP.setHorasReportadas(parseInt(txtHoras.getText()));
+        repP.setTipoReporte(combxTipo.getValue());
+        try{
+            byte[] doc = new byte[(int) file.length()];
+            InputStream input = new FileInputStream(file);
+            input.read(doc);
+            archP.setArchivo(doc);
+        }catch(IOException ex){
+            archP.setArchivo(null);
+        }
+        arch.subirArchivo(archP, matricula, claveExp);
+        rep.subirReporte(repP);
     }
 
     public void closeWindows() {
@@ -124,5 +154,11 @@ public class SubirReporteController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }   
+    }
+    
+    public void initData(String matricula, int claveExp){
+        this.matricula = matricula;
+        this.claveExp = claveExp;
+    }
+    
 }

@@ -40,6 +40,7 @@ public class preSubirReporteController implements Initializable {
     private EstudianteDAO eDAO;
     
     
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -86,7 +87,9 @@ public class preSubirReporteController implements Initializable {
             // Obtengo el controlador
             SubirReporteController controlador = loader.getController();
             
-            //controlador.initData(ePOJO);
+            controlador.initData(matricula, eDAO.recuperaClaveExpediente(matricula));
+            
+            controlador.initData(ePOJO);
                        
             // Creo la scene y el stage
             Scene scene = new Scene(root);

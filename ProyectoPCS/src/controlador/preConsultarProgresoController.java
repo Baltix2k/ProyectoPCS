@@ -111,7 +111,7 @@ public class preConsultarProgresoController implements Initializable {
             // Obtengo el controlador
             consultarProgresoController controlador = loader.getController();
             
-            controlador.initData(ePOJO);
+            //controlador.initData(ePOJO);
                        
             // Creo la scene y el stage
             Scene scene = new Scene(root);
