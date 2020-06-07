@@ -15,7 +15,7 @@ public class ProyectoDAO {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = "select proyecto.nombre, proyecto.nombreOrganizacion, proyecto.descripcion from proyecto where not exists (select proyecto.claveproyecto from expediente where expediente.claveproyecto = proyecto.claveproyecto);";
+        String sql = "select proyecto.claveproyecto, proyecto.nombre, proyecto.nombreOrganizacion, proyecto.descripcion from proyecto where not exists (select proyecto.claveproyecto from expediente where expediente.claveproyecto = proyecto.claveproyecto);";
 
         ObservableList<ProyectoPOJO> obs = FXCollections.observableArrayList();
 
@@ -24,12 +24,13 @@ public class ProyectoDAO {
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
+                Integer claveproyecto = rs.getInt("CLAVEPROYECTO");
                 String nombre = rs.getString("NOMBRE");
                 String nombreOrganizacion = rs.getString("NOMBREORGANIZACION");
                 String descripcion = rs.getString("DESCRIPCION");                
                 
-                //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
-                ProyectoPOJO c = new ProyectoPOJO(nombre, nombreOrganizacion, descripcion);
+                System.out.println("CLAVEPROYECTO: " + claveproyecto + "NOMBRE: " + nombre + "NOMBREORGANIZACION:" + nombreOrganizacion);
+                ProyectoPOJO c = new ProyectoPOJO(claveproyecto, nombre, nombreOrganizacion, descripcion);
                 
                 obs.add(c);
             }

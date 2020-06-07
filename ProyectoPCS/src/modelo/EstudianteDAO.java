@@ -128,4 +128,38 @@ public class EstudianteDAO {
         }
         return claveExpediente;
     }
+
+    public ObservableList<EstudiantePOJO> getEstudiantes() {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "select estudiante.nombre, estudiante.apellidopaterno, estudiante.apellidomatenro, estudiante.matricula from estudiante where not exists (select estudiante.matricula from expediente where expediente.matricula = estudiante.matricula);";
+
+        ObservableList<EstudiantePOJO> obs = FXCollections.observableArrayList();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                String nombre = rs.getString("NOMBRE");
+                String apellidoPaterno = rs.getString("APELLIDOPATERNO");
+                String apellidoMaterno = rs.getString("APELLIDOMATENRO"); 
+                String matricula = rs.getString("MATRICULA"); 
+                
+                //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
+                EstudiantePOJO c = new EstudiantePOJO(nombre, apellidoPaterno, apellidoMaterno, matricula);
+                
+                obs.add(c);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error: Clase ArchivoDAO, método getEstudiantes()");
+            e.printStackTrace();
+        }
+
+        return obs;
+    }
 }

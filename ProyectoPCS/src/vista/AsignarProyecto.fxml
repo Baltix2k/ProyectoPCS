@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -35,26 +34,27 @@
             <Font name="Segoe UI" size="23.0" />
          </font>
       </Button>
-      <Button fx:id="BtnCancelar" layoutX="632.0" layoutY="641.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #1fab89;" text="Cancelar" textFill="WHITE">
+      <Button fx:id="BtnCancelar" layoutX="632.0" layoutY="641.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #1fab89;" text="Cancelar" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="23.0" />
          </font>
       </Button>
       <TableView fx:id="TblProyecto" layoutX="42.0" layoutY="129.0" prefHeight="200.0" prefWidth="803.0" style="-fx-background-color: #155263;">
         <columns>
-          <TableColumn fx:id="ColProyecto" prefWidth="215.0" text="Proyecto" />
-            <TableColumn fx:id="ColOrganizacion" prefWidth="281.0" text="Organizacion vinculada" />
-            <TableColumn fx:id="ColDescripcion" prefWidth="317.0" text="Descripcion" />
+            <TableColumn fx:id="ColClave" prefWidth="75.0" text="Clave" />
+          <TableColumn fx:id="ColProyecto" prefWidth="166.0" text="Proyecto" />
+            <TableColumn fx:id="ColOrganizacion" prefWidth="271.0" text="Organizacion vinculada" />
+            <TableColumn fx:id="ColDescripcion" prefWidth="290.0" text="Descripcion" />
         </columns>
       </TableView>
-      <ScrollBar layoutX="844.0" layoutY="129.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
-      <TableView fx:id="TblAlumno" layoutX="37.0" layoutY="369.0" prefHeight="200.0" prefWidth="398.0" style="-fx-background-color: #155263;">
+      <TableView fx:id="TblAlumno" layoutX="37.0" layoutY="369.0" prefHeight="200.0" prefWidth="494.0" style="-fx-background-color: #155263;">
          <columns>
-            <TableColumn fx:id="ColAlumno" prefWidth="204.0" text="Nombre de Alumno" />
-            <TableColumn fx:id="ColMatricula" prefWidth="159.0" text="Matricula" />
+            <TableColumn fx:id="ColMatricula" prefWidth="104.0" text="Matricula" />
+            <TableColumn fx:id="ColAlumno" prefWidth="78.0" text="Nombre" />
+            <TableColumn fx:id="estudianteApPat" minWidth="0.0" prefWidth="142.0" text="Apellido Paterno" />
+            <TableColumn fx:id="estudianteApMat" prefWidth="168.0" text="Apellido materno" />
          </columns>
       </TableView>
-      <ScrollBar layoutX="434.0" layoutY="369.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
       <Label layoutX="548.0" layoutY="361.0" prefHeight="44.0" prefWidth="281.0" text="OPCIONES DE PROYECTO" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="24.0" />
