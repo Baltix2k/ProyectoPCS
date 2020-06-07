@@ -1,3 +1,4 @@
+--Tablas--
 CREATE TABLE Organizacion(
     calle VARCHAR(30) NOT NULL,
     codigoPostal VARCHAR(5) NOT NULL,
@@ -22,7 +23,7 @@ CREATE TABLE Proyecto(
 );
 
 CREATE TABLE Estudiante(
-    apellidoMatenro VARCHAR(20) NOT NULL,
+    apellidoMaterno VARCHAR(20) NOT NULL,
     apellidoPaterno VARCHAR(20) NOT NULL,
     nombre VARCHAR(20) NOT NULL,
     correoPersonal VARCHAR(20) NOT NULL,
@@ -76,23 +77,22 @@ CREATE TABLE Expediente(
 );
 
 CREATE TABLE Archivo(
-    claveExp INT NOT NULL,
-    estado VARCHAR(10),
-    rutaUbicacion VARCHAR(100) NOT NULL,
+    idArchivo INTEGER NOT NULL AUTO_INCREMENT,
+    archivo MEDIUMBLOB,
+    claveExp INTEGER NOT NULL,
     titulo VARCHAR(20),
-    PRIMARY KEY(rutaUbicacion)
+    fechaEntrega DATE,
+    PRIMARY KEY(idArchivo)
 );
 
 CREATE TABLE Reporte(
-    rutaUbicacion VARCHAR(100) NOT NULL,
-    fechaEntrega DATE,
+    idArchivo INTEGER NOT NULL,
     horasReportadas INTEGER,
-    mes VARCHAR(10),
-    numero INTEGER,
     tipoReporte VARCHAR(20),
-    PRIMARY KEY(rutaUbicacion)
+    PRIMARY KEY(idArchivo)
 );
 
+--Llaves foraneas--
 ALTER TABLE Proyecto ADD CONSTRAINT 
 fk_proyecto_1 FOREIGN KEY (nombreOrganizacion) 
 REFERENCES Organizacion (nombre);
@@ -130,9 +130,10 @@ fk_arch_1 FOREIGN KEY (claveExp)
 REFERENCES Expediente (clave);
 
 ALTER TABLE Reporte ADD CONSTRAINT 
-fk_reporte_1 FOREIGN KEY (rutaUbicacion) 
-REFERENCES Archivo (rutaUbicacion);
+fk_reporte_1 FOREIGN KEY (idArchivo) 
+REFERENCES Archivo (idArchivo);
 
+--Datos--
 INSERT INTO Estudiante VALUES
 ('Baltazar', 'Islas','Omar', 'omar@gmail.com','Inscrito','S18012180',9.2,'2283661974'),
 ('Alarcon', 'Santos', 'Emilio Antonio','emilio@gmail.com','Inscrito','S18012181',8.7,'2281776654'),
@@ -180,8 +181,6 @@ INSERT INTO Inscripcion VALUES
 INSERT INTO Expediente VALUES
 (NULL,'2020/08/20','2020/02/25',0,0,'S18012183',912),
 (NULL,'2020/08/20','2020/02/25',0,0,'S18012184',712);
-
-
 
 
 
