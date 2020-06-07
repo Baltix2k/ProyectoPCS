@@ -24,6 +24,13 @@ public class EstudiantePOJO {
         this.telefono = telefono;
     }
 
+    EstudiantePOJO(String nombre, String apellidoPaterno, String apellidoMaterno, String matricula) {
+        this.apellidoMaterno = apellidoMaterno;
+        this.apellidoPaterno = apellidoPaterno;
+        this.nombre = nombre;
+        this.matricula = matricula;
+    }
+
     public String getNombre() {
         return nombre;
     }

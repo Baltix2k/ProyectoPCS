@@ -21,8 +21,9 @@ public class ProyectoPOJO {
         this.responsableNombre = responsableNombre;
     }
 
-    ProyectoPOJO(String nombre, String nombreOrganizacion, String descripcion) {
+    ProyectoPOJO(int claveProyecto, String nombre, String nombreOrganizacion, String descripcion) {
         this.descripcion = descripcion;
+        this.claveProyecto = claveProyecto;
         this.nombre = nombre;
         this.responsableNombre = nombreOrganizacion;
     }

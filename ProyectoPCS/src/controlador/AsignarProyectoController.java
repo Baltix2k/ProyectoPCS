@@ -7,9 +7,11 @@ package controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,32 +47,50 @@ public class AsignarProyectoController implements Initializable {
     @FXML
     private TableView<ProyectoPOJO> TblProyecto;
     @FXML
+    private TableColumn<ProyectoPOJO, Integer> ColClave;
+    @FXML
     private TableColumn<ProyectoPOJO, String> ColProyecto;
     @FXML
     private TableColumn<ProyectoPOJO, String> ColOrganizacion;
     @FXML
     private TableColumn<ProyectoPOJO, String> ColDescripcion;
     @FXML
-    private TableView<?> TblAlumno;
+    private TableView<EstudiantePOJO> TblAlumno;
     @FXML
-    private TableColumn<?, ?> ColAlumno;
+    private TableColumn<EstudiantePOJO, String> ColAlumno;
     @FXML
-    private TableColumn<?, ?> ColMatricula;
+    private TableColumn<EstudiantePOJO, String> ColMatricula;
+    @FXML
+    private TableColumn<EstudiantePOJO, String> estudianteApPat;
+    @FXML
+    private TableColumn<EstudiantePOJO, String> estudianteApMat;
     @FXML
     private TextField LbOpcion1;
     @FXML
     private TextField LbOpcion2;
     @FXML
     private TextField LbOpcion3;
-    
+
     private ProyectoDAO pDAO;
+    private EstudianteDAO eDAO;
+
+    ObservableList<ProyectoPOJO> proyectos;
+    ObservableList<EstudiantePOJO> estudiantes;
+    
+    
+
 
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //      final ObservableList<EstudiantePOJO> tablaEstudianteSeleccionado = (ObservableList<EstudiantePOJO>) TblAlumno.getSelectionModel().getSelectedItem();
+//        tablaEstudianteSeleccionado.addListener(selectorTablaEstudiante);
     }
 
     public void closeWindows() {
@@ -79,7 +99,7 @@ public class AsignarProyectoController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
 
             Parent root = loader.load();
-            
+
             MenuController controlador = loader.getController();
 
             Scene scene = new Scene(root);
@@ -99,12 +119,58 @@ public class AsignarProyectoController implements Initializable {
 
     void initData() {
         this.pDAO = new ProyectoDAO();
+        ColClave.setCellValueFactory(new PropertyValueFactory<>("claveproyecto"));
         ColProyecto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         ColOrganizacion.setCellValueFactory(new PropertyValueFactory<>("responsableNombre"));
         ColDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+
+        this.proyectos = pDAO.getProyectos();
+        this.TblProyecto.setItems(proyectos);
+
+        this.eDAO = new EstudianteDAO();
+        ColAlumno.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        estudianteApPat.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
+        estudianteApMat.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
+        ColMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+
+        this.estudiantes = eDAO.getEstudiantes();
+        this.TblAlumno.setItems(estudiantes);
+
+        TblProyecto.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionProyecto) -> {
+            if (newSelectionProyecto != null) {
+                System.out.println(newSelectionProyecto.getNombre());
+            }
+        });
         
-        ObservableList<ProyectoPOJO> obsProyecto = pDAO.getProyectos();
-        this.TblProyecto.setItems(obsProyecto);
+        TblAlumno.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionEstudiante) -> {
+            if (newSelectionEstudiante != null) {
+                System.out.println(newSelectionEstudiante.getNombre());
+            }
+        });
+        
     }
-    
+
+    @FXML
+    void cancelar() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
+
+            Parent root = loader.load();
+
+            MenuController controlador = loader.getController();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.show();
+
+            Stage myStage = (Stage) this.BtnCancelar.getScene().getWindow();
+            myStage.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
