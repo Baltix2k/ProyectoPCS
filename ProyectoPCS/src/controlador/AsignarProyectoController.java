@@ -7,6 +7,7 @@ package controlador;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -32,6 +33,7 @@ import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
 import modelo.ProyectoDAO;
 import modelo.ProyectoPOJO;
+import modelo.SeleccionProyectoPOJO;
 
 /**
  * FXML Controller class
@@ -76,9 +78,10 @@ public class AsignarProyectoController implements Initializable {
 
     ObservableList<ProyectoPOJO> proyectos;
     ObservableList<EstudiantePOJO> estudiantes;
+    ArrayList<SeleccionProyectoPOJO> selecciones;
     
-    
-
+    int claveProyectoElegido;
+    String matriculaEstudianteElegido;
 
     /**
      * Initializes the controller class.
@@ -119,7 +122,7 @@ public class AsignarProyectoController implements Initializable {
 
     void initData() {
         this.pDAO = new ProyectoDAO();
-        ColClave.setCellValueFactory(new PropertyValueFactory<>("claveproyecto"));
+        ColClave.setCellValueFactory(new PropertyValueFactory<>("claveProyecto"));
         ColProyecto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         ColOrganizacion.setCellValueFactory(new PropertyValueFactory<>("responsableNombre"));
         ColDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
@@ -139,12 +142,23 @@ public class AsignarProyectoController implements Initializable {
         TblProyecto.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionProyecto) -> {
             if (newSelectionProyecto != null) {
                 System.out.println(newSelectionProyecto.getNombre());
+                claveProyectoElegido = newSelectionProyecto.getClaveProyecto();
+                System.out.println("CLAVE: " + claveProyectoElegido);                
             }
         });
         
         TblAlumno.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionEstudiante) -> {
             if (newSelectionEstudiante != null) {
                 System.out.println(newSelectionEstudiante.getNombre());
+                selecciones = eDAO.getSelecciones(newSelectionEstudiante.getMatricula()); // Obtiene las selecciones del alumno con su matricula
+                int s1 = selecciones.get(0).getClaveProyecto();
+                int s2 = selecciones.get(1).getClaveProyecto();;
+                int s3 = selecciones.get(2).getClaveProyecto();;
+                this.LbOpcion1.setText(pDAO.recuperarNombre(s1));
+                this.LbOpcion2.setText(pDAO.recuperarNombre(s2));
+                this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
+                matriculaEstudianteElegido = newSelectionEstudiante.getMatricula();
+                System.out.println("MATRICULA: " + matriculaEstudianteElegido); 
             }
         });
         
@@ -171,6 +185,11 @@ public class AsignarProyectoController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void aceptar(ActionEvent event) {
+        eDAO.asginarProyecto(matriculaEstudianteElegido, claveProyectoElegido);
     }
 
 }

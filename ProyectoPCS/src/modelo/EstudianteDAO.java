@@ -4,24 +4,27 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EstudianteDAO {
-    
+
     public EstudiantePOJO recuperar(String matricula) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
         EstudiantePOJO e = null;
         String sql = "SELECT * FROM estudiante WHERE matricula = '" + matricula + "';";
-        
+
         try {
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
-                e = new EstudiantePOJO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getFloat(7),rs.getString(8));
+                e = new EstudiantePOJO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getFloat(7), rs.getString(8));
             }
             stm.close();
             rs.close();
@@ -32,21 +35,21 @@ public class EstudianteDAO {
         }
         return e;
     }
-    
+
     public String recuperarNombreOrganizacion(String matricula) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
         String nombreOrganizacion = null;
         String sql = "SELECT proyecto.nombreorganizacion FROM inscripcion JOIN proyecto ON inscripcion.claveProyecto = proyecto.claveProyecto WHERE matricula = '" + matricula + "';";
-        
+
         try {
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
-            while (rs.next()){ 
+            while (rs.next()) {
                 nombreOrganizacion = rs.getString(1);
-            }  
+            }
             stm.close();
             rs.close();
             con.close();
@@ -56,12 +59,12 @@ public class EstudianteDAO {
         }
         return nombreOrganizacion;
     }
-    
+
     public String recuperarNombreProyecto(String matricula) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String nombreProyecto = null;        
+        String nombreProyecto = null;
         String sql = "SELECT proyecto.nombre FROM inscripcion JOIN proyecto ON inscripcion.claveProyecto = proyecto.claveProyecto WHERE matricula = '" + matricula + "';";
 
         try {
@@ -80,12 +83,12 @@ public class EstudianteDAO {
         }
         return nombreProyecto;
     }
-    
-    public int recuperarClaveProyecto(String matricula){
+
+    public int recuperarClaveProyecto(String matricula) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        int claveProyecto = 0;        
+        int claveProyecto = 0;
         String sql = "SELECT inscripcion.claveProyecto FROM inscripcion WHERE matricula = '" + matricula + "';";
 
         try {
@@ -104,12 +107,12 @@ public class EstudianteDAO {
         }
         return claveProyecto;
     }
-    
-    public int recuperaClaveExpediente(String matricula){
+
+    public int recuperaClaveExpediente(String matricula) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        int claveExpediente = 0;        
+        int claveExpediente = 0;
         String sql = "SELECT expediente.clave FROM expediente WHERE matricula = '" + matricula + "';";
 
         try {
@@ -144,12 +147,12 @@ public class EstudianteDAO {
             while (rs.next()) {
                 String nombre = rs.getString("NOMBRE");
                 String apellidoPaterno = rs.getString("APELLIDOPATERNO");
-                String apellidoMaterno = rs.getString("APELLIDOMATENRO"); 
-                String matricula = rs.getString("MATRICULA"); 
-                
+                String apellidoMaterno = rs.getString("APELLIDOMATENRO");
+                String matricula = rs.getString("MATRICULA");
+
                 //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
                 EstudiantePOJO c = new EstudiantePOJO(nombre, apellidoPaterno, apellidoMaterno, matricula);
-                
+
                 obs.add(c);
             }
             stm.close();
@@ -161,5 +164,72 @@ public class EstudianteDAO {
         }
 
         return obs;
+    }
+
+    public ArrayList<SeleccionProyectoPOJO> getSelecciones(String matricula) {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "select claveproyecto, fecha, periodo from seleccionproyecto where matricula = '" + matricula + "';";
+
+        ArrayList<SeleccionProyectoPOJO> obs = new ArrayList<SeleccionProyectoPOJO>();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                int claveproyecto = rs.getInt("claveproyecto");
+                LocalDate fecha = LocalDate.parse(rs.getString("fecha"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String periodo = rs.getString("periodo");
+
+                //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
+                SeleccionProyectoPOJO c = new SeleccionProyectoPOJO(claveproyecto, fecha, periodo);
+
+                obs.add(c);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error: Clase EstudianteDAO, método getSelecciones()");
+            e.printStackTrace();
+        }
+
+        return obs;
+    }
+
+    public void asginarProyecto(String matriculaEstudianteElegido, int claveProyectoElegido) {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "select claveproyecto, fecha, periodo from seleccionproyecto where matricula = '" + matricula + "';";
+
+        ArrayList<SeleccionProyectoPOJO> obs = new ArrayList<SeleccionProyectoPOJO>();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                int claveproyecto = rs.getInt("claveproyecto");
+                LocalDate fecha = LocalDate.parse(rs.getString("fecha"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                String periodo = rs.getString("periodo");
+
+                //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
+                SeleccionProyectoPOJO c = new SeleccionProyectoPOJO(claveproyecto, fecha, periodo);
+
+                obs.add(c);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error: Clase EstudianteDAO, método getSelecciones()");
+            e.printStackTrace();
+        }
+
+        return obs;
+
     }
 }

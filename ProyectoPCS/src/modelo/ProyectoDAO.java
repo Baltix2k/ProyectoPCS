@@ -29,7 +29,7 @@ public class ProyectoDAO {
                 String nombreOrganizacion = rs.getString("NOMBREORGANIZACION");
                 String descripcion = rs.getString("DESCRIPCION");                
                 
-                System.out.println("CLAVEPROYECTO: " + claveproyecto + "NOMBRE: " + nombre + "NOMBREORGANIZACION:" + nombreOrganizacion);
+                System.out.println("CLAVEPROYECTO: " + claveproyecto + " NOMBRE: " + nombre + " NOMBREORGANIZACION:" + nombreOrganizacion);
                 ProyectoPOJO c = new ProyectoPOJO(claveproyecto, nombre, nombreOrganizacion, descripcion);
                 
                 obs.add(c);
@@ -87,6 +87,29 @@ public class ProyectoDAO {
             ex.printStackTrace();
         }
         return nombreOrganizacion;
+    }
+
+    public String recuperarNombre(int claveproyecto) {
+       Connection con = null;
+       Statement stm = null;
+       ResultSet rs = null;
+       String nombreProyecto = null;
+       
+       LocalDate fecha = LocalDate.now();
+       
+       String sql = "SELECT nombre FROM proyecto WHERE claveproyecto = " + claveproyecto + ";";
+       
+       try{
+           con = new ConexionDB().conectarMySQL();
+           stm = con.createStatement();
+           rs = stm.executeQuery(sql);
+           while (rs.next()){
+               nombreProyecto = rs.getString(1);           }
+        }catch(SQLException ex){
+           System.out.println("Error: Clase ProyectoDAO, método recuperarNombre()");
+           ex.printStackTrace();
+       }
+       return nombreProyecto;
     }
    
 }

@@ -29,7 +29,7 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="BtnAceptar" layoutX="777.0" layoutY="641.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #155263;" text="Aceptar" textFill="#fffefe">
+      <Button fx:id="BtnAceptar" layoutX="777.0" layoutY="641.0" mnemonicParsing="false" onAction="#aceptar" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #155263;" text="Aceptar" textFill="#fffefe">
          <font>
             <Font name="Segoe UI" size="23.0" />
          </font>
