@@ -132,6 +132,18 @@ public class SubirReporteController implements Initializable {
             archP.setArchivo(doc);
         }catch(IOException ex){
             archP.setArchivo(null);
+        }catch (NullPointerException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Campos faltantes");
+            alert.showAndWait();
+        }catch(RuntimeException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Campos faltantes");
+            alert.showAndWait();
         }
         arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.getText()));
         int idArch = arch.obtenerClaveArchivo();
@@ -144,7 +156,6 @@ public class SubirReporteController implements Initializable {
         alert.setContentText("Archivo cargado exitosamente");
         alert.showAndWait();
         this.closeWindows();
-        
     }
 
     public void closeWindows() {

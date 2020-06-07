@@ -76,41 +76,55 @@ public class preSubirReporteController implements Initializable {
         
         try {
             String matricula = this.txfdmatricula.getText();
-            EstudiantePOJO ePOJO = eDAO.recuperar(matricula);          
-            
-            // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/SubirReporteVista.fxml"));
-            
-            // Cargo el padre
-            Parent root = loader.load();
+            EstudiantePOJO ePOJO = eDAO.recuperar(matricula);
+            if(eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) != null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText("Estudiante sin expediente");
+                alert.showAndWait();
+            }else{
+               if(eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) == null){ 
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Error");
+                    alert.setContentText("Estudiante no encontrado");
+                    alert.showAndWait();
+                }else{           
+                    // Cargo la vista
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/SubirReporteVista.fxml"));
 
-            // Obtengo el controlador
-            SubirReporteController controlador = loader.getController();
-            
-            controlador.initData(ePOJO);
-                       
-            // Creo la scene y el stage
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+                    // Cargo el padre
+                    Parent root = loader.load();
 
-            // Asocio el stage con el scene
-            stage.setScene(scene);
-            stage.show();
+                    // Obtengo el controlador
+                    SubirReporteController controlador = loader.getController();
 
-            // Indico que debe hacer al cerrar
-            stage.setOnCloseRequest(e -> controlador.closeWindows());
+                    controlador.initData(ePOJO);
 
-            // Cierro la ventana donde estoy
-            Stage myStage = (Stage) this.btnAceptar.getScene().getWindow();
-            myStage.close();
+                    // Creo la scene y el stage
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
 
+                    // Asocio el stage con el scene
+                    stage.setScene(scene);
+                    stage.show();
+
+                    // Indico que debe hacer al cerrar
+                    stage.setOnCloseRequest(e -> controlador.closeWindows());
+
+                    // Cierro la ventana donde estoy
+                    Stage myStage = (Stage) this.btnAceptar.getScene().getWindow();
+                    myStage.close();
+                }
+            }
         } catch (IOException ex) {
             Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException ex2) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error");
-            alert.setContentText("Matricula no encontrada");
+            alert.setContentText("Matricula no válida");
             alert.showAndWait();
         } catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
