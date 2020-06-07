@@ -199,11 +199,11 @@ public class EstudianteDAO {
         return obs;
     }
 
-    public void asginarProyecto(String matriculaEstudianteElegido, int claveProyectoElegido) {
+    public ArrayList<SeleccionProyectoPOJO> asginarProyecto(String matriculaEstudianteElegido, int claveProyectoElegido) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = "select claveproyecto, fecha, periodo from seleccionproyecto where matricula = '" + matricula + "';";
+        String sql = "INSERT INTO EXPEDIENTE VALUES (null," + claveProyectoElegido +");";
 
         ArrayList<SeleccionProyectoPOJO> obs = new ArrayList<SeleccionProyectoPOJO>();
 
