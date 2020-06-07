@@ -199,37 +199,25 @@ public class EstudianteDAO {
         return obs;
     }
 
-    public ArrayList<SeleccionProyectoPOJO> asginarProyecto(String matriculaEstudianteElegido, int claveProyectoElegido) {
+    public void asginarProyecto(String matriculaEstudianteElegido, int claveProyectoElegido) {
         Connection con = null;
         Statement stm = null;
-        ResultSet rs = null;
-        String sql = "INSERT INTO EXPEDIENTE VALUES (null," + claveProyectoElegido +");";
-
-        ArrayList<SeleccionProyectoPOJO> obs = new ArrayList<SeleccionProyectoPOJO>();
-
+        
+        LocalDate fechaInicioPP = LocalDate.now();
+        LocalDate fechaFinPP = fechaInicioPP.plusMonths(6);
+        String sql = "INSERT INTO inscripcion VALUES ('" + matriculaEstudianteElegido + "', " + claveProyectoElegido + ", 234, 1, 35, 'Inscrito', '" + fechaInicioPP + "', 123, 'FEB2020-AGO2020', 1, 'Primera inscripcion');";
+        String sql2 = "INSERT INTO expediente VALUES (null, '" + fechaFinPP + "', '" + fechaInicioPP + "', 0, 0, '" + matriculaEstudianteElegido + "', " + claveProyectoElegido + ");";
+        
         try {
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
-            rs = stm.executeQuery(sql);
-            while (rs.next()) {
-                int claveproyecto = rs.getInt("claveproyecto");
-                LocalDate fecha = LocalDate.parse(rs.getString("fecha"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                String periodo = rs.getString("periodo");
-
-                //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
-                SeleccionProyectoPOJO c = new SeleccionProyectoPOJO(claveproyecto, fecha, periodo);
-
-                obs.add(c);
-            }
+            stm.executeUpdate(sql);
+            stm.executeUpdate(sql2);
             stm.close();
-            rs.close();
             con.close();
         } catch (SQLException e) {
             System.out.println("Error: Clase EstudianteDAO, método getSelecciones()");
             e.printStackTrace();
         }
-
-        return obs;
-
     }
 }
