@@ -64,7 +64,7 @@
             <Font name="Segoe UI" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="txtFecha" editable="false" layoutX="344.0" layoutY="325.0" prefHeight="31.0" prefWidth="90.0" />
+      <TextField fx:id="txtFecha" editable="false" layoutX="344.0" layoutY="325.0" prefHeight="31.0" prefWidth="126.0" />
       <TextField fx:id="txtMatricula" editable="false" layoutX="127.0" layoutY="148.0" prefHeight="31.0" prefWidth="108.0" />
       <TextField fx:id="txtClaveExp" editable="false" layoutX="457.0" layoutY="149.0" prefHeight="31.0" prefWidth="90.0" />
       <Label layoutX="19.0" layoutY="142.0" prefHeight="44.0" prefWidth="101.0" text="Matricula:" textAlignment="CENTER" textFill="WHITE">

@@ -3,14 +3,15 @@ package modelo;
 import java.time.LocalDate;
 
 public class ArchivoPOJO {
+    int id;
     byte[] archivo;
     String titulo;
     LocalDate fechaEntrega;
 
-    public ArchivoPOJO(String titulo, byte[] archivo, LocalDate fechaEntrega) {
-        this.archivo = archivo;
+    public ArchivoPOJO(int id, String titulo,LocalDate fechaEntrega) {
+        this.id = id;
+        //this.archivo = archivo;
         this.fechaEntrega = fechaEntrega;
-        //this.rutaUbicacion = rutaUbicacion;
         this.titulo = titulo;
     }
 

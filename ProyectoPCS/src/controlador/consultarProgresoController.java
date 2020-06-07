@@ -110,7 +110,7 @@ public class consultarProgresoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //final ObservableList<ArchivoPOJO> tablaArchivo1 = tableArchivo.getSelectionModel().getSelectedItems();
+        final ObservableList<ArchivoPOJO> tablaArchivo1 = tableArchivo.getSelectionModel().getSelectedItems();
         //tablaArchivo1.addListener(selector);
     }
 
@@ -167,21 +167,23 @@ public class consultarProgresoController implements Initializable {
         this.txtfproyecto.setText(this.eDAO.recuperarNombreProyecto(ePOJO.getMatricula()));
 
         this.aDAO = new ArchivoDAO();
+        archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("id archivo"));
         archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        archivoRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
+        //archivoRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
         archivoFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         
         ObservableList<ArchivoPOJO> obsArchivo = aDAO.getArchivos(ePOJO.getMatricula());
         this.tableArchivo.setItems(obsArchivo);
         
         this.rDAO = new ReporteDAO();
+        archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("id archivo"));
         reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        reporteRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
+        //reporteRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
         reporteFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         reporteHoras.setCellValueFactory(new PropertyValueFactory<>("horasReportadas"));
         reporteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
         
-        //ObservableList<ReportePOJO> obsReporte = rDAO.getReportes(ePOJO.getMatricula());
-        //this.tableReporte.setItems(obsReporte);
+        ObservableList<ReportePOJO> obsReporte = rDAO.getReportes(ePOJO.getMatricula());
+        this.tableReporte.setItems(obsReporte);
     }
 }

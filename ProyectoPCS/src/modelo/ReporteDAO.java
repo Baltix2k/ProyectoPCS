@@ -15,11 +15,11 @@ import javafx.collections.ObservableList;
  * @author ricar
  */
 public class ReporteDAO {
-    /*public ObservableList<ReportePOJO> getReportes(String matricula) {
+    public ObservableList<ReportePOJO> getReportes(String matricula) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = "select archivo.titulo, archivo.rutaUbicacion, archivo.fechaEntrega, reporte.horasReportadas, reporte.tipoReporte from inscripcion join expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp join reporte on archivo.idarchivo = reporte.idarchivo where inscripcion.matricula = '" + matricula + "';";
+        String sql = "select archivo.idArchivo, archivo.titulo, archivo.fechaEntrega, reporte.horasReportadas, reporte.tipoReporte from inscripcion join expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp join reporte on archivo.idarchivo = reporte.idarchivo where inscripcion.matricula = '" + matricula + "';";
 
         ObservableList<ReportePOJO> obs = FXCollections.observableArrayList();
 
@@ -28,13 +28,13 @@ public class ReporteDAO {
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
+                int clave = rs.getInt("ID ARCHIVO");
                 String titulo = rs.getString("TITULO");
-                String rutaubicacion = rs.getString("RUTAUBICACION");
                 LocalDate fechaEntrega = LocalDate.parse(rs.getString("FECHAENTREGA"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 int horasReportadas = rs.getInt("HORASREPORTADAS");
                 String tipoReporte = rs.getString("TIPOREPORTE");
                 
-                ReportePOJO c = new ReportePOJO(titulo, rutaubicacion, fechaEntrega, horasReportadas, tipoReporte);
+                ReportePOJO c = new ReportePOJO(horasReportadas, tipoReporte);
                 
                 obs.add(c);
             }
@@ -47,7 +47,7 @@ public class ReporteDAO {
         }
 
         return obs;
-    }*/
+    }
     
     public void subirReporte(ReportePOJO report, int idArch){    
         Connection con = null;

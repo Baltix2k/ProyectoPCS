@@ -16,7 +16,7 @@ public class ArchivoDAO {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = "SELECT archivo.titulo, archivo.rutaUbicacion, archivo.fechaEntrega FROM inscripcion JOIN expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp where not exists (select archivo.idarchivo from reporte where reporte.idarchivo = archivo.idarchivo) and inscripcion.matricula = '" + matricula + "';";
+        String sql = "SELECT archivo.idarchivo, archivo.titulo, archivo.fechaEntrega FROM inscripcion JOIN expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp where not exists (select archivo.idarchivo from reporte where reporte.idarchivo = archivo.idarchivo) and inscripcion.matricula = '" + matricula + "';";
                    //"select archivo.titulo, archivo.rutaUbicacion, archivo.fechaEntrega from inscripcion join expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp where inscripcion.matricula = '" + matricula + "';";
 
         ObservableList<ArchivoPOJO> obs = FXCollections.observableArrayList();
@@ -26,13 +26,13 @@ public class ArchivoDAO {
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
+                int id = rs.getInt("ID ARCHIVO");
                 String titulo = rs.getString("TITULO");
-                String rutaubicacion = rs.getString("RUTAUBICACION");
                 LocalDate fechaEntrega = LocalDate.parse(rs.getString("FECHAENTREGA"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 
                 
-                System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
-                //ArchivoPOJO c = new ArchivoPOJO(titulo, rutaubicacion, fechaEntrega);
+                System.out.println("ID Archivo: "+ id +"Titulo: " + titulo + "Fecha:" + fechaEntrega);
+                ArchivoPOJO c = new ArchivoPOJO(id,titulo, fechaEntrega);
                 
                 //obs.add(c);
             }
@@ -81,9 +81,6 @@ public class ArchivoDAO {
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
-            /*while(rs.next()){
-                clave = rs.getInt(1);
-            }*/
             rs.next();
             clave = rs.getInt(1);
             stm.close();
