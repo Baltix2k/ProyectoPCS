@@ -136,7 +136,7 @@ public class EstudianteDAO {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = "select estudiante.nombre, estudiante.apellidopaterno, estudiante.apellidomatenro, estudiante.matricula from estudiante where not exists (select estudiante.matricula from expediente where expediente.matricula = estudiante.matricula);";
+        String sql = "select estudiante.nombre, estudiante.apellidopaterno, estudiante.apellidomaterno, estudiante.matricula from estudiante where not exists (select estudiante.matricula from expediente where expediente.matricula = estudiante.matricula);";
 
         ObservableList<EstudiantePOJO> obs = FXCollections.observableArrayList();
 
@@ -147,7 +147,7 @@ public class EstudianteDAO {
             while (rs.next()) {
                 String nombre = rs.getString("NOMBRE");
                 String apellidoPaterno = rs.getString("APELLIDOPATERNO");
-                String apellidoMaterno = rs.getString("APELLIDOMATENRO");
+                String apellidoMaterno = rs.getString("APELLIDOMATERNO");
                 String matricula = rs.getString("MATRICULA");
 
                 //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);

@@ -43,10 +43,6 @@ public class consultarProgresoController implements Initializable {
 
     private Button btnconsultar;
     @FXML
-    private ScrollBar sb1;
-    @FXML
-    private ScrollBar sb2;
-    @FXML
     private Label lbnomb;
     @FXML
     private Label lbmatr;
@@ -84,17 +80,17 @@ public class consultarProgresoController implements Initializable {
     @FXML
     private TableView<ArchivoPOJO> tableArchivo;
     @FXML
-    private TableColumn<ArchivoPOJO, String> archivoTitulo;
+    private TableColumn<ArchivoPOJO, Integer> archivoId;
     @FXML
-    private TableColumn<ArchivoPOJO, String> archivoRuta;
+    private TableColumn<ArchivoPOJO, String> archivoTitulo;
     @FXML
     private TableColumn<ArchivoPOJO, LocalDate> archivoFecha;
     @FXML
     private TableView<ReportePOJO> tableReporte;
     @FXML
-    private TableColumn<ReportePOJO, String> reporteTitulo;
+    private TableColumn<ReportePOJO, Integer> reporteId;
     @FXML
-    private TableColumn<ReportePOJO, String> reporteRuta;
+    private TableColumn<ReportePOJO, String> reporteTitulo;
     @FXML
     private TableColumn<ReportePOJO, LocalDate> reporteFecha;
     @FXML
@@ -104,6 +100,7 @@ public class consultarProgresoController implements Initializable {
 
     ObservableList<ArchivoPOJO> archivos;
     ObservableList<ReportePOJO> reportes;
+    
 
     /**
      * Initializes the controller class.
@@ -167,18 +164,16 @@ public class consultarProgresoController implements Initializable {
         this.txtfproyecto.setText(this.eDAO.recuperarNombreProyecto(ePOJO.getMatricula()));
 
         this.aDAO = new ArchivoDAO();
-        archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("id archivo"));
+        archivoId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
         archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        //archivoRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
         archivoFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         
         ObservableList<ArchivoPOJO> obsArchivo = aDAO.getArchivos(ePOJO.getMatricula());
         this.tableArchivo.setItems(obsArchivo);
         
         this.rDAO = new ReporteDAO();
-        archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("id archivo"));
+        reporteId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
         reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        //reporteRuta.setCellValueFactory(new PropertyValueFactory<>("rutaUbicacion"));
         reporteFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         reporteHoras.setCellValueFactory(new PropertyValueFactory<>("horasReportadas"));
         reporteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
