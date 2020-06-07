@@ -4,10 +4,45 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ProyectoDAO {
+    
+    public ObservableList<ProyectoPOJO> getProyectos() {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "select proyecto.nombre, proyecto.nombreOrganizacion, proyecto.descripcion from proyecto where not exists (select proyecto.claveproyecto from expediente where expediente.claveproyecto = proyecto.claveproyecto);";
+
+        ObservableList<ProyectoPOJO> obs = FXCollections.observableArrayList();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                String nombre = rs.getString("NOMBRE");
+                String nombreOrganizacion = rs.getString("NOMBREORGANIZACION");
+                String descripcion = rs.getString("DESCRIPCION");                
+                
+                //System.out.println("Titulo: " + titulo + "Ruta: " + rutaubicacion + "Fecha:" + fechaEntrega);
+                ProyectoPOJO c = new ProyectoPOJO(nombre, nombreOrganizacion, descripcion);
+                
+                obs.add(c);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error: Clase ArchivoDAO, método readAll()");
+            e.printStackTrace();
+        }
+
+        return obs;
+    }
     
     public String recuperarNombreProyecto(){
        Connection con = null;

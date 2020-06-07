@@ -21,6 +21,12 @@ public class ProyectoPOJO {
         this.responsableNombre = responsableNombre;
     }
 
+    ProyectoPOJO(String nombre, String nombreOrganizacion, String descripcion) {
+        this.descripcion = descripcion;
+        this.nombre = nombre;
+        this.responsableNombre = nombreOrganizacion;
+    }
+
     public String getActividades() {
         return actividades;
     }
