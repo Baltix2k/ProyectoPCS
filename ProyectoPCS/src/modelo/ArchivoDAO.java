@@ -1,5 +1,10 @@
 package modelo;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +13,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -89,5 +96,71 @@ public class ArchivoDAO {
             e.printStackTrace();
         }
         return clave;
-    }  
+    }
+    
+    public void abrirArchivo(int idArchivo){
+        /*Conectar cn = new Conectar();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        byte[] b = null;
+
+        try {
+            ps = cn.getConnection().prepareStatement("SELECT archivopdf FROM pdf WHERE codigopdf = ?;");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                b = rs.getBytes(1);
+            }
+            InputStream bos = new ByteArrayInputStream(b);
+
+            int tamanoInput = bos.available();
+            byte[] datosPDF = new byte[tamanoInput];
+            bos.read(datosPDF, 0, tamanoInput);
+
+            OutputStream out = new FileOutputStream("new.pdf");
+            out.write(datosPDF);
+
+            //abrir archivo
+            out.close();
+            bos.close();
+            ps.close();
+            rs.close();
+            cn.desconectar();*/
+        Connection con = null;
+        ResultSet rs = null;
+        byte[] b = null;
+        
+        String sql = "SELECT archivo FROM Archivo WHERE idArchivo =?;";
+        PreparedStatement ps = null;
+        ConexionDB cc = new ConexionDB();
+        try{
+            con = cc.conectarMySQL();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,idArchivo);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                b = rs.getBytes(1);
+            }
+            InputStream bos = new ByteArrayInputStream(b);
+            
+            int tamInput = bos.available();
+            byte[] datosArch = new byte[tamInput];
+            bos.read(datosArch,0,tamInput);
+            
+            OutputStream out = new FileOutputStream("new.pdf");
+            out.write(datosArch);
+            
+            //abrir Archivo
+            out.close();
+            bos.close();
+            ps.close();
+            rs.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println("Error al abrir archivo");
+            e.printStackTrace();
+        } catch (IOException | NumberFormatException ex) {
+            Logger.getLogger(ArchivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
