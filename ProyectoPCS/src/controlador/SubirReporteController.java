@@ -32,6 +32,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.ArchivoDAO;
 import modelo.ArchivoPOJO;
+import modelo.EstudianteDAO;
+import modelo.EstudiantePOJO;
 import modelo.ReporteDAO;
 import modelo.ReportePOJO;
 
@@ -60,6 +62,7 @@ public class SubirReporteController implements Initializable {
     @FXML
     private TextField txtClaveExp;
     
+    private EstudianteDAO eDAO;
     private File file;
     
     ObservableList<String> tiposReporte = FXCollections.observableArrayList("Inicial","Mensual","Final");
@@ -172,9 +175,10 @@ public class SubirReporteController implements Initializable {
         }
     }
     
-    public void initData(String matricula, int claveExp){
-        txtMatricula.setText(matricula);
-        txtClaveExp.setText(Integer.toString(claveExp));
+    public void initData(EstudiantePOJO ePOJO){
+        this.eDAO = new EstudianteDAO();
+        txtMatricula.setText(ePOJO.getMatricula());
+        txtClaveExp.setText(Integer.toString(this.eDAO.recuperaClaveExpediente(ePOJO.getMatricula())));
     }
     
 }

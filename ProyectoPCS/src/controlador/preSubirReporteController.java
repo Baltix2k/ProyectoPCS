@@ -87,9 +87,7 @@ public class preSubirReporteController implements Initializable {
             // Obtengo el controlador
             SubirReporteController controlador = loader.getController();
             
-            controlador.initData(matricula, eDAO.recuperaClaveExpediente(matricula));
-            
-            //controlador.initData(ePOJO);
+            controlador.initData(ePOJO);
                        
             // Creo la scene y el stage
             Scene scene = new Scene(root);
@@ -102,7 +100,7 @@ public class preSubirReporteController implements Initializable {
             // Indico que debe hacer al cerrar
             stage.setOnCloseRequest(e -> controlador.closeWindows());
 
-            // Ciero la ventana donde estoy
+            // Cierro la ventana donde estoy
             Stage myStage = (Stage) this.btnAceptar.getScene().getWindow();
             myStage.close();
 
@@ -113,6 +111,12 @@ public class preSubirReporteController implements Initializable {
             alert.setHeaderText(null);
             alert.setTitle("Error");
             alert.setContentText("Matricula no encontrada");
+            alert.showAndWait();
+        } catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setContentText("Campo vacio");
             alert.showAndWait();
         }
     }
