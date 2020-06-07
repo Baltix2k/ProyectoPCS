@@ -1,6 +1,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -48,24 +49,26 @@ public class ReporteDAO {
         return obs;
     }*/
     
-    public void subirReporte(ReportePOJO report){
+    public void subirReporte(ReportePOJO report, int idArch){    
         Connection con = null;
-        Statement stm = null;
         ResultSet rs = null;
-        ArchivoDAO arch = new ArchivoDAO();
-        int clave = arch.obtenerClaveArchivo();
-        String sql = "INSERT INTO Reporte VALUES ("+clave+","+report.getHorasReportadas()+","+report.getTipoReporte()+");";
-
+        System.out.println(idArch+"-"+report.getHorasReportadas()+"-"+report.getTipoReporte());
+        
+        String sql = "INSERT INTO Reporte VALUES(?,?,?);";
+        PreparedStatement ps = null;
         ConexionDB cc = new ConexionDB();
         try{
             con = cc.conectarMySQL();
-            stm = con.createStatement();
-            stm.execute(sql);
-            stm.close();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idArch);
+            ps.setInt(2, report.getHorasReportadas());
+            ps.setString(3, report.getTipoReporte());
+            ps.executeUpdate();
+            ps.close();
             con.close();
         }catch(SQLException e){
             System.out.println("Error al cargar reporte, metodo subirReporte");
             e.printStackTrace();
-        }
+        }       
     }
 }

@@ -47,39 +47,17 @@ public class ArchivoDAO {
         return obs;
     }
     
-    public void subirArchivo(ArchivoPOJO arch,String matricula, int claveExp) {
-        /*Conectar conec = new Conectar();
-        String sql = "INSERT INTO pdf (codigopdf, nombrepdf, archivopdf) VALUES(?, ?, ?);";
-        PreparedStatement ps = null;
-        try {
-            ps = conec.getConnection().prepareStatement(sql);
-            ps.setInt(1, vo.getCodigopdf());
-            ps.setString(2, vo.getNombrepdf());
-            ps.setBytes(3, vo.getArchivopdf());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        } finally {
-            try {
-                ps.close();
-                conec.desconectar();
-            } catch (Exception ex) {
-            }
-        }*/
-        
+    public void subirArchivo(ArchivoPOJO arch,int claveExp) {
         Connection con = null;
-        Statement stm = null;
         ResultSet rs = null;
         
-        //String sql = "INSERT INTO Archivo VALUES (NULL,"+arch.getArchivo()+","+claveExp+",'"+arch.getTitulo()+"','"+arch.getFechaEntrega().toString()+"');";
         String sql = "INSERT INTO Archivo VALUES (NULL,?,?,?,?);";
         PreparedStatement ps = null;
         ConexionDB cc = new ConexionDB();
         try{
             con = cc.conectarMySQL();
-            stm = con.createStatement();
+            //stm = con.createStatement();
+            ps = con.prepareStatement(sql);
             ps.setBytes(1,arch.getArchivo());
             ps.setInt(2, claveExp);
             ps.setString(3, arch.getTitulo());
@@ -98,14 +76,16 @@ public class ArchivoDAO {
         Statement stm = null;
         Connection con = null;
         ResultSet rs = null;
-        String sql = "SELECT idArchivo FROM Archivo;";
+        String sql = "SELECT MAX(idArchivo) AS id FROM Archivo;";
         try{
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
-            while(rs.next()){
+            /*while(rs.next()){
                 clave = rs.getInt(1);
-            }
+            }*/
+            rs.next();
+            clave = rs.getInt(1);
             stm.close();
             con.close();
         }catch(Exception e){

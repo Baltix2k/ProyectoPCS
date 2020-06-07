@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -117,11 +118,10 @@ public class SubirReporteController implements Initializable {
         ReporteDAO rep = new ReporteDAO();
         ReportePOJO repP = new ReportePOJO();
         archP.setTitulo(file.getName());
-        System.out.println(txtFecha.getText());
         String fecha = txtFecha.getText();
         archP.setFechaEntrega(LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
-        repP.setTipoReporte(combxTipo.getValue().toString());
+        repP.setTipoReporte(combxTipo.getValue());
         try{
             byte[] doc = new byte[(int) file.length()];
             InputStream input = new FileInputStream(file);
@@ -130,8 +130,18 @@ public class SubirReporteController implements Initializable {
         }catch(IOException ex){
             archP.setArchivo(null);
         }
-        arch.subirArchivo(archP, txtMatricula.getText(), Integer.parseInt(txtClaveExp.getText()));
-        rep.subirReporte(repP);
+        arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.getText()));
+        int idArch = arch.obtenerClaveArchivo();
+        System.out.println(idArch); //-------------------
+        rep.subirReporte(repP,idArch);
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Exito");
+        alert.setContentText("Archivo cargado exitosamente");
+        alert.showAndWait();
+        this.closeWindows();
+        
     }
 
     public void closeWindows() {
