@@ -35,6 +35,30 @@ public class EstudianteDAO {
         }
         return e;
     }
+    
+    public String recuperarNombreEstudiante(String matricula) {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String nombreEstudiante = null;
+        String sql = "SELECT estudiante.nombre FROM estudiante WHERE matricula = '" + matricula + "';";
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                nombreEstudiante = rs.getString(1);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: Clase EstudianteDAO, método recuperarNombreEstudiante()");
+            ex.printStackTrace();
+        }
+    return nombreEstudiante;
+    }
 
     public String recuperarNombreOrganizacion(String matricula) {
         Connection con = null;
