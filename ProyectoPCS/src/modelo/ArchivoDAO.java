@@ -48,21 +48,44 @@ public class ArchivoDAO {
     }
     
     public void subirArchivo(ArchivoPOJO arch,String matricula, int claveExp) {
+        /*Conectar conec = new Conectar();
+        String sql = "INSERT INTO pdf (codigopdf, nombrepdf, archivopdf) VALUES(?, ?, ?);";
+        PreparedStatement ps = null;
+        try {
+            ps = conec.getConnection().prepareStatement(sql);
+            ps.setInt(1, vo.getCodigopdf());
+            ps.setString(2, vo.getNombrepdf());
+            ps.setBytes(3, vo.getArchivopdf());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                ps.close();
+                conec.desconectar();
+            } catch (Exception ex) {
+            }
+        }*/
+        
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        LocalDate fecha = arch.getFechaEntrega();//For reference
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-        String fechaString = fecha.format(formatter);
         
-        String sql = "INSERT INTO Archivo VALUES (NULL,"+arch.getArchivo()+","+claveExp+","+arch.getTitulo()+","+fechaString+");";
-
+        //String sql = "INSERT INTO Archivo VALUES (NULL,"+arch.getArchivo()+","+claveExp+",'"+arch.getTitulo()+"','"+arch.getFechaEntrega().toString()+"');";
+        String sql = "INSERT INTO Archivo VALUES (NULL,?,?,?,?);";
+        PreparedStatement ps = null;
         ConexionDB cc = new ConexionDB();
         try{
             con = cc.conectarMySQL();
             stm = con.createStatement();
-            stm.execute(sql);
-            stm.close();
+            ps.setBytes(1,arch.getArchivo());
+            ps.setInt(2, claveExp);
+            ps.setString(3, arch.getTitulo());
+            ps.setString(4, arch.getFechaEntrega().toString());
+            ps.executeUpdate();
+            ps.close();
             con.close();
         }catch(SQLException e){
             System.out.println("Error al cargar archivo, metodo subirArchivo");

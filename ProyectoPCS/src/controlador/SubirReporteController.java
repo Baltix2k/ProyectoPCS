@@ -54,14 +54,16 @@ public class SubirReporteController implements Initializable {
     private Label labArchivo;
     @FXML
     private TextField txtFecha;
+    @FXML
+    private TextField txtMatricula;
+    @FXML
+    private TextField txtClaveExp;
     
     private File file;
-    private String matricula;
-    private int claveExp;
     
     ObservableList<String> tiposReporte = FXCollections.observableArrayList("Inicial","Mensual","Final");
     DateFormat df = DateFormat.getDateInstance();
-    
+        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         combxTipo.setItems(tiposReporte);
@@ -118,8 +120,8 @@ public class SubirReporteController implements Initializable {
         System.out.println(txtFecha.getText());
         String fecha = txtFecha.getText();
         archP.setFechaEntrega(LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        repP.setHorasReportadas(parseInt(txtHoras.getText()));
-        repP.setTipoReporte(combxTipo.getValue());
+        repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
+        repP.setTipoReporte(combxTipo.getValue().toString());
         try{
             byte[] doc = new byte[(int) file.length()];
             InputStream input = new FileInputStream(file);
@@ -128,7 +130,7 @@ public class SubirReporteController implements Initializable {
         }catch(IOException ex){
             archP.setArchivo(null);
         }
-        arch.subirArchivo(archP, matricula, claveExp);
+        arch.subirArchivo(archP, txtMatricula.getText(), Integer.parseInt(txtClaveExp.getText()));
         rep.subirReporte(repP);
     }
 
@@ -161,8 +163,8 @@ public class SubirReporteController implements Initializable {
     }
     
     public void initData(String matricula, int claveExp){
-        this.matricula = matricula;
-        this.claveExp = claveExp;
+        txtMatricula.setText(matricula);
+        txtClaveExp.setText(Integer.toString(claveExp));
     }
     
 }
