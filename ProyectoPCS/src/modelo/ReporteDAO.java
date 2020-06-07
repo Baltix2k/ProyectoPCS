@@ -19,7 +19,7 @@ public class ReporteDAO {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = "select archivo.idArchivo, archivo.titulo, archivo.fechaEntrega, reporte.horasReportadas, reporte.tipoReporte from inscripcion join expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp join reporte on archivo.idarchivo = reporte.idarchivo where inscripcion.matricula = '" + matricula + "';";
+        String sql = "select reporte.idArchivo, archivo.titulo, archivo.fechaEntrega, reporte.horasReportadas, reporte.tipoReporte from inscripcion join expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp join reporte on archivo.idarchivo = reporte.idarchivo where inscripcion.matricula = '" + matricula + "';";
 
         ObservableList<ReportePOJO> obs = FXCollections.observableArrayList();
 
@@ -28,13 +28,14 @@ public class ReporteDAO {
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
-                int clave = rs.getInt("ID ARCHIVO");
+                int idArchivo = rs.getInt("IDARCHIVO");
                 String titulo = rs.getString("TITULO");
                 LocalDate fechaEntrega = LocalDate.parse(rs.getString("FECHAENTREGA"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 int horasReportadas = rs.getInt("HORASREPORTADAS");
                 String tipoReporte = rs.getString("TIPOREPORTE");
                 
-                ReportePOJO c = new ReportePOJO(horasReportadas, tipoReporte);
+                System.out.println("ID: " + idArchivo);
+                ReportePOJO c = new ReportePOJO(idArchivo, titulo, fechaEntrega, horasReportadas, tipoReporte);
                 
                 obs.add(c);
             }

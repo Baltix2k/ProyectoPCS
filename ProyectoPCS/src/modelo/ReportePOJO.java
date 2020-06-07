@@ -13,6 +13,12 @@ public class ReportePOJO extends ArchivoPOJO {
     
     public ReportePOJO(){}
 
+    ReportePOJO(int idarchivo, String titulo, LocalDate fechaEntrega, int horasReportadas, String tipoReporte) {
+        super(idarchivo,titulo,fechaEntrega);
+        this.horasReportadas = horasReportadas;
+        this.tipoReporte = tipoReporte;
+    }
+
     public int getHorasReportadas() {
         return horasReportadas;
     }

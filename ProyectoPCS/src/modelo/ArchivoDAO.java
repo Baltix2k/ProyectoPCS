@@ -26,15 +26,15 @@ public class ArchivoDAO {
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
-                int id = rs.getInt("ID ARCHIVO");
+                int idArchivo = rs.getInt("IDARCHIVO");
                 String titulo = rs.getString("TITULO");
                 LocalDate fechaEntrega = LocalDate.parse(rs.getString("FECHAENTREGA"),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 
                 
-                System.out.println("ID Archivo: "+ id +"Titulo: " + titulo + "Fecha:" + fechaEntrega);
-                ArchivoPOJO c = new ArchivoPOJO(id,titulo, fechaEntrega);
+                System.out.println("ID Archivo: "+ idArchivo +"Titulo: " + titulo + "Fecha:" + fechaEntrega);
+                ArchivoPOJO c = new ArchivoPOJO(idArchivo, titulo, fechaEntrega);
                 
-                //obs.add(c);
+                obs.add(c);
             }
             stm.close();
             rs.close();
