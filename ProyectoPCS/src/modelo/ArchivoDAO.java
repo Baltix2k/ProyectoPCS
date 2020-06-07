@@ -17,7 +17,6 @@ public class ArchivoDAO {
         Statement stm = null;
         ResultSet rs = null;
         String sql = "SELECT archivo.idarchivo, archivo.titulo, archivo.fechaEntrega FROM inscripcion JOIN expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp where not exists (select archivo.idarchivo from reporte where reporte.idarchivo = archivo.idarchivo) and inscripcion.matricula = '" + matricula + "';";
-                   //"select archivo.titulo, archivo.rutaUbicacion, archivo.fechaEntrega from inscripcion join expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp where inscripcion.matricula = '" + matricula + "';";
 
         ObservableList<ArchivoPOJO> obs = FXCollections.observableArrayList();
 
