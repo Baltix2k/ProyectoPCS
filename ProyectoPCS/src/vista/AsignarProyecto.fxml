@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="917.0" style="-fx-background-color: #17223B;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.AsignarProyectoController">
+   <children>
+      <Pane prefHeight="74.0" prefWidth="917.0" style="-fx-background-color: #155263;">
+         <children>
+            <Label layoutX="201.0" layoutY="8.0" prefHeight="58.0" prefWidth="516.0" text="PRÁCTICAS PROFESIONALES" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="HP Simplified" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="8.0" layoutY="81.0" prefHeight="33.0" prefWidth="901.0" style="-fx-background-color: #1fab89;">
+         <children>
+            <Label layoutX="337.0" layoutY="-5.0" prefHeight="44.0" prefWidth="228.0" text="ASIGNAR PROYECTO" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="BtnAceptar" layoutX="777.0" layoutY="641.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #155263;" text="Aceptar" textFill="#fffefe">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+      <Button fx:id="BtnCancelar" layoutX="632.0" layoutY="641.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: #1fab89;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="23.0" />
+         </font>
+      </Button>
+      <TableView fx:id="TblProyecto" layoutX="42.0" layoutY="129.0" prefHeight="200.0" prefWidth="803.0" style="-fx-background-color: #155263;">
+        <columns>
+          <TableColumn prefWidth="34.0" />
+          <TableColumn fx:id="ColProyecto" prefWidth="215.0" text="Proyecto" />
+            <TableColumn fx:id="ColOrganizacion" prefWidth="281.0" text="Organizacion vinculada" />
+            <TableColumn fx:id="ColDescripcion" prefWidth="317.0" text="Descripcion" />
+        </columns>
+      </TableView>
+      <ScrollBar layoutX="844.0" layoutY="129.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
+      <TableView fx:id="TblAlumno" layoutX="37.0" layoutY="369.0" prefHeight="200.0" prefWidth="398.0" style="-fx-background-color: #155263;">
+         <columns>
+            <TableColumn prefWidth="34.0" />
+            <TableColumn fx:id="ColAlumno" prefWidth="204.0" text="Nombre de Alumno" />
+            <TableColumn fx:id="ColMatricula" prefWidth="159.0" text="Matricula" />
+         </columns>
+      </TableView>
+      <ScrollBar layoutX="434.0" layoutY="369.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="18.0" style="-fx-background-color: #1fab89;" />
+      <Label layoutX="548.0" layoutY="361.0" prefHeight="44.0" prefWidth="281.0" text="OPCIONES DE PROYECTO" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="548.0" layoutY="405.0" prefHeight="44.0" prefWidth="281.0" text="Opcion 1" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="548.0" layoutY="447.0" prefHeight="44.0" prefWidth="281.0" text="Opcion 2" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="548.0" layoutY="491.0" prefHeight="44.0" prefWidth="281.0" text="Opcion 3" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="8.0" layoutY="636.0" prefHeight="55.0" prefWidth="516.0" text="NOTA: El sistema no verifica por su cuenta el enlace, verifique sus elecciones antes de asignar" textAlignment="CENTER" textFill="#726f6f" wrapText="true">
+         <font>
+            <Font name="Segoe UI Italic" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="LbOpcion1" editable="false" layoutX="680.0" layoutY="415.0" prefHeight="25.0" prefWidth="186.0" />
+      <TextField fx:id="LbOpcion2" editable="false" layoutX="680.0" layoutY="457.0" prefHeight="25.0" prefWidth="186.0" />
+      <TextField fx:id="LbOpcion3" editable="false" layoutX="680.0" layoutY="501.0" prefHeight="25.0" prefWidth="186.0" />
+   </children>
+</AnchorPane>
