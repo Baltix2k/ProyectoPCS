@@ -65,12 +65,12 @@ public class ProyectoDAO {
        return nombreProyecto;
    }
    
-    public String recuperarNombreOrganizacion(String matricula) {
+    public String recuperarNombreOrganizacion(int claveProyecto) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
         String nombreOrganizacion = null;
-        String sql = "SELECT proyecto.nombreorganizacion FROM organizacion JOIN proyecto ON proyecto.claveProyecto = proyecto.claveProyecto;";
+        String sql = "SELECT proyecto.nombreorganizacion FROM proyecto WHERE proyecto.claveProyecto = " + claveProyecto + ";";
         
         try {
             con = new ConexionDB().conectarMySQL();

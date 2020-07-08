@@ -157,10 +157,15 @@ public class consultarProgresoController implements Initializable {
 
     void initData(EstudiantePOJO ePOJO) {
         this.eDAO = new EstudianteDAO();
+        this.rDAO = new ReporteDAO();
         this.txtfdnomb.setText(ePOJO.getNombre() + " " + ePOJO.getApellidoPaterno() + " " + ePOJO.getApellidoMaterno());
         this.txtfdmatr.setText(ePOJO.getMatricula());
         this.txtfdorg.setText(this.eDAO.recuperarNombreOrganizacion(ePOJO.getMatricula()));
         this.txtfproyecto.setText(this.eDAO.recuperarNombreProyecto(ePOJO.getMatricula()));
+        int horasCub = this.rDAO.recuperarHoras(ePOJO.getMatricula());
+        int horasPorCub = 200 - horasCub;
+        this.txtfdhorascub.setText(Integer.toString(horasCub));
+        this.txtfdhorasporcub.setText(Integer.toString(horasPorCub));
 
         this.aDAO = new ArchivoDAO();
         archivoId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));

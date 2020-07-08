@@ -73,4 +73,28 @@ public class ReporteDAO {
         }       
     }
     
+    public int recuperarHoras(String matricula){
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String sql = "select reporte.horasReportadas from inscripcion join expediente on inscripcion.matricula = expediente.matricula join archivo on expediente.clave = archivo.claveexp join reporte on archivo.idarchivo = reporte.idarchivo where inscripcion.matricula = '" + matricula + "';";
+        int horas = 0;
+        ObservableList<ReportePOJO> obs = FXCollections.observableArrayList();
+
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                horas = horas + rs.getInt(1);
+            }
+            stm.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error: Clase ArchivoDAO, método readAll()");
+            e.printStackTrace();
+        }
+        return horas;
+    }
 }
