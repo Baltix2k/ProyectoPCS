@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.io.IOException;
@@ -18,8 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -36,11 +29,9 @@ public class preSubirReporteController implements Initializable {
     private Button btncancelar;
     @FXML
     private Button btnAceptar;
-    
+
     private EstudianteDAO eDAO;
-    
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -52,7 +43,7 @@ public class preSubirReporteController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
 
             Parent root = loader.load();
-            
+
             MenuController controlador = loader.getController();
 
             Scene scene = new Scene(root);
@@ -73,24 +64,24 @@ public class preSubirReporteController implements Initializable {
     @FXML
     private void aceptar(ActionEvent event) {
         this.eDAO = new EstudianteDAO();
-        
+
         try {
             String matricula = this.txfdmatricula.getText();
             EstudiantePOJO ePOJO = eDAO.recuperar(matricula);
-            if(eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) != null){
+            if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) != null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setTitle("Error");
                 alert.setContentText("Estudiante sin expediente");
                 alert.showAndWait();
-            }else{
-               if(eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) == null){ 
+            } else {
+                if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) == null) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setHeaderText(null);
                     alert.setTitle("Error");
                     alert.setContentText("Estudiante no encontrado");
                     alert.showAndWait();
-                }else{           
+                } else {
                     // Cargo la vista
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/SubirReporteVista.fxml"));
 
@@ -126,7 +117,7 @@ public class preSubirReporteController implements Initializable {
             alert.setTitle("Error");
             alert.setContentText("Matricula no válida");
             alert.showAndWait();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error");
@@ -141,7 +132,7 @@ public class preSubirReporteController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
 
             Parent root = loader.load();
-            
+
             MenuController controlador = loader.getController();
 
             Scene scene = new Scene(root);

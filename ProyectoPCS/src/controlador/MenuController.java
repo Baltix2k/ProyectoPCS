@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.io.IOException;
@@ -20,6 +15,12 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Clase controlador de la vista del Menu, la cual es la primera pantalla de la
+ * aplicación. Se ejecuta tras iniciar el programa.
+ *
+ * @version 1.0
+ */
 public class MenuController implements Initializable {
 
     @FXML
@@ -29,109 +30,97 @@ public class MenuController implements Initializable {
     @FXML
     private Button btn3;
 
+    /**
+     * Inicializa el controllador de la clase.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
+    /**
+     * Acción realizada al dar clic en el tercer botón: Consultar progreso. El
+     * parent carga la nueva vista del preConsultarProgreso, el cual se va a
+     * cargar en el scene que esta asociado al stage.
+     *
+     * @param event El clic del botón.
+     */
     @FXML
     private void consultarProgreso(ActionEvent event) {
-
         try {
-            // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/preConsultarProgreso.fxml"));
-
-            // Cargo el padre
+            FXMLLoader loader = new FXMLLoader(getClass()
+                    .getResource("/vista/preConsultarProgreso.fxml"));
             Parent root = loader.load();
-
-            // Obtengo el controlador
             preConsultarProgresoController controlador = loader.getController();
-
-            // Creo la scene y el stage
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-
-            // Asocio el stage con el scene
             stage.setScene(scene);
             stage.show();
-
-            // Indico que debe hacer al cerrar
             stage.setOnCloseRequest(e -> controlador.closeWindows());
-
-            // Ciero la ventana donde estoy
             Stage myStage = (Stage) this.btn3.getScene().getWindow();
             myStage.close();
-
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
-
     }
 
+    /**
+     * Acción realizada al dar clic en el segundo botón: Subir reporte. El
+     * parent carga la nueva vista de subirReporte, el cual se va a cargar en el
+     * scene que esta asociado al stage.
+     *
+     * @param event El clic del botón.
+     */
     @FXML
     private void subirReporte(ActionEvent event) {
         try {
-            // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/preSubirReporte.fxml"));
-
-            // Cargo el padre
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/preSubirReporte.fxml"));
             Parent root = loader.load();
-
-            // Obtengo el controlador
             preSubirReporteController controlador = loader.getController();
-
-            // Creo la scene y el stage
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Asocio el stage con el scene
             stage.setScene(scene);
             stage.show();
-
-            // Indico que debe hacer al cerrar
             stage.setOnCloseRequest(e -> controlador.closeWindows());
-
-            // Cierro la ventana donde estoy
             Stage myStage = (Stage) this.btn2.getScene().getWindow();
             myStage.close();
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    /**
+     * Acción realizada al dar clic en el primer botón: Asignar proyecto a 
+     * estudiante. El parent carga la nueva vista de subirReporte, el cual se va
+     * a cargar en el scene que esta asociado al stage.
+     *
+     * @param event El clic del botón.
+     */
     @FXML
     private void asignarProyecto(ActionEvent event) {
         try {
-            // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/AsignarProyecto.fxml"));
-
-            // Cargo el padre
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/AsignarProyecto.fxml"));
             Parent root = loader.load();
-
-            // Obtengo el controlador
             AsignarProyectoController controlador = loader.getController();
-
             controlador.initData();
-            
-            // Creo la scene y el stage
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Asocio el stage con el scene
             stage.setScene(scene);
             stage.show();
-
-            // Indico que debe hacer al cerrar
             stage.setOnCloseRequest(e -> controlador.closeWindows());
-
-            // Cierro la ventana donde estoy
-            Stage myStage = (Stage) this.btn2.getScene().getWindow();
+            Stage myStage = (Stage) this.btn1.getScene().getWindow();
             myStage.close();
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
-
 }

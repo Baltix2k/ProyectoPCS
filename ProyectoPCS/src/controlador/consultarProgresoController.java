@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.io.IOException;
@@ -35,9 +30,11 @@ import modelo.ReporteDAO;
 import modelo.ReportePOJO;
 
 /**
- * FXML Controller class
+ * Clase controlador de la vista del consultarProgreso, pantalla que tiene como
+ * objetivo mostrar la consulta del progreso del ESTUDIANTE que fue recuperado
+ * de la pantalla anterior (preConsultarProgreso) por medio de una matricula.
  *
- * @author ricar
+ * @version 1.0
  */
 public class consultarProgresoController implements Initializable {
 
@@ -103,7 +100,7 @@ public class consultarProgresoController implements Initializable {
     ObservableList<ArchivoPOJO> archivos;
     ObservableList<ReportePOJO> reportes;
     int idArchivo;
-   
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         final ObservableList<ArchivoPOJO> tablaArchivo1 = tableArchivo.getSelectionModel().getSelectedItems();
@@ -166,20 +163,20 @@ public class consultarProgresoController implements Initializable {
         archivoId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
         archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         archivoFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
-        
+
         ObservableList<ArchivoPOJO> obsArchivo = aDAO.getArchivos(ePOJO.getMatricula());
         this.tableArchivo.setItems(obsArchivo);
-        
+
         this.rDAO = new ReporteDAO();
         reporteId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
         reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         reporteFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
         reporteHoras.setCellValueFactory(new PropertyValueFactory<>("horasReportadas"));
         reporteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
-        
+
         ObservableList<ReportePOJO> obsReporte = rDAO.getReportes(ePOJO.getMatricula());
         this.tableReporte.setItems(obsReporte);
-        
+
         tableArchivo.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionArchivo) -> {
             if (newSelectionArchivo != null) {
                 tableReporte.getSelectionModel().clearSelection();
@@ -187,7 +184,7 @@ public class consultarProgresoController implements Initializable {
                 System.out.println("CLAVE: " + idArchivo);
             }
         });
-        
+
         tableReporte.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionReporte) -> {
             if (newSelectionReporte != null) {
                 tableArchivo.getSelectionModel().clearSelection();
