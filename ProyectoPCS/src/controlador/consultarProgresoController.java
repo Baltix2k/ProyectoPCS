@@ -198,10 +198,5 @@ public class consultarProgresoController implements Initializable {
             }
         });
     }
-
-    @FXML
-    private void AbrirArchivo(ActionEvent event) {
-        this.aDAO = new ArchivoDAO();
-        aDAO.abrirArchivo(idArchivo);
-    }
+    
 }
