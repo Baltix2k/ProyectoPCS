@@ -53,7 +53,7 @@ public class ArchivoDAO {
         return obs;
     }
     
-    public void subirArchivo(ArchivoPOJO arch,int claveExp) {
+    public void subirArchivo(ArchivoPOJO arch, int claveExp) {
         Connection con = null;
         ResultSet rs = null;
         
