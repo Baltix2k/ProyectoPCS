@@ -95,6 +95,7 @@ public class ReporteDAO {
             System.out.println("Error: Clase ArchivoDAO, método readAll()");
             e.printStackTrace();
         }
+        
         return horas;
     }
 }
