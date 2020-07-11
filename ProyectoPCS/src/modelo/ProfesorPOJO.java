@@ -1,5 +1,10 @@
 package modelo;
 
+/**
+ * Clase que representa como objeto los PROFESORES registrados en la BD.
+ * 
+ * @version 1.0
+ */
 public class ProfesorPOJO {
     String apellidoMaterno;
     String apellidoPaterno;

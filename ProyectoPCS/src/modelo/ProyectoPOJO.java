@@ -2,6 +2,12 @@ package modelo;
 
 import java.time.LocalDate;
 
+/**
+ * Clase que representa como objeto los PROYECTOS pertenecientes a las
+ * ORGANIZACIONES registradas en la BD.
+ * 
+ * @version 1.0
+ */
 public class ProyectoPOJO {
     String actividades;
     int claveProyecto;
@@ -11,7 +17,9 @@ public class ProyectoPOJO {
     String nombre;
     String responsableNombre;
 
-    public ProyectoPOJO(String actividades, int claveProyecto, String descripcion, LocalDate fechaRegistro, int noEstudiantes, String nombre, String responsableNombre) {
+    public ProyectoPOJO(String actividades, int claveProyecto, 
+            String descripcion, LocalDate fechaRegistro, int noEstudiantes, 
+            String nombre, String responsableNombre) {
         this.actividades = actividades;
         this.claveProyecto = claveProyecto;
         this.descripcion = descripcion;
@@ -21,7 +29,8 @@ public class ProyectoPOJO {
         this.responsableNombre = responsableNombre;
     }
 
-    ProyectoPOJO(int claveProyecto, String nombre, String nombreOrganizacion, String descripcion) {
+    ProyectoPOJO(int claveProyecto, String nombre, String nombreOrganizacion, 
+            String descripcion) {
         this.descripcion = descripcion;
         this.claveProyecto = claveProyecto;
         this.nombre = nombre;

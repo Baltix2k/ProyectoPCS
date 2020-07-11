@@ -4,21 +4,32 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Clase que encargada de realizar todas las operaciones de los objetos PROYECTO
+ * manejados dentro del sistema con los registrados en la BD.
+ *
+ * @version 1.0
+ */
 public class ProyectoDAO {
-    
+
+    /**
+     * Recupera de la base de datos la lista de PROYECTOS registrados en la BD.
+     *
+     * @return obs Lista contenedora de los PROYECTOS.
+     */
     public ObservableList<ProyectoPOJO> getProyectos() {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = "select proyecto.claveproyecto, proyecto.nombre, proyecto.nombreOrganizacion, proyecto.descripcion from proyecto where not exists (select proyecto.claveproyecto from expediente where expediente.claveproyecto = proyecto.claveproyecto);";
-
+        String sql = "select proyecto.claveproyecto, proyecto.nombre, "
+                + "proyecto.nombreOrganizacion, proyecto.descripcion from "
+                + "proyecto where not exists (select proyecto.claveproyecto "
+                + "from expediente where expediente.claveproyecto = "
+                + "proyecto.claveproyecto);";
         ObservableList<ProyectoPOJO> obs = FXCollections.observableArrayList();
-
         try {
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
@@ -27,11 +38,12 @@ public class ProyectoDAO {
                 Integer claveproyecto = rs.getInt("CLAVEPROYECTO");
                 String nombre = rs.getString("NOMBRE");
                 String nombreOrganizacion = rs.getString("NOMBREORGANIZACION");
-                String descripcion = rs.getString("DESCRIPCION");                
-                
-                System.out.println("CLAVEPROYECTO: " + claveproyecto + " NOMBRE: " + nombre + " NOMBREORGANIZACION:" + nombreOrganizacion);
-                ProyectoPOJO c = new ProyectoPOJO(claveproyecto, nombre, nombreOrganizacion, descripcion);
-                
+                String descripcion = rs.getString("DESCRIPCION");
+                System.out.println("CLAVEPROYECTO: " + claveproyecto
+                        + " NOMBRE: " + nombre + " NOMBREORGANIZACION:"
+                        + nombreOrganizacion);
+                ProyectoPOJO c = new ProyectoPOJO(claveproyecto, nombre,
+                        nombreOrganizacion, descripcion);
                 obs.add(c);
             }
             stm.close();
@@ -41,75 +53,93 @@ public class ProyectoDAO {
             System.out.println("Error: Clase ArchivoDAO, método readAll()");
             e.printStackTrace();
         }
-
         return obs;
     }
-    
-    public String recuperarNombreProyecto(){
-       Connection con = null;
-       Statement stm = null;
-       ResultSet rs = null;
-       String nombreProyecto = null;
-       String sql = "SELECT nombre FROM proyecto WHERE noEstudiantes > 0;";
-       
-       try{
-           con = new ConexionDB().conectarMySQL();
-           stm = con.createStatement();
-           rs = stm.executeQuery(sql);
-           while (rs.next()){
-               nombreProyecto = rs.getString(1);           }
-        }catch(SQLException ex){
-           System.out.println("Error: Clase ProyectoDAO, método recuperarNombreProyecto()");
-           ex.printStackTrace();
-       }
-       return nombreProyecto;
-   }
-   
+
+    /**
+     * Recupera de la base de datos el nombre del ultimo PROYECTO registrado en
+     * la BD.
+     *
+     * @return nombreProyecto Nombre del PROYECTO.
+     */
+    public String recuperarNombreProyecto() {
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String nombreProyecto = null;
+        String sql = "SELECT nombre FROM proyecto WHERE noEstudiantes > 0;";
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                nombreProyecto = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: Clase ProyectoDAO, método recuperarNombreProyecto()");
+            ex.printStackTrace();
+        }
+        return nombreProyecto;
+    }
+
+    /**
+     * Recupera de la base de datos el nombre de la ORGANIZACION de un PROYECTO
+     * especificado registrado en la BD.
+     *
+     * @param claveProyecto Clave del PROYECTO del cual se requiere el nombre de
+     * la ORGANIZACIÓN.
+     * @return nombreOrganizacion Nombre de la ORGANIZACIÓN.
+     */
     public String recuperarNombreOrganizacion(int claveProyecto) {
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
         String nombreOrganizacion = null;
-        String sql = "SELECT proyecto.nombreorganizacion FROM proyecto WHERE proyecto.claveProyecto = " + claveProyecto + ";";
-        
+        String sql = "SELECT proyecto.nombreorganizacion FROM proyecto WHERE "
+                + "proyecto.claveProyecto = " + claveProyecto + ";";
         try {
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
-            while (rs.next()){ 
+            while (rs.next()) {
                 nombreOrganizacion = rs.getString(1);
-            }  
+            }
             stm.close();
             rs.close();
             con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase ProyectoDAO, método recuperarNombreOrganizacion()");
+            System.out.println("Error: Clase ProyectoDAO, método "
+                    + "recuperarNombreOrganizacion()");
             ex.printStackTrace();
         }
         return nombreOrganizacion;
     }
 
+    /**
+     * Recupera el nombre de un PROYECTO especificado por medio de la clave.
+     *
+     * @param claveproyecto Clave del PROYECTO requerido.
+     * @return nombreProyecto Nombre del PROYECTO.
+     */
     public String recuperarNombre(int claveproyecto) {
-       Connection con = null;
-       Statement stm = null;
-       ResultSet rs = null;
-       String nombreProyecto = null;
-       
-       LocalDate fecha = LocalDate.now();
-       
-       String sql = "SELECT nombre FROM proyecto WHERE claveproyecto = " + claveproyecto + ";";
-       
-       try{
-           con = new ConexionDB().conectarMySQL();
-           stm = con.createStatement();
-           rs = stm.executeQuery(sql);
-           while (rs.next()){
-               nombreProyecto = rs.getString(1);           }
-        }catch(SQLException ex){
-           System.out.println("Error: Clase ProyectoDAO, método recuperarNombre()");
-           ex.printStackTrace();
-       }
-       return nombreProyecto;
+        Connection con = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        String nombreProyecto = null;
+        String sql = "SELECT nombre FROM proyecto WHERE claveproyecto = " 
+                + claveproyecto + ";";
+        try {
+            con = new ConexionDB().conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                nombreProyecto = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: Clase ProyectoDAO, método "
+                    + "recuperarNombre()");
+            ex.printStackTrace();
+        }
+        return nombreProyecto;
     }
-   
 }

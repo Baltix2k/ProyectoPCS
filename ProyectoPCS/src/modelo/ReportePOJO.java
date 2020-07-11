@@ -2,6 +2,12 @@ package modelo;
 
 import java.time.LocalDate;
 
+/**
+ * Clase que representa como objeto los REPORTES entregados por los ESTUDIANTES
+ * registrados en la BD.
+ * 
+ * @version 1.0
+ */
 public class ReportePOJO extends ArchivoPOJO {
     int horasReportadas;
     String tipoReporte;
@@ -13,7 +19,8 @@ public class ReportePOJO extends ArchivoPOJO {
     
     public ReportePOJO(){}
 
-    ReportePOJO(int idArchivo, String titulo, LocalDate fechaEntrega, int horasReportadas, String tipoReporte) {
+    ReportePOJO(int idArchivo, String titulo, LocalDate fechaEntrega, 
+            int horasReportadas, String tipoReporte) {
         super(idArchivo,titulo,fechaEntrega);
         this.horasReportadas = horasReportadas;
         this.tipoReporte = tipoReporte;

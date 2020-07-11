@@ -1,5 +1,10 @@
 package modelo;
 
+/**
+ * Clase que representa como objeto las ORGANIZACIONES registradas en la BD.
+ * 
+ * @version 1.0
+ */
 public class OrganizacionPOJO {
     String calle;
     String codigoPostal;
@@ -9,7 +14,8 @@ public class OrganizacionPOJO {
     String numExt;
     String telefono;
 
-    public OrganizacionPOJO(String calle, String codigoPostal, String colonia, String correo, String nombre, String numExt, String telefono) {
+    public OrganizacionPOJO(String calle, String codigoPostal, String colonia, 
+            String correo, String nombre, String numExt, String telefono) {
         this.calle = calle;
         this.codigoPostal = codigoPostal;
         this.colonia = colonia;

@@ -2,6 +2,12 @@ package modelo;
 
 import java.time.LocalDate;
 
+/**
+ * Clase que representa como objeto la INSCRIPCIÓN de los ESTUDIANTES
+ * registrados en la BD.
+ * 
+ * @version 1.0
+ */
 public class Inscripción {
     int bloque;
     int cupo;
@@ -12,7 +18,8 @@ public class Inscripción {
     int seccion;
     String tipo;
 
-    public Inscripción(int bloque, int cupo, String estatus, LocalDate fecha, int nrc, String periodo, int seccion, String tipo) {
+    public Inscripción(int bloque, int cupo, String estatus, LocalDate fecha, 
+            int nrc, String periodo, int seccion, String tipo) {
         this.bloque = bloque;
         this.cupo = cupo;
         this.estatus = estatus;

@@ -2,6 +2,12 @@ package modelo;
 
 import java.time.LocalDate;
 
+/**
+ * Clase que representa como objeto los ARCHIVOS entregados por los ESTUDIANTES
+ * registrados en la BD.
+ * 
+ * @version 1.0
+ */
 public class ArchivoPOJO {
     int idArchivo;
     byte[] archivo;
