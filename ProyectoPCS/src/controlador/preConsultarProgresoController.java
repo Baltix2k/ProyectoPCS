@@ -37,7 +37,7 @@ public class preConsultarProgresoController implements Initializable {
     private EstudianteDAO eDAO;
 
     /**
-     * Inicializa el controllador de la clase.
+     * Inicializa el controlador de la clase.
      *
      * @param url
      * @param rb
@@ -47,13 +47,12 @@ public class preConsultarProgresoController implements Initializable {
     }
 
     /**
-     * Regresa a la ventana anterior incluso cuando se cierre la ventana.
+     * Regresa al menu principal incluso cuando se cierre la ventana.
      */
     public void closeWindows() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().
                     getResource("/vista/MenuVista.fxml"));
-            //MenuController controlador = loader.getController();
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -79,7 +78,6 @@ public class preConsultarProgresoController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
-            //MenuController controlador = loader.getController();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

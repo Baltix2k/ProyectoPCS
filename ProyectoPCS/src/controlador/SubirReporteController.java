@@ -5,12 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import static java.lang.Integer.parseInt;
 import java.net.URL;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,21 +36,21 @@ import modelo.ReporteDAO;
 import modelo.ReportePOJO;
 
 /**
- * FXML Controller class
+ * Clase controlador de la vista del SubirReporte, pantalla que tiene como
+ * objetivo mostrar subir un archivo al expediente del ESTUDIANTE que fue 
+ * recuperado de la pantalla anterior (preSubirReporte) por medio de una 
+ * matricula.
  *
- * @author obalt
+ * @version 1.0
  */
 public class SubirReporteController implements Initializable {
+
     @FXML
     private ComboBox<String> combxTipo;
     @FXML
     private TextField txtHoras;
     @FXML
-    private Button btnExaminar;
-    @FXML
     private Button btnCancelar;
-    @FXML
-    private Button btnAceptar;
     @FXML
     private Label labArchivo;
     @FXML
@@ -61,59 +59,78 @@ public class SubirReporteController implements Initializable {
     private TextField txtMatricula;
     @FXML
     private TextField txtClaveExp;
-    
+
     private EstudianteDAO eDAO;
     private File file;
-    
-    ObservableList<String> tiposReporte = FXCollections.observableArrayList("Inicial","Mensual","Final");
+
+    ObservableList<String> tiposReporte = FXCollections.
+            observableArrayList("Inicial", "Mensual", "Final");
     DateFormat df = DateFormat.getDateInstance();
-        
+
+    /**
+     * Inicializa el controlador de la clase.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         combxTipo.setItems(tiposReporte);
-        
         LocalDate fecha = LocalDate.now();
         txtFecha.setText(fecha.toString());
-    }    
+    }
 
+    /**
+     * Despliega el explorador de archivos para seleccionar el reporte a subir 
+     * por medio de un FileChooser.
+     * 
+     * @param event El clic del botón.
+     */
     @FXML
     private void subirArchivo(ActionEvent event) {
         FileChooser fc = new FileChooser();
         file = fc.showOpenDialog(null);
-        if(file != null){
+        if (file != null) {
             labArchivo.setText("Archivo: " + file.getName());
         }
     }
 
+    /**
+     * Acción realizada al dar clic en el botón: Cancelar, el cual regresa al
+     * menu principal ignorando la cantidad de ventanas por las cuales habia
+     * pasado.
+     *
+     * @param event El clic del botón.
+     */
     @FXML
     private void cancelar(ActionEvent event) {
         try {
-            // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
-
-            // Cargo el padre
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
-
-            // Obtengo el controlador
             MenuController controlador = loader.getController();
-
-            // Creo la scene y el stage
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Asocio el stage con el scene
             stage.setScene(scene);
             stage.show();
-
-            // Cierro la ventana donde estoy
             Stage myStage = (Stage) this.btnCancelar.getScene().getWindow();
             myStage.close();
         } catch (IOException ex) {
-            Logger.getLogger(SubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SubirReporteController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Acción realizada al dar clic en el botón: Aceptar, el cual recupera las
+     * cadenas escritas en los textfield requeridos asi como recupera el archivo
+     * seleccionado en el filechooser y realiza un registro en la base de datos
+     * acorde al ESTUDIANTE seleccionado en la pantalla anterior.
+     *
+     * @param event El clic del botón.
+     * @throws FileNotFoundException Sin selección de archivo.
+     */
     @FXML
     private void aceptar(ActionEvent event) throws FileNotFoundException {
         ArchivoDAO arch = new ArchivoDAO();
@@ -122,23 +139,24 @@ public class SubirReporteController implements Initializable {
         ReportePOJO repP = new ReportePOJO();
         archP.setTitulo(file.getName());
         String fecha = txtFecha.getText();
-        archP.setFechaEntrega(LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        archP.setFechaEntrega(LocalDate.parse(fecha, DateTimeFormatter.
+                ofPattern("yyyy-MM-dd")));
         repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
         repP.setTipoReporte(combxTipo.getValue());
-        try{
+        try {
             byte[] doc = new byte[(int) file.length()];
             InputStream input = new FileInputStream(file);
             input.read(doc);
             archP.setArchivo(doc);
-        }catch(IOException ex){
+        } catch (IOException ex) {
             archP.setArchivo(null);
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error");
             alert.setContentText("Campos faltantes");
             alert.showAndWait();
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error");
@@ -148,8 +166,7 @@ public class SubirReporteController implements Initializable {
         arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.getText()));
         int idArch = arch.obtenerClaveArchivo();
         System.out.println(idArch); //-------------------
-        rep.subirReporte(repP,idArch);
-        
+        rep.subirReporte(repP, idArch);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.setTitle("Exito");
@@ -158,38 +175,38 @@ public class SubirReporteController implements Initializable {
         this.closeWindows();
     }
 
+    /**
+     * Regresa al menu principal incluso cuando se cierre la ventana.
+     */
     public void closeWindows() {
         try {
-            // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
-
-            // Cargo el padre
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
-
-            // Obtengo el controlador
-            MenuController controlador = loader.getController();
-
-            // Creo la scene y el stage
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Asocio el stage con el scene
             stage.setScene(scene);
             stage.show();
-
-            // Cierro la ventana donde estoy
             Stage myStage = (Stage) this.btnCancelar.getScene().getWindow();
             myStage.close();
         } catch (IOException ex) {
-            Logger.getLogger(SubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SubirReporteController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void initData(EstudiantePOJO ePOJO){
+
+    /**
+     * Inicializa los textfield y establece que la pantalla responde al 
+     * ESTUDIANTE recibido de la pantalla anterior por medio de clases DAO y el 
+     * POJO.
+     * 
+     * @param ePOJO 
+     */
+    public void initData(EstudiantePOJO ePOJO) {
         this.eDAO = new EstudianteDAO();
         txtMatricula.setText(ePOJO.getMatricula());
-        txtClaveExp.setText(Integer.toString(this.eDAO.recuperaClaveExpediente(ePOJO.getMatricula())));
+        txtClaveExp.setText(Integer.toString(this.eDAO.
+                recuperaClaveExpediente(ePOJO.getMatricula())));
     }
-    
 }

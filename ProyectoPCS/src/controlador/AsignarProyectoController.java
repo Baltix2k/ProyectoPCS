@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,8 +22,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import modelo.ArchivoDAO;
-import modelo.ArchivoPOJO;
 import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
 import modelo.ProyectoDAO;
@@ -38,14 +29,14 @@ import modelo.ProyectoPOJO;
 import modelo.SeleccionProyectoPOJO;
 
 /**
- * FXML Controller class
+ * Clase controlador de la vista de AsignarProyecto, pantalla que tiene como
+ * objetivo realizar la asignación de un ESTUDIANTE registrado en la BD con un
+ * PROYECTO que no tenga un ESTUDIANTE asociado.
  *
- * @author enano
+ * @version 1.0
  */
 public class AsignarProyectoController implements Initializable {
 
-    @FXML
-    private Button BtnAceptar;
     @FXML
     private Button BtnCancelar;
     @FXML
@@ -86,62 +77,64 @@ public class AsignarProyectoController implements Initializable {
     String matriculaEstudianteElegido;
 
     /**
-     * Initializes the controller class.
+     * Inicializa el controlador de la clase.
      *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        //      final ObservableList<EstudiantePOJO> tablaEstudianteSeleccionado = (ObservableList<EstudiantePOJO>) TblAlumno.getSelectionModel().getSelectedItem();
-//        tablaEstudianteSeleccionado.addListener(selectorTablaEstudiante);
     }
 
+    /**
+     * Regresa al menu principal incluso cuando se cierre la ventana.
+     */
     public void closeWindows() {
-
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
-
-            MenuController controlador = loader.getController();
-
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-
             stage.setScene(scene);
             stage.show();
-
             Stage myStage = (Stage) this.BtnCancelar.getScene().getWindow();
             myStage.close();
-
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
-
     }
 
+    /**
+     * Inicializa los textfield, las tablas y sus listeners mostrados en
+     * pantalla medio de clases DAO y el POJO.
+     */
     void initData() {
         this.pDAO = new ProyectoDAO();
-        ColClave.setCellValueFactory(new PropertyValueFactory<>("claveProyecto"));
+        ColClave.setCellValueFactory(new PropertyValueFactory<>(
+                "claveProyecto"));
         ColProyecto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        ColOrganizacion.setCellValueFactory(new PropertyValueFactory<>("responsableNombre"));
-        ColDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-
+        ColOrganizacion.setCellValueFactory(new PropertyValueFactory<>(
+                "responsableNombre"));
+        ColDescripcion.setCellValueFactory(new PropertyValueFactory<>(
+                "descripcion"));
         this.proyectos = pDAO.getProyectos();
         this.TblProyecto.setItems(proyectos);
 
         this.eDAO = new EstudianteDAO();
         ColAlumno.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        estudianteApPat.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
-        estudianteApMat.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
-        ColMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
-
+        estudianteApPat.setCellValueFactory(new PropertyValueFactory<>(
+                "apellidoPaterno"));
+        estudianteApMat.setCellValueFactory(new PropertyValueFactory<>(
+                "apellidoMaterno"));
+        ColMatricula.setCellValueFactory(new PropertyValueFactory<>(
+                "matricula"));
         this.estudiantes = eDAO.getEstudiantes();
         this.TblAlumno.setItems(estudiantes);
 
-        TblProyecto.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionProyecto) -> {
+        TblProyecto.getSelectionModel().selectedItemProperty().
+                addListener((obs, oldSelection, newSelectionProyecto) -> {
             if (newSelectionProyecto != null) {
                 System.out.println(newSelectionProyecto.getNombre());
                 claveProyectoElegido = newSelectionProyecto.getClaveProyecto();
@@ -149,72 +142,77 @@ public class AsignarProyectoController implements Initializable {
             }
         });
 
-        TblAlumno.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionEstudiante) -> {
+        TblAlumno.getSelectionModel().selectedItemProperty().
+                addListener((obs, oldSelection, newSelectionEstudiante) -> {
             if (newSelectionEstudiante != null) {
                 System.out.println(newSelectionEstudiante.getNombre());
-                selecciones = eDAO.getSelecciones(newSelectionEstudiante.getMatricula()); // Obtiene las selecciones del alumno con su matricula
+                selecciones = eDAO.
+                        getSelecciones(newSelectionEstudiante.getMatricula()); 
                 int s1 = selecciones.get(0).getClaveProyecto();
                 int s2 = selecciones.get(1).getClaveProyecto();;
                 int s3 = selecciones.get(2).getClaveProyecto();;
                 this.LbOpcion1.setText(pDAO.recuperarNombre(s1));
                 this.LbOpcion2.setText(pDAO.recuperarNombre(s2));
                 this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
-                matriculaEstudianteElegido = newSelectionEstudiante.getMatricula();
+                matriculaEstudianteElegido = newSelectionEstudiante.
+                        getMatricula();
                 System.out.println("MATRICULA: " + matriculaEstudianteElegido);
             }
         });
 
     }
 
+    /**
+     * Acción realizada al dar clic en el botón: Cancelar, el cual regresa al
+     * menu principal ignorando la cantidad de ventanas por las cuales habia
+     * pasado.
+     *
+     * @param event El clic del botón.
+     */
     @FXML
     void cancelar() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
-
-            MenuController controlador = loader.getController();
-
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-
             stage.setScene(scene);
             stage.show();
-
             Stage myStage = (Stage) this.BtnCancelar.getScene().getWindow();
             myStage.close();
-
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Recupera las selecciones de los listeners (ESTUDIANTE y PROYECTO) y 
+     * realiza la asociacion entre ellas generando asi una INSCRIPCIÓN.
+     * 
+     * @param event
+     */
     @FXML
     private void aceptar(ActionEvent event) {
         eDAO.asginarProyecto(matriculaEstudianteElegido, claveProyectoElegido);
         System.out.println("Asignación realizada");
-
         Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setHeaderText(null);
         alert.setTitle("Exito");
         alert.setContentText("Asignación realizada");
         //alert.showAndWait();
-        
-        ButtonType generarOficio = new ButtonType("Generar oficio de asignación");
+        ButtonType generarOficio = new ButtonType(
+                "Generar oficio de asignación");
         ButtonType finalizar = new ButtonType("Finalizar");
-        
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(generarOficio, finalizar);
-        
         Optional<ButtonType> option = alert.showAndWait();
-        
         if (option.get() == finalizar) {
             this.closeWindows();
         } else if (option.get() == generarOficio) {
             System.out.println("Caso de uso no implementado");
             this.closeWindows();
         }
-
     }
-
 }

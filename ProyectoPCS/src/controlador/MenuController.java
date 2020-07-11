@@ -31,7 +31,7 @@ public class MenuController implements Initializable {
     private Button btn3;
 
     /**
-     * Inicializa el controllador de la clase.
+     * Inicializa el controlador de la clase.
      *
      * @param url
      * @param rb

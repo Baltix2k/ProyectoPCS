@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,8 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -38,25 +35,8 @@ import modelo.ReportePOJO;
  */
 public class consultarProgresoController implements Initializable {
 
-    private Button btnconsultar;
-    @FXML
-    private Label lbnomb;
-    @FXML
-    private Label lbmatr;
-    @FXML
-    private Label lborg;
-    @FXML
-    private Label lbproy;
-    @FXML
-    private Label lbdocs;
-    @FXML
-    private Label lbreps;
-    @FXML
-    private Label lbhorascub;
     @FXML
     private TextField txtfdhorasporcub;
-    @FXML
-    private Label lbhorasporcub;
     @FXML
     private TextField txtfdnomb;
     @FXML
@@ -69,13 +49,6 @@ public class consultarProgresoController implements Initializable {
     private Button btnsalir;
     @FXML
     private TextField txtfdhorascub;
-    @FXML
-    private Button btnAbrir;
-
-    private EstudianteDAO eDAO;
-    private ArchivoDAO aDAO;
-    private ReporteDAO rDAO;
-
     @FXML
     private TableView<ArchivoPOJO> tableArchivo;
     @FXML
@@ -97,68 +70,86 @@ public class consultarProgresoController implements Initializable {
     @FXML
     private TableColumn<ReportePOJO, String> reporteTipo;
 
+    private EstudianteDAO eDAO;
+    private ArchivoDAO aDAO;
+    private ReporteDAO rDAO;
+    int idArchivo;
     ObservableList<ArchivoPOJO> archivos;
     ObservableList<ReportePOJO> reportes;
-    int idArchivo;
 
+    /**
+     * Inicializa el controlador de la clase.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        final ObservableList<ArchivoPOJO> tablaArchivo1 = tableArchivo.getSelectionModel().getSelectedItems();
-        //tablaArchivo1.addListener(selector);
+        final ObservableList<ArchivoPOJO> tablaArchivo1 = tableArchivo.
+                getSelectionModel().getSelectedItems();
     }
 
+    /**
+     * Regresa al menu principal.
+     * 
+     * @param event
+     */
     @FXML
     private void salir(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
-
-            MenuController controlador = loader.getController();
-
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-
             stage.setScene(scene);
             stage.show();
-
             Stage myStage = (Stage) this.btnsalir.getScene().getWindow();
             myStage.close();
-
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Regresa al menu principal incluso cuando se cierre la ventana.
+     */
     void closeWindows() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
-
-            MenuController controlador = loader.getController();
-
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-
             stage.setScene(scene);
             stage.show();
-
             Stage myStage = (Stage) this.btnsalir.getScene().getWindow();
             myStage.close();
-
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Inicializa los textfield y las tablas mostrados en pantalla acorde al 
+     * ESTUDIANTE recibido de la pantalla anterior por medio de clases DAO y el 
+     * POJO.
+     * 
+     * @param ePOJO 
+     */
     void initData(EstudiantePOJO ePOJO) {
         this.eDAO = new EstudianteDAO();
         this.rDAO = new ReporteDAO();
-        this.txtfdnomb.setText(ePOJO.getNombre() + " " + ePOJO.getApellidoPaterno() + " " + ePOJO.getApellidoMaterno());
+        this.txtfdnomb.setText(ePOJO.getNombre() + " " 
+                + ePOJO.getApellidoPaterno() + " " 
+                + ePOJO.getApellidoMaterno());
         this.txtfdmatr.setText(ePOJO.getMatricula());
-        this.txtfdorg.setText(this.eDAO.recuperarNombreOrganizacion(ePOJO.getMatricula()));
-        this.txtfproyecto.setText(this.eDAO.recuperarNombreProyecto(ePOJO.getMatricula()));
+        this.txtfdorg.setText(this.eDAO.
+                recuperarNombreOrganizacion(ePOJO.getMatricula()));
+        this.txtfproyecto.setText(this.eDAO.
+                recuperarNombreProyecto(ePOJO.getMatricula()));
         int horasCub = this.rDAO.recuperarHoras(ePOJO.getMatricula());
         int horasPorCub = 200 - horasCub;
         this.txtfdhorascub.setText(Integer.toString(horasCub));
@@ -198,5 +189,5 @@ public class consultarProgresoController implements Initializable {
             }
         });
     }
-    
+
 }
