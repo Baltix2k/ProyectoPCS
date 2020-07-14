@@ -16,14 +16,14 @@ public class ReporteDAO_Test {
     }
     
     @Test 
-    public void recuperarReportesTest(){
+    public void recuperarReportesTest() throws Exception{
         ObservableList<ReportePOJO> reportes = reporteDAO.getReportes("S18012183");
         reporte = reportes.get(0);
         assertTrue(reporte.getTipoReporte().equalsIgnoreCase("Inicial"));
     }
     
     @Test 
-    public void recuperarHorasTest(){
+    public void recuperarHorasTest() throws Exception{
         int horasAcomuladas = reporteDAO.recuperarHoras("S18012183");
         assertTrue(horasAcomuladas == 52);
     }

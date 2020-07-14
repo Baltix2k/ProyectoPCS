@@ -15,19 +15,19 @@ public class ProyectoDAO_Test{
     }
     
     @Test
-    public void testRecuperarNombre(){
+    public void testRecuperarNombre() throws Exception{
         String nombre = proyectoDAO.recuperarNombre(712);
         assertTrue(nombre.equalsIgnoreCase("SecureServ"));
     }
     
     @Test
-    public void testRecuperarNombreOrganizacion(){
+    public void testRecuperarNombreOrganizacion() throws Exception{
         String nombreOrganizacion = proyectoDAO.recuperarNombreOrganizacion(712);
         assertTrue(nombreOrganizacion.equalsIgnoreCase("Softeck"));
     }
     
     @Test 
-    public void recuperarProyectosTest(){
+    public void recuperarProyectosTest() throws Exception{
         ObservableList<ProyectoPOJO> proyectos = proyectoDAO.getProyectos();
         proyecto = proyectos.get(0);
         assertTrue(proyecto.getNombre().equalsIgnoreCase("ProdutivityService"));

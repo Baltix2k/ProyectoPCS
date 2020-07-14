@@ -16,14 +16,14 @@ public class ArchivoDAO_Test {
     }
     
     @Test 
-    public void recuperarArchivosTest(){
+    public void recuperarArchivosTest() throws Exception{
         ObservableList<ArchivoPOJO> archivos = archivoDAO.getArchivos("S18012183");
         assertTrue(archivos.isEmpty());
     }
     
     @Test 
-    public void recuerarMaxIDTest(){
+    public void recuerarMaxIDTest() throws Exception{
         int clave = archivoDAO.obtenerClaveArchivo();
-        assertTrue(clave == 3);
+        assertTrue(clave == 6);
     }
 }
