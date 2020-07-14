@@ -27,7 +27,7 @@ public class ArchivoDAO {
      * @return obs Lista contenedora de los ARCHIVOS del
      * ESTUDIANTE.
      */
-    public ObservableList<ArchivoPOJO> getArchivos(String matricula) {
+    public ObservableList<ArchivoPOJO> getArchivos(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -55,13 +55,14 @@ public class ArchivoDAO {
                         fechaEntrega);
                 obs.add(c);
             }
-            stm.close();
-            rs.close();
-            con.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase ArchivoDAO, método readAll()");
-            e.printStackTrace();
+        } catch (SQLException e) {           
+            throw new Exception("Error en create Clase ArchivoDAO, método readAll: " + e.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
+        
         return obs;
     }
 
@@ -72,9 +73,8 @@ public class ArchivoDAO {
      * @param arch Archivo a cargar.
      * @param claveExp Clave del expediente donde el archivo se va a cargar.
      */
-    public void subirArchivo(ArchivoPOJO arch, int claveExp) {
+    public void subirArchivo(ArchivoPOJO arch, int claveExp) throws Exception{
         Connection con = null;
-        ResultSet rs = null;
         String sql = "INSERT INTO Archivo VALUES (NULL,?,?,?,?);";
         PreparedStatement ps = null;
         ConexionDB cc = new ConexionDB();
@@ -87,11 +87,11 @@ public class ArchivoDAO {
             ps.setString(3, arch.getTitulo());
             ps.setString(4, arch.getFechaEntrega().toString());
             ps.executeUpdate();
-            ps.close();
-            con.close();
         } catch (SQLException e) {
-            System.out.println("Error al cargar archivo, metodo subirArchivo");
-            e.printStackTrace();
+            throw new Exception("Error en Clase ArchivoDAO, metodo subirArchivo: " + e.getMessage());
+        }finally{
+            try { if (ps != null) ps.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
     }
 
@@ -100,7 +100,7 @@ public class ArchivoDAO {
      * 
      * @return clave Regresa la clase del archivo.
      */
-    public int obtenerClaveArchivo() {
+    public int obtenerClaveArchivo() throws Exception{
         int clave = 0;
         Statement stm = null;
         Connection con = null;
@@ -112,13 +112,15 @@ public class ArchivoDAO {
             rs = stm.executeQuery(sql);
             rs.next();
             clave = rs.getInt(1);
-            stm.close();
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Error al obtener idArchivo, método "
-                    + "obtenerClaveArchivo");
-            e.printStackTrace();
+        } catch (Exception e) {            
+            throw new Exception("Error al obtener idArchivo, método "
+                    + "obtenerClaveArchivo: " + e.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
+        
         return clave;
     }
 

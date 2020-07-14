@@ -20,7 +20,7 @@ public class ProyectoDAO {
      *
      * @return obs Lista contenedora de los PROYECTOS.
      */
-    public ObservableList<ProyectoPOJO> getProyectos() {
+    public ObservableList<ProyectoPOJO> getProyectos() throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -46,12 +46,13 @@ public class ProyectoDAO {
                         nombreOrganizacion, descripcion);
                 obs.add(c);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException e) {
-            System.out.println("Error: Clase ArchivoDAO, método readAll()");
-            e.printStackTrace();
+            throw new Exception("Error en Clase ProyectoDAO, "
+                    + "método readAll(): " + e.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return obs;
     }
@@ -62,7 +63,7 @@ public class ProyectoDAO {
      *
      * @return nombreProyecto Nombre del PROYECTO.
      */
-    public String recuperarNombreProyecto() {
+    public String recuperarNombreProyecto() throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -76,8 +77,12 @@ public class ProyectoDAO {
                 nombreProyecto = rs.getString(1);
             }
         } catch (SQLException ex) {
-            System.out.println("Error: Clase ProyectoDAO, método recuperarNombreProyecto()");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase ProyectoDAO, "
+                    + "método recuperarNombreProyecto: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return nombreProyecto;
     }
@@ -90,7 +95,7 @@ public class ProyectoDAO {
      * la ORGANIZACIÓN.
      * @return nombreOrganizacion Nombre de la ORGANIZACIÓN.
      */
-    public String recuperarNombreOrganizacion(int claveProyecto) {
+    public String recuperarNombreOrganizacion(int claveProyecto) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -104,13 +109,13 @@ public class ProyectoDAO {
             while (rs.next()) {
                 nombreOrganizacion = rs.getString(1);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase ProyectoDAO, método "
-                    + "recuperarNombreOrganizacion()");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase ProyectoDAO, método "
+                    + "recuperarNombreOrganizacion: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return nombreOrganizacion;
     }
@@ -121,7 +126,7 @@ public class ProyectoDAO {
      * @param claveproyecto Clave del PROYECTO requerido.
      * @return nombreProyecto Nombre del PROYECTO.
      */
-    public String recuperarNombre(int claveproyecto) {
+    public String recuperarNombre(int claveproyecto) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -136,9 +141,12 @@ public class ProyectoDAO {
                 nombreProyecto = rs.getString(1);
             }
         } catch (SQLException ex) {
-            System.out.println("Error: Clase ProyectoDAO, método "
-                    + "recuperarNombre()");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase ProyectoDAO, método "
+                    + "recuperarNombre: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return nombreProyecto;
     }

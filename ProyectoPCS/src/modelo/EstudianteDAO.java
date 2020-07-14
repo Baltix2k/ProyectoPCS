@@ -24,11 +24,11 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return EstudiantePOJO Objeto ESTUDIANTE.
      */
-    public EstudiantePOJO recuperar(String matricula) {
+    public EstudiantePOJO recuperar(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-        EstudiantePOJO e = null;
+        EstudiantePOJO estudiante = null;
         String sql = "SELECT * FROM estudiante WHERE matricula = '" + 
                 matricula + "';";
         try {
@@ -36,18 +36,19 @@ public class EstudianteDAO {
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
-                e = new EstudiantePOJO(rs.getString(1), rs.getString(2), 
+                estudiante = new EstudiantePOJO(rs.getString(1), rs.getString(2), 
                         rs.getString(3), rs.getString(4), rs.getString(5), 
                         rs.getString(6), rs.getFloat(7), rs.getString(8));
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase EstudianteDAO, método recuperar()");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método recuperar: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
-        return e;
+        
+        return estudiante;
     }
 
     /**
@@ -56,7 +57,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return nombreEstudiante Nombre del ESTUDIAIANTE especificado.
      */
-    public String recuperarNombreEstudiante(String matricula) {
+    public String recuperarNombreEstudiante(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -70,13 +71,15 @@ public class EstudianteDAO {
             while (rs.next()) {
                 nombreEstudiante = rs.getString(1);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase EstudianteDAO, método recuperarNombreEstudiante()");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método recuperarNombreEstudiante: " 
+                    + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
+        
         return nombreEstudiante;
     }
 
@@ -87,7 +90,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return nombreOrganizacion Nombre de la ORGANIZACION especificado.
      */
-    public String recuperarNombreOrganizacion(String matricula) {
+    public String recuperarNombreOrganizacion(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -103,14 +106,15 @@ public class EstudianteDAO {
             while (rs.next()) {
                 nombreOrganizacion = rs.getString(1);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase EstudianteDAO, método "
-                    + "recuperarNombreOrganizacion()");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "recuperarNombreOrganizacion: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
+        
         return nombreOrganizacion;
     }
 
@@ -120,7 +124,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return nombreProyecto Nombre del PROYECTO especificado.
      */
-    public String recuperarNombreProyecto(String matricula) {
+    public String recuperarNombreProyecto(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -135,14 +139,15 @@ public class EstudianteDAO {
             while (rs.next()) {
                 nombreProyecto = rs.getString(1);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase EstudianteDAO, método "
-                    + "recuperarNombreProyecto()");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "recuperarNombreProyecto: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
+        
         return nombreProyecto;
     }
 
@@ -152,7 +157,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return claveProyecto Clave del PROYECTO especificado.
      */
-    public int recuperarClaveProyecto(String matricula) {
+    public int recuperarClaveProyecto(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -166,13 +171,13 @@ public class EstudianteDAO {
             while (rs.next()) {
                 claveProyecto = rs.getInt(1);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase EstudianteDAO, método "
-                    + "recuperarClaveProyecto)");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "recuperarClaveProyecto: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return claveProyecto;
     }
@@ -184,7 +189,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return claveExpediente Clave del EXPEDIENTE especificado.
      */
-    public int recuperaClaveExpediente(String matricula) {
+    public int recuperaClaveExpediente(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -198,13 +203,13 @@ public class EstudianteDAO {
             while (rs.next()) {
                 claveExpediente = rs.getInt(1);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException ex) {
-            System.out.println("Error: Clase EstudianteDAO, método "
-                    + "recuperarClaveExpediente)");
-            ex.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "recuperarClaveExpediente: " + ex.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return claveExpediente;
     }
@@ -215,7 +220,7 @@ public class EstudianteDAO {
      * 
      * @return obs Lista contenedora de los ESTUDIANTES.
      */
-    public ObservableList<EstudiantePOJO> getEstudiantes() {
+    public ObservableList<EstudiantePOJO> getEstudiantes() throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -239,13 +244,13 @@ public class EstudianteDAO {
                         apellidoMaterno, matricula);
                 obs.add(c);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException e) {
-            System.out.println("Error: Clase ArchivoDAO, método "
-                    + "getEstudiantes()");
-            e.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "getEstudiantes: " + e.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return obs;
     }
@@ -258,7 +263,7 @@ public class EstudianteDAO {
      * SELECCIONPROYECTO.
      * @return obs Lista contenedora de las SELECCIONPROYECTO.
      */
-    public ArrayList<SeleccionProyectoPOJO> getSelecciones(String matricula) {
+    public ArrayList<SeleccionProyectoPOJO> getSelecciones(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -279,13 +284,13 @@ public class EstudianteDAO {
                         claveproyecto, fecha, periodo);
                 obs.add(c);
             }
-            stm.close();
-            rs.close();
-            con.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Clase EstudianteDAO, método "
-                    + "getSelecciones()");
-            e.printStackTrace();
+        } catch (SQLException e) {            
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "getSelecciones: " + e.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return obs;
     }
@@ -299,7 +304,7 @@ public class EstudianteDAO {
      * @param claveProyectoElegido Clave del PROYECTO a asignar.
      */
     public void asginarProyecto(String matriculaEstudianteElegido, 
-            int claveProyectoElegido) {
+            int claveProyectoElegido) throws Exception{
         Connection con = null;
         Statement stm = null;
         LocalDate fechaInicioPP = LocalDate.now();
@@ -317,11 +322,13 @@ public class EstudianteDAO {
             stm = con.createStatement();
             stm.executeUpdate(sql);
             stm.executeUpdate(sql2);
-            stm.close();
-            con.close();
+;
         } catch (SQLException e) {
-            System.out.println("Error: Clase EstudianteDAO, método getSelecciones()");
-            e.printStackTrace();
+            throw new Exception("Error en Clase EstudianteDAO, método getSelecciones: " 
+                    + e.getMessage());
+        }finally{
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
     }
 }

@@ -25,15 +25,14 @@ public class ConexionDB {
      * Genera conexion a la base de datos de acuerdo a los datos que se encuentran en los atributos.
      * @return void
      */
-    public Connection conectarMySQL() {
+    public Connection conectarMySQL() throws Exception{
         Connection conn = null;
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("Se establece la conexion a la base de datos");
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println("Error en la conexion de la base de datos");
-            e.printStackTrace();
+            throw new Exception("Error en ConexionDB la causa es: " + e.getCause().toString());
         }
         return conn;
     }
