@@ -112,6 +112,8 @@ public class preSubirReporteController implements Initializable {
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -163,4 +165,6 @@ public class preSubirReporteController implements Initializable {
             return false;
         }
     }
+    
+
 }

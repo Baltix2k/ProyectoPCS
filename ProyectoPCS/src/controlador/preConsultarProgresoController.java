@@ -136,6 +136,8 @@ public class preConsultarProgresoController implements Initializable {
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(preConsultarProgresoController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(preConsultarProgresoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

@@ -133,7 +133,7 @@ public class SubirReporteController implements Initializable {
      * @throws FileNotFoundException Sin selección de archivo.
      */
     @FXML
-    private void aceptar(ActionEvent event) throws FileNotFoundException {
+    private void aceptar(ActionEvent event) throws FileNotFoundException, Exception {
         ArchivoDAO arch = new ArchivoDAO();
         ArchivoPOJO archP = new ArchivoPOJO();
         ReporteDAO rep = new ReporteDAO();
@@ -150,11 +150,7 @@ public class SubirReporteController implements Initializable {
                 repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
                 repP.setTipoReporte(combxTipo.getValue());
             
-                if(file.length() > 16777216){
-                    AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
-                    alerta.alertaInformacion("Error", "Limite de tamaño de archivo excedido", 
-                            "El tamaño del archivo excede el limite soportado");
-                }else{
+                if(this.validarArchivo()){
                     try {
                         byte[] doc = new byte[(int) file.length()];
                         InputStream input = new FileInputStream(file);
@@ -209,7 +205,7 @@ public class SubirReporteController implements Initializable {
      * 
      * @param ePOJO 
      */
-    public void initData(EstudiantePOJO ePOJO) {
+    public void initData(EstudiantePOJO ePOJO) throws Exception {
         this.eDAO = new EstudianteDAO();
         txtMatricula.setText(ePOJO.getMatricula());
         txtClaveExp.setText(Integer.toString(this.eDAO.
@@ -232,10 +228,40 @@ public class SubirReporteController implements Initializable {
         }
         
         if(errorMessage.length() == 0){
-                    return true;
+            return true;
         }else{
             AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
             alerta.alertaInformacion("Error", "Campos incompletos", errorMessage);
+            return false;
+        }
+    }
+    
+    private String getExtensionArchivo() {
+        String name = file.getName();
+        int lastIndexOf = name.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return name.substring(lastIndexOf);
+    }
+    
+    private boolean validarArchivo(){
+        String errorMessage = "";
+        if(file.length() > Math.pow(2, 32)){
+            errorMessage = "El tamaño del archivo excede el limite soportado";
+        }else{
+            if(this.getExtensionArchivo() != ".pdf" || this.getExtensionArchivo() != ".doc" ||
+                    this.getExtensionArchivo() != ".docx"){
+                errorMessage = "El tipo de archivo no es valido, "
+                        + "el sistema solo acepta PDF y DOCX";
+            }
+        }
+        
+        if(errorMessage.length() == 0){
+            return true;
+        }else{
+            AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+            alerta.alertaInformacion("Error", "Archivo invalido", errorMessage);
             return false;
         }
     }
