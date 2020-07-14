@@ -4,25 +4,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Clase que realiza la conexión con la base de datos.
+ * 
+ * @version 1.0
+ */
 public class ConexionDB {
 
-    //Libreria MySQL
     public String driver = "com.mysql.jdbc.Driver";
-    //Nombre base de datos
     public String database = "practicas_profesionales";
-    //Host
     public String hostname = "localhost";
-    //Puerto
     public String port = "3306";
-    //Ruta de nuestra base de datos (Desactivamos el uso de SSL con "?usessl=false")
-    public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";
-    //Nombre de usuario
+    public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database
+            + "?useSSL=false";
     public String username = "root";
-    //Clave de usuario
-    public String password = "Jinchuriki2k";
+    public String password = "gatodeportivo";
 
     /**
-     * Genera conexion a la base de datos de acuerdo a los datos que se encuentran en los atributos.
+     * Genera conexion a la base de datos de acuerdo a los datos que se 
+     * encuentran en los atributos.
+     * 
      * @return void
      */
     public Connection conectarMySQL() throws Exception{
@@ -36,6 +37,4 @@ public class ConexionDB {
         }
         return conn;
     }
-    
-
 }
