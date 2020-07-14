@@ -34,6 +34,7 @@ import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
 import modelo.ReporteDAO;
 import modelo.ReportePOJO;
+import vista.AlertaFXML;
 
 /**
  * Clase controlador de la vista del SubirReporte, pantalla que tiene como
@@ -137,42 +138,47 @@ public class SubirReporteController implements Initializable {
         ArchivoPOJO archP = new ArchivoPOJO();
         ReporteDAO rep = new ReporteDAO();
         ReportePOJO repP = new ReportePOJO();
-        archP.setTitulo(file.getName());
-        String fecha = txtFecha.getText();
-        archP.setFechaEntrega(LocalDate.parse(fecha, DateTimeFormatter.
-                ofPattern("yyyy-MM-dd")));
-        repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
-        repP.setTipoReporte(combxTipo.getValue());
-        try {
-            byte[] doc = new byte[(int) file.length()];
-            InputStream input = new FileInputStream(file);
-            input.read(doc);
-            archP.setArchivo(doc);
-        } catch (IOException ex) {
-            archP.setArchivo(null);
-        } catch (NullPointerException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Campos faltantes");
-            alert.showAndWait();
-        } catch (RuntimeException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Campos faltantes");
-            alert.showAndWait();
+        if(this.validarCampos()){
+            archP.setTitulo(file.getName());
+            String fecha = txtFecha.getText();
+            archP.setFechaEntrega(LocalDate.parse(fecha, 
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            
+            String horas = txtHoras.getText();
+
+            if(horas.matches("[0-9]*")){
+                repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
+                repP.setTipoReporte(combxTipo.getValue());
+            
+                if(file.length() > 16777216){
+                    AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+                    alerta.alertaInformacion("Error", "Limite de tamaño de archivo excedido", 
+                            "El tamaño del archivo excede el limite soportado");
+                }else{
+                    try {
+                        byte[] doc = new byte[(int) file.length()];
+                        InputStream input = new FileInputStream(file);
+                        input.read(doc);
+                        archP.setArchivo(doc);
+                    } catch (IOException ex) {
+                        archP.setArchivo(null);
+                    }
+                    arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.getText()));
+                    int idArch = arch.obtenerClaveArchivo();
+
+                    rep.subirReporte(repP, idArch);
+                    AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+                            alerta.alertaInformacion("Exito", "Archivo subido exitosamente", 
+                                    "El archivo se ha cargado correctamente al sistema");
+                    this.closeWindows();
+                }
+                
+            }else{
+                AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+                    alerta.alertaInformacion("Error", "Horas a registrar incorrectas", 
+                            "Las horas son aracteres numericos");
+            }  
         }
-        arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.getText()));
-        int idArch = arch.obtenerClaveArchivo();
-        System.out.println(idArch); //-------------------
-        rep.subirReporte(repP, idArch);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("Exito");
-        alert.setContentText("Archivo cargado exitosamente");
-        alert.showAndWait();
-        this.closeWindows();
     }
 
     /**
@@ -208,5 +214,29 @@ public class SubirReporteController implements Initializable {
         txtMatricula.setText(ePOJO.getMatricula());
         txtClaveExp.setText(Integer.toString(this.eDAO.
                 recuperaClaveExpediente(ePOJO.getMatricula())));
+    }
+    
+    public boolean validarCampos(){
+        String errorMessage = "";
+        
+        if(this.txtHoras.getText() == null || this.txtHoras.getText().length() == 0){
+            errorMessage = "Campo de HORAS vacio \n";
+        }else{   
+            if(this.combxTipo.getSelectionModel().isEmpty()){
+                errorMessage = "Tipo de reporte no seleccionado \n";
+            }else{
+                if(file == null){
+                    errorMessage = "Archivo no seleccionado \n";
+                }
+            }
+        }
+        
+        if(errorMessage.length() == 0){
+                    return true;
+        }else{
+            AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+            alerta.alertaInformacion("Error", "Campos incompletos", errorMessage);
+            return false;
+        }
     }
 }
