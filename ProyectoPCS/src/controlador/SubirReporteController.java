@@ -212,6 +212,11 @@ public class SubirReporteController implements Initializable {
                 recuperaClaveExpediente(ePOJO.getMatricula())));
     }
     
+    /**
+     * Valida que los campos dentro del boton aceptar no esten incompletos.
+     * 
+     * @return boolean.
+     */
     public boolean validarCampos(){
         String errorMessage = "";
         
@@ -236,6 +241,11 @@ public class SubirReporteController implements Initializable {
         }
     }
     
+    /**
+     * Evalua la variable file para determinar el tipo de archivo que se intetna subir.
+     * 
+     * @return String.
+     */
     private String getExtensionArchivo() {
         String name = file.getName();
         int lastIndexOf = name.lastIndexOf(".");
@@ -245,6 +255,11 @@ public class SubirReporteController implements Initializable {
         return name.substring(lastIndexOf);
     }
     
+    /**
+     * Valida que el archivo a subir no sobre pase el tamaño y que sea de los tipos aceptados.
+     * 
+     * @return boolean.
+     */
     private boolean validarArchivo(){
         String errorMessage = "";
         if(file.length() > Math.pow(2, 32)){
