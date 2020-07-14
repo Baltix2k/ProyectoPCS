@@ -34,6 +34,7 @@ import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
 import modelo.ReporteDAO;
 import modelo.ReportePOJO;
+import vista.AlertaFXML;
 
 /**
  * Clase controlador de la vista del SubirReporte, pantalla que tiene como
@@ -132,47 +133,48 @@ public class SubirReporteController implements Initializable {
      * @throws FileNotFoundException Sin selección de archivo.
      */
     @FXML
-    private void aceptar(ActionEvent event) throws FileNotFoundException {
+    private void aceptar(ActionEvent event) throws FileNotFoundException, Exception {
         ArchivoDAO arch = new ArchivoDAO();
         ArchivoPOJO archP = new ArchivoPOJO();
         ReporteDAO rep = new ReporteDAO();
         ReportePOJO repP = new ReportePOJO();
-        archP.setTitulo(file.getName());
-        String fecha = txtFecha.getText();
-        archP.setFechaEntrega(LocalDate.parse(fecha, DateTimeFormatter.
-                ofPattern("yyyy-MM-dd")));
-        repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
-        repP.setTipoReporte(combxTipo.getValue());
-        try {
-            byte[] doc = new byte[(int) file.length()];
-            InputStream input = new FileInputStream(file);
-            input.read(doc);
-            archP.setArchivo(doc);
-        } catch (IOException ex) {
-            archP.setArchivo(null);
-        } catch (NullPointerException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Campos faltantes");
-            alert.showAndWait();
-        } catch (RuntimeException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Campos faltantes");
-            alert.showAndWait();
+        if(this.validarCampos()){
+            archP.setTitulo(file.getName());
+            String fecha = txtFecha.getText();
+            archP.setFechaEntrega(LocalDate.parse(fecha, 
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            
+            String horas = txtHoras.getText();
+
+            if(horas.matches("[0-9]*")){
+                repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
+                repP.setTipoReporte(combxTipo.getValue());
+            
+                if(this.validarArchivo()){
+                    try {
+                        byte[] doc = new byte[(int) file.length()];
+                        InputStream input = new FileInputStream(file);
+                        input.read(doc);
+                        archP.setArchivo(doc);
+                    } catch (IOException ex) {
+                        archP.setArchivo(null);
+                    }
+                    arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.getText()));
+                    int idArch = arch.obtenerClaveArchivo();
+
+                    rep.subirReporte(repP, idArch);
+                    AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+                            alerta.alertaInformacion("Exito", "Archivo subido exitosamente", 
+                                    "El archivo se ha cargado correctamente al sistema");
+                    this.closeWindows();
+                }
+                
+            }else{
+                AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+                    alerta.alertaInformacion("Error", "Horas a registrar incorrectas", 
+                            "Las horas son aracteres numericos");
+            }  
         }
-        arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.getText()));
-        int idArch = arch.obtenerClaveArchivo();
-        System.out.println(idArch); //-------------------
-        rep.subirReporte(repP, idArch);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("Exito");
-        alert.setContentText("Archivo cargado exitosamente");
-        alert.showAndWait();
-        this.closeWindows();
     }
 
     /**
@@ -203,10 +205,79 @@ public class SubirReporteController implements Initializable {
      * 
      * @param ePOJO 
      */
-    public void initData(EstudiantePOJO ePOJO) {
+    public void initData(EstudiantePOJO ePOJO) throws Exception {
         this.eDAO = new EstudianteDAO();
         txtMatricula.setText(ePOJO.getMatricula());
         txtClaveExp.setText(Integer.toString(this.eDAO.
                 recuperaClaveExpediente(ePOJO.getMatricula())));
+    }
+    
+    /**
+     * Valida que los campos dentro del boton aceptar no esten incompletos.
+     * 
+     * @return boolean.
+     */
+    public boolean validarCampos(){
+        String errorMessage = "";
+        
+        if(this.txtHoras.getText() == null || this.txtHoras.getText().length() == 0){
+            errorMessage = "Campo de HORAS vacio \n";
+        }else{   
+            if(this.combxTipo.getSelectionModel().isEmpty()){
+                errorMessage = "Tipo de reporte no seleccionado \n";
+            }else{
+                if(file == null){
+                    errorMessage = "Archivo no seleccionado \n";
+                }
+            }
+        }
+        
+        if(errorMessage.length() == 0){
+            return true;
+        }else{
+            AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+            alerta.alertaInformacion("Error", "Campos incompletos", errorMessage);
+            return false;
+        }
+    }
+    
+    /**
+     * Evalua la variable file para determinar el tipo de archivo que se intetna subir.
+     * 
+     * @return String.
+     */
+    private String getExtensionArchivo() {
+        String name = file.getName();
+        int lastIndexOf = name.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return name.substring(lastIndexOf);
+    }
+    
+    /**
+     * Valida que el archivo a subir no sobre pase el tamaño y que sea de los tipos aceptados.
+     * 
+     * @return boolean.
+     */
+    private boolean validarArchivo(){
+        String errorMessage = "";
+        if(file.length() > Math.pow(2, 32)){
+            errorMessage = "El tamaño del archivo excede el limite soportado";
+        }else{
+            if(this.getExtensionArchivo() != ".pdf" || this.getExtensionArchivo() != ".doc" ||
+                    this.getExtensionArchivo() != ".docx"){
+                errorMessage = "El tipo de archivo no es valido, "
+                        + "el sistema solo acepta PDF y DOCX";
+            }
+        }
+        
+        if(errorMessage.length() == 0){
+            return true;
+        }else{
+            AlertaFXML alerta = new AlertaFXML((Stage)this.btnCancelar.getScene().getWindow());
+            alerta.alertaInformacion("Error", "Archivo invalido", errorMessage);
+            return false;
+        }
     }
 }

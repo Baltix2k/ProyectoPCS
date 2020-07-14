@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
+import vista.AlertaFXML;
 
 /**
  * Clase controlador de la vista del preSubirReporte, pantalla que tiene como
@@ -77,50 +78,44 @@ public class preSubirReporteController implements Initializable {
     @FXML
     private void aceptar(ActionEvent event) {
         this.eDAO = new EstudianteDAO();
-        try {
-            String matricula = this.txfdmatricula.getText();
-            EstudiantePOJO ePOJO = eDAO.recuperar(matricula);
-            if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) != null) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setTitle("Error");
-                alert.setContentText("Estudiante sin expediente");
-                alert.showAndWait();
-            } else {
-                if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText(null);
-                    alert.setTitle("Error");
-                    alert.setContentText("Estudiante no encontrado");
-                    alert.showAndWait();
-                } else {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/SubirReporteVista.fxml"));
-                    Parent root = loader.load();
-                    SubirReporteController controlador = loader.getController();
-                    controlador.initData(ePOJO);
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.show();
-                    stage.setOnCloseRequest(e -> controlador.closeWindows());
-                    Stage myStage = (Stage) this.btnAceptar.getScene().getWindow();
-                    myStage.close();
+        String matricula = this.txfdmatricula.getText();
+        if(this.matriculaValida()){
+            if(matricula.matches("[0-9]*")){
+                AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
+                alerta.alertaInformacion("Error", "Matricula invalida", 
+                        "La matricula debe comenzar con S");
+            }else{
+                try {
+                    EstudiantePOJO ePOJO = eDAO.recuperar(matricula);
+                    if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) != null) {
+                        AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
+                        alerta.alertaInformacion("Error", "Estudiante sin expediente", 
+                                "El estudiante no cuenta con un expediente, se le debe asignar un proyecto");
+                    } else {
+                        if (eDAO.recuperarNombreEstudiante(matricula) == null && eDAO.recuperaClaveExpediente(matricula) == 0) {
+                            AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
+                            alerta.alertaInformacion("Error", "Estudiante no encontrado", 
+                                    "El estudiante no se encuentra en la base de datos");
+                        }else {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/SubirReporteVista.fxml"));
+                            Parent root = loader.load();
+                            SubirReporteController controlador = loader.getController();
+                            controlador.initData(ePOJO);
+                            Scene scene = new Scene(root);
+                            Stage stage = new Stage();
+                            stage.setScene(scene);
+                            stage.show();
+                            stage.setOnCloseRequest(e -> controlador.closeWindows());
+                            Stage myStage = (Stage) this.btnAceptar.getScene().getWindow();
+                            myStage.close();
+                        }
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        } catch (IOException ex) {
-            Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NumberFormatException ex2) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Matricula no válida");
-            alert.showAndWait();
-        } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.setContentText("Campo vacio");
-            alert.showAndWait();
         }
     }
 
@@ -146,4 +141,30 @@ public class preSubirReporteController implements Initializable {
             Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+     * Permite validar si la matricula ingresda no contiene espacios o el campo esta vacio.
+     * @return boolean.
+     *
+     */
+    private boolean matriculaValida(){
+        String errorMessage = "";
+        
+        if(this.txfdmatricula.getText() == null || this.txfdmatricula.getText().length() == 0){
+            errorMessage = "Campo vacio \n";
+        }
+        if(this.txfdmatricula.getText().contains(" ")){
+            errorMessage = "La matricula contiene espacios \n";
+        }
+                
+        if(errorMessage.length() == 0){
+            return true;
+        }else{
+            AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
+            alerta.alertaInformacion("Error", "Campo invalido", errorMessage);
+            return false;
+        }
+    }
+    
+
 }

@@ -26,7 +26,7 @@ public class ReporteDAO {
      * REPORTES.
      * @return obs Lista contenedora de los REPORTES del ESTUDIANTE.
      */
-    public ObservableList<ReportePOJO> getReportes(String matricula) {
+    public ObservableList<ReportePOJO> getReportes(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -55,12 +55,13 @@ public class ReporteDAO {
                         horasReportadas, tipoReporte);
                 obs.add(c);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException e) {
-            System.out.println("Error: Clase ArchivoDAO, método getReportes");
-            e.printStackTrace();
+            throw new Exception("Error en Clase ReporteDAO, "
+                    + "método getReportes: " + e.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return obs;
     }
@@ -72,7 +73,7 @@ public class ReporteDAO {
      * @param report Objeto REPORTE a registrar.
      * @param idArch Id del ARCHIVO a donde pertenece el REPORTE.
      */
-    public void subirReporte(ReportePOJO report, int idArch) {
+    public void subirReporte(ReportePOJO report, int idArch) throws Exception{
         Connection con = null;
         System.out.println(idArch + "-" + report.getHorasReportadas() + "-" 
                 + report.getTipoReporte());
@@ -86,11 +87,12 @@ public class ReporteDAO {
             ps.setInt(2, report.getHorasReportadas());
             ps.setString(3, report.getTipoReporte());
             ps.executeUpdate();
-            ps.close();
-            con.close();
         } catch (SQLException e) {
-            System.out.println("Error al cargar reporte, metodo subirReporte");
-            e.printStackTrace();
+            throw new Exception("Error en Clase ReporteDAO, "
+                    + "metodo subirReporte: " + e.getMessage());
+        }finally{
+            try { if (ps != null) ps.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
     }
 
@@ -101,7 +103,7 @@ public class ReporteDAO {
      * @param matricula Matricula del ESTUDIANTE especificado.
      * @return horas Numero de horas registradas.
      */
-    public int recuperarHoras(String matricula) {
+    public int recuperarHoras(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -118,12 +120,13 @@ public class ReporteDAO {
             while (rs.next()) {
                 horas = horas + rs.getInt(1);
             }
-            stm.close();
-            rs.close();
-            con.close();
         } catch (SQLException e) {
-            System.out.println("Error: Clase ArchivoDAO, método readAll()");
-            e.printStackTrace();
+            throw new Exception("Error en Clase ReporteDAO, "
+                    + "método readAll: " + e.getMessage());
+        }finally{
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stm != null) stm.close(); } catch (Exception e) {};
+            try { if (con!= null) con.close(); } catch (Exception e) {};
         }
         return horas;
     }

@@ -139,7 +139,7 @@ public class consultarProgresoController implements Initializable {
      * 
      * @param ePOJO 
      */
-    void initData(EstudiantePOJO ePOJO) {
+    void initData(EstudiantePOJO ePOJO) throws Exception {
         this.eDAO = new EstudianteDAO();
         this.rDAO = new ReporteDAO();
         this.txtfdnomb.setText(ePOJO.getNombre() + " " 
