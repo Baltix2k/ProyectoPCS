@@ -57,7 +57,7 @@ public class ReporteDAO {
                 obs.add(c);
             }
         } catch (SQLException e) {
-            throw new Exception("Error en Clase ReporteDAO, "
+            throw new SQLException("Error en Clase ReporteDAO, "
                     + "método getReportes: " + e.getMessage());
         }finally{
             try { if (rs != null) rs.close(); } catch (Exception e) {};

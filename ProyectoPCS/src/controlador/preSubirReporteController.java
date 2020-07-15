@@ -79,7 +79,7 @@ public class preSubirReporteController implements Initializable {
      * @param event El clic del botón.
      */
     @FXML
-    private void aceptar(ActionEvent event) throws Exception {
+    private void aceptar(ActionEvent event){
         this.eDAO = new EstudianteDAO();
         String matricula = this.txfdmatricula.getText();
         if (this.matriculaValida()) {
