@@ -165,7 +165,7 @@ public class AsignarProyectoController implements Initializable {
                             this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
                             matriculaEstudianteElegido = newSelectionEstudiante.
                                     getMatricula();
-                            System.out.println("MATRICULA: " 
+                            System.out.println("MATRICULA: "
                                     + matriculaEstudianteElegido);
                         } catch (Exception ex) {
                             Logger.getLogger(AsignarProyectoController.class.
@@ -209,22 +209,22 @@ public class AsignarProyectoController implements Initializable {
      */
     @FXML
     private void aceptar(ActionEvent event) throws Exception {
-        if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) {
-            eDAO.asginarProyecto(matriculaEstudianteElegido, 
-                    claveProyectoElegido);
-            System.out.println("Mensaje de confirmación");
-            Alert alertConfirmacion = new Alert(Alert.AlertType.NONE); 
-            alertConfirmacion.setHeaderText(null);
-            alertConfirmacion.setTitle("Confirmación de acción");
-            alertConfirmacion.setContentText(
-                    "¿Desea continuar con la asignación?");
-            ButtonType si = new ButtonType("Si");
-            ButtonType no = new ButtonType("No");
-            alertConfirmacion.getButtonTypes().clear();
-            alertConfirmacion.getButtonTypes().addAll(si,no);
-            Optional<ButtonType> opt = alertConfirmacion.showAndWait();
-            if(opt.get() == si){
-                         
+        System.out.println("Mensaje de confirmación");
+        Alert alertConfirmacion = new Alert(Alert.AlertType.NONE);
+        alertConfirmacion.setHeaderText(null);
+        alertConfirmacion.setTitle("Confirmación de acción");
+        alertConfirmacion.setContentText(
+                "¿Desea continuar con la asignación?");
+        ButtonType si = new ButtonType("Si");
+        ButtonType no = new ButtonType("No");
+        alertConfirmacion.getButtonTypes().clear();
+        alertConfirmacion.getButtonTypes().addAll(si, no);
+        Optional<ButtonType> opt = alertConfirmacion.showAndWait();
+        if (opt.get() == si) {
+            if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) {
+                eDAO.asginarProyecto(matriculaEstudianteElegido,
+                        claveProyectoElegido);
+
                 System.out.println("Asignación realizada");
                 Alert alert = new Alert(Alert.AlertType.NONE);
                 alert.setHeaderText(null);
@@ -243,14 +243,15 @@ public class AsignarProyectoController implements Initializable {
                     System.out.println("Caso de uso no implementado");
                     this.closeWindows();
                 }
-            }else if(opt.get() == no){
-                System.out.println("Esta implementandose....");
-            }
-        } else {
-            AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
+            } else if (opt.get() == no) {
+                AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
                     getScene().getWindow());
             alerta.alertaInformacion("Error", "Opciones incompletas",
                     "Faltan selecciones para realisar la asignacion");
+            }
+        } else {
+            System.out.println("Esta implementandose....");
+            
         }
     }
 }
