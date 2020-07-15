@@ -35,6 +35,7 @@ public class ConexionDB {
         } catch (ClassNotFoundException | SQLException e) {
             throw new Exception("Error en ConexionDB la causa es: " + e.
                     getCause().toString());
+            
         }
         return conn;
     }

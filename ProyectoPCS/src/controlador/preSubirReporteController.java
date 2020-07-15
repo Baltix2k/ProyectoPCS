@@ -1,7 +1,9 @@
 package controlador;
 
+import com.mysql.cj.exceptions.CJCommunicationsException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,7 +79,7 @@ public class preSubirReporteController implements Initializable {
      * @param event El clic del botón.
      */
     @FXML
-    private void aceptar(ActionEvent event) {
+    private void aceptar(ActionEvent event) throws Exception {
         this.eDAO = new EstudianteDAO();
         String matricula = this.txfdmatricula.getText();
         if (this.matriculaValida()) {
@@ -125,12 +127,12 @@ public class preSubirReporteController implements Initializable {
                             myStage.close();
                         }
                     }
-                } catch (IOException ex) {
-                    Logger.getLogger(preSubirReporteController.class.getName()).
-                            log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
-                    Logger.getLogger(preSubirReporteController.class.getName()).
-                            log(Level.SEVERE, null, ex);
+                    AlertaFXML alerta = new AlertaFXML(
+                            (Stage) this.btnAceptar.getScene().
+                                    getWindow());
+                    alerta.alertaInformacion("Error", "Error de conexion" 
+                            ,"Ocurrio un error con la conexion a la base de datos");
                 }
             }
         }

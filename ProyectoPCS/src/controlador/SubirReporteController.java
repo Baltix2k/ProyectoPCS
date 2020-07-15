@@ -1,11 +1,13 @@
 package controlador;
 
+import com.mysql.cj.exceptions.CJCommunicationsException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -158,20 +160,26 @@ public class SubirReporteController implements Initializable {
                             InputStream input = new FileInputStream(file);
                             input.read(doc);
                             archP.setArchivo(doc);
+                            arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.
+                                getText()));
+                            int idArch = arch.obtenerClaveArchivo();
+
+                            rep.subirReporte(repP, idArch);
+                            AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
+                                    getScene().getWindow());
+                            alerta.alertaInformacion("Exito", "Archivo subido "
+                                    + "exitosamente", "El archivo se ha cargado "
+                                    + "correctamente al sistema");
+                            this.closeWindows();
                         } catch (IOException ex) {
                             archP.setArchivo(null);
+                        }catch(CJCommunicationsException ex){
+                            AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
+                                    getScene().getWindow());
+                            alerta.alertaInformacion("Error", "Error de conexión"
+                                    ,"Ocurrio un error con la conexion a la base de datos");
                         }
-                        arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.
-                                getText()));
-                        int idArch = arch.obtenerClaveArchivo();
-
-                        rep.subirReporte(repP, idArch);
-                        AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
-                                getScene().getWindow());
-                        alerta.alertaInformacion("Exito", "Archivo subido "
-                                + "exitosamente", "El archivo se ha cargado "
-                                + "correctamente al sistema");
-                        this.closeWindows();
+                        
                     }else{
                         AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
                     getScene().getWindow());
@@ -279,22 +287,6 @@ public class SubirReporteController implements Initializable {
         System.out.println(this.getExtensionArchivo());
         if (file.length() > Math.pow(2, 32)) {
             errorMessage = "El tamaño del archivo excede el limite soportado";
-        /*} else {
-            /*if (this.getExtensionArchivo() != ".pdf"
-                    || this.getExtensionArchivo() != ".doc"
-                    || this.getExtensionArchivo() != ".docx") {
-                errorMessage = "El tipo de archivo no es valido, "
-                        + "el sistema solo acepta PDF y DOCX";
-            }
-            if (this.getExtensionArchivo() != ".pdf" || this.getExtensionArchivo() != ".docx") {
-                errorMessage = "El tipo de archivo no es valido, "
-                        + "el sistema solo acepta PDF y DOCX";
-            }/*else{
-                if (this.getExtensionArchivo() != ".docx"){
-                    errorMessage = "El tipo de archivo no es valido, "
-                        + "el sistema solo acepta PDF y DOCX";
-                }
-            }*/
         }
 
         if (errorMessage.length() == 0) {
