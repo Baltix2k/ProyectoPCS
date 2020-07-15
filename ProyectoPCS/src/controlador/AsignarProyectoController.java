@@ -165,7 +165,7 @@ public class AsignarProyectoController implements Initializable {
                             this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
                             matriculaEstudianteElegido = newSelectionEstudiante.
                                     getMatricula();
-                            System.out.println("MATRICULA: " 
+                            System.out.println("MATRICULA: "
                                     + matriculaEstudianteElegido);
                         } catch (Exception ex) {
                             Logger.getLogger(AsignarProyectoController.class.
@@ -210,7 +210,7 @@ public class AsignarProyectoController implements Initializable {
     @FXML
     private void aceptar(ActionEvent event) throws Exception {
         if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) {
-            eDAO.asginarProyecto(matriculaEstudianteElegido, 
+            eDAO.asginarProyecto(matriculaEstudianteElegido,
                     claveProyectoElegido);
             System.out.println("Asignación realizada");
             Alert alert = new Alert(Alert.AlertType.NONE);

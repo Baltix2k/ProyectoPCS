@@ -73,7 +73,7 @@ public class consultarProgresoController implements Initializable {
     private EstudianteDAO eDAO;
     private ArchivoDAO aDAO;
     private ReporteDAO rDAO;
-    int idArchivo;
+    
     ObservableList<ArchivoPOJO> archivos;
     ObservableList<ReportePOJO> reportes;
 
@@ -178,24 +178,6 @@ public class consultarProgresoController implements Initializable {
         ObservableList<ReportePOJO> obsReporte = rDAO.
                 getReportes(ePOJO.getMatricula());
         this.tableReporte.setItems(obsReporte);
-
-        tableArchivo.getSelectionModel().selectedItemProperty().
-                addListener((obs, oldSelection, newSelectionArchivo) -> {
-                    if (newSelectionArchivo != null) {
-                        tableReporte.getSelectionModel().clearSelection();
-                        this.idArchivo = newSelectionArchivo.getIdArchivo();
-                        System.out.println("CLAVE: " + idArchivo);
-                    }
-                });
-
-        tableReporte.getSelectionModel().selectedItemProperty().
-                addListener((obs, oldSelection, newSelectionReporte) -> {
-                    if (newSelectionReporte != null) {
-                        tableArchivo.getSelectionModel().clearSelection();
-                        this.idArchivo = newSelectionReporte.getIdArchivo();
-                        System.out.println("CLAVE: " + idArchivo);
-                    }
-                });
     }
 
 }
