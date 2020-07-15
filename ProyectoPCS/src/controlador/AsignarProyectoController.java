@@ -221,7 +221,8 @@ public class AsignarProyectoController implements Initializable {
         alertConfirmacion.getButtonTypes().addAll(si, no);
         Optional<ButtonType> opt = alertConfirmacion.showAndWait();
         if (opt.get() == si) {
-            if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) {
+            if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) 
+            {
                 eDAO.asginarProyecto(matriculaEstudianteElegido,
                         claveProyectoElegido);
 
