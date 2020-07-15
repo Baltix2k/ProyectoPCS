@@ -112,68 +112,75 @@ public class AsignarProyectoController implements Initializable {
      * pantalla medio de clases DAO y el POJO.
      */
     void initData() throws Exception {
-        this.pDAO = new ProyectoDAO();
-        ColClave.setCellValueFactory(new PropertyValueFactory<>(
-                "claveProyecto"));
-        ColProyecto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        ColOrganizacion.setCellValueFactory(new PropertyValueFactory<>(
-                "responsableNombre"));
-        ColDescripcion.setCellValueFactory(new PropertyValueFactory<>(
-                "descripcion"));
-        this.proyectos = pDAO.getProyectos();
-        this.TblProyecto.setItems(proyectos);
+        try{           
+            this.pDAO = new ProyectoDAO();
+            ColClave.setCellValueFactory(new PropertyValueFactory<>(
+                    "claveProyecto"));
+            ColProyecto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+            ColOrganizacion.setCellValueFactory(new PropertyValueFactory<>(
+                    "responsableNombre"));
+            ColDescripcion.setCellValueFactory(new PropertyValueFactory<>(
+                    "descripcion"));
+            this.proyectos = pDAO.getProyectos();
+            this.TblProyecto.setItems(proyectos);
 
-        this.eDAO = new EstudianteDAO();
-        ColAlumno.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        estudianteApPat.setCellValueFactory(new PropertyValueFactory<>(
-                "apellidoPaterno"));
-        estudianteApMat.setCellValueFactory(new PropertyValueFactory<>(
-                "apellidoMaterno"));
-        ColMatricula.setCellValueFactory(new PropertyValueFactory<>(
-                "matricula"));
-        this.estudiantes = eDAO.getEstudiantes();
-        this.TblAlumno.setItems(estudiantes);
+            this.eDAO = new EstudianteDAO();
+            ColAlumno.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+            estudianteApPat.setCellValueFactory(new PropertyValueFactory<>(
+                    "apellidoPaterno"));
+            estudianteApMat.setCellValueFactory(new PropertyValueFactory<>(
+                    "apellidoMaterno"));
+            ColMatricula.setCellValueFactory(new PropertyValueFactory<>(
+                    "matricula"));
+            this.estudiantes = eDAO.getEstudiantes();
+            this.TblAlumno.setItems(estudiantes);
 
-        TblProyecto.getSelectionModel().selectedItemProperty().
-                addListener((obs, oldSelection, newSelectionProyecto) -> {
-                    if (newSelectionProyecto != null) {
-                        System.out.println(newSelectionProyecto.getNombre());
-                        claveProyectoElegido = newSelectionProyecto.
-                                getClaveProyecto();
-                        System.out.println("CLAVE: " + claveProyectoElegido);
-                    }
-                });
-
-        TblAlumno.getSelectionModel().selectedItemProperty().
-                addListener((obs, oldSelection, newSelectionEstudiante) -> {
-                    if (newSelectionEstudiante != null) {
-                        System.out.println(newSelectionEstudiante.getNombre());
-                        try {
-                            selecciones = eDAO.
-                                    getSelecciones(newSelectionEstudiante.
-                                            getMatricula());
-                        } catch (Exception ex) {
-                            Logger.getLogger(AsignarProyectoController.class.
-                                    getName()).log(Level.SEVERE, null, ex);
+            TblProyecto.getSelectionModel().selectedItemProperty().
+                    addListener((obs, oldSelection, newSelectionProyecto) -> {
+                        if (newSelectionProyecto != null) {
+                            System.out.println(newSelectionProyecto.getNombre());
+                            claveProyectoElegido = newSelectionProyecto.
+                                    getClaveProyecto();
+                            System.out.println("CLAVE: " + claveProyectoElegido);
                         }
-                        int s1 = selecciones.get(0).getClaveProyecto();
-                        int s2 = selecciones.get(1).getClaveProyecto();
-                        int s3 = selecciones.get(2).getClaveProyecto();
-                        try {
-                            this.LbOpcion1.setText(pDAO.recuperarNombre(s1));
-                            this.LbOpcion2.setText(pDAO.recuperarNombre(s2));
-                            this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
-                            matriculaEstudianteElegido = newSelectionEstudiante.
-                                    getMatricula();
-                            System.out.println("MATRICULA: " 
-                                    + matriculaEstudianteElegido);
-                        } catch (Exception ex) {
-                            Logger.getLogger(AsignarProyectoController.class.
-                                    getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                });
+                    });
 
+            TblAlumno.getSelectionModel().selectedItemProperty().
+                    addListener((obs, oldSelection, newSelectionEstudiante) -> {
+                        if (newSelectionEstudiante != null) {
+                            System.out.println(newSelectionEstudiante.getNombre());
+                            try {
+                                selecciones = eDAO.
+                                        getSelecciones(newSelectionEstudiante.
+                                                getMatricula());
+                            } catch (Exception ex) {
+                                Logger.getLogger(AsignarProyectoController.class.
+                                        getName()).log(Level.SEVERE, null, ex);
+                            }
+                            int s1 = selecciones.get(0).getClaveProyecto();
+                            int s2 = selecciones.get(1).getClaveProyecto();
+                            int s3 = selecciones.get(2).getClaveProyecto();
+                            try {
+                                this.LbOpcion1.setText(pDAO.recuperarNombre(s1));
+                                this.LbOpcion2.setText(pDAO.recuperarNombre(s2));
+                                this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
+                                matriculaEstudianteElegido = newSelectionEstudiante.
+                                        getMatricula();
+                                System.out.println("MATRICULA: " 
+                                        + matriculaEstudianteElegido);
+                            } catch (Exception ex) {
+                                Logger.getLogger(AsignarProyectoController.class.
+                                        getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
+        }catch (Exception ex) {
+            AlertaFXML alerta = new AlertaFXML(
+                    (Stage) this.BtnCancelar.getScene().
+                            getWindow());
+            alerta.alertaInformacion("Error", "Error de conexion" 
+                    ,"Ocurrio un error con la conexion a la base de datos");
+        }
     }
 
     /**
@@ -209,32 +216,40 @@ public class AsignarProyectoController implements Initializable {
      */
     @FXML
     private void aceptar(ActionEvent event) throws Exception {
-        if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) {
-            eDAO.asginarProyecto(matriculaEstudianteElegido, 
-                    claveProyectoElegido);
-            System.out.println("Asignación realizada");
-            Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setHeaderText(null);
-            alert.setTitle("Exito");
-            alert.setContentText("Asignación realizada");
-            //alert.showAndWait();
-            ButtonType generarOficio = new ButtonType(
-                    "Generar oficio de asignación");
-            ButtonType finalizar = new ButtonType("Finalizar");
-            alert.getButtonTypes().clear();
-            alert.getButtonTypes().addAll(generarOficio, finalizar);
-            Optional<ButtonType> option = alert.showAndWait();
-            if (option.get() == finalizar) {
-                this.closeWindows();
-            } else if (option.get() == generarOficio) {
-                System.out.println("Caso de uso no implementado");
-                this.closeWindows();
+        try{
+            if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) {
+                eDAO.asginarProyecto(matriculaEstudianteElegido, 
+                        claveProyectoElegido);
+                System.out.println("Asignación realizada");
+                Alert alert = new Alert(Alert.AlertType.NONE);
+                alert.setHeaderText(null);
+                alert.setTitle("Exito");
+                alert.setContentText("Asignación realizada");
+                //alert.showAndWait();
+                ButtonType generarOficio = new ButtonType(
+                        "Generar oficio de asignación");
+                ButtonType finalizar = new ButtonType("Finalizar");
+                alert.getButtonTypes().clear();
+                alert.getButtonTypes().addAll(generarOficio, finalizar);
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == finalizar) {
+                    this.closeWindows();
+                } else if (option.get() == generarOficio) {
+                    System.out.println("Caso de uso no implementado");
+                    this.closeWindows();
+                }
+            } else {
+                AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
+                        getScene().getWindow());
+                alerta.alertaInformacion("Error", "Opciones incompletas",
+                        "Faltan selecciones para realisar la asignacion");
             }
-        } else {
-            AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
-                    getScene().getWindow());
-            alerta.alertaInformacion("Error", "Opciones incompletas",
-                    "Faltan selecciones para realisar la asignacion");
+        }catch (Exception ex) {
+            AlertaFXML alerta = new AlertaFXML(
+                    (Stage) this.BtnCancelar.getScene().
+                            getWindow());
+            alerta.alertaInformacion("Error", "Error de conexion" 
+                    ,"Ocurrio un error con la conexion a la base de datos");
         }
     }
 }

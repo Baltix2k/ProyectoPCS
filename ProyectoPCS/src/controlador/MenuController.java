@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import vista.AlertaFXML;
 
 /**
  * Clase controlador de la vista del Menu, la cual es la primera pantalla de la
@@ -64,6 +65,12 @@ public class MenuController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuController.class.getName()).
                     log(Level.SEVERE, null, ex);
+        }catch (Exception ex) {
+            AlertaFXML alerta = new AlertaFXML(
+                    (Stage) this.btn2.getScene().
+                            getWindow());
+            alerta.alertaInformacion("Error", "Error de conexion" 
+                    ,"Ocurrio un error con la conexion a la base de datos");
         }
     }
 
@@ -121,6 +128,12 @@ public class MenuController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuController.class.getName()).
                     log(Level.SEVERE, null, ex);
+        }catch (Exception ex) {
+            AlertaFXML alerta = new AlertaFXML(
+                    (Stage) this.btn3.getScene().
+                            getWindow());
+            alerta.alertaInformacion("Error", "Error de conexion" 
+                    ,"Ocurrio un error con la conexion a la base de datos");
         }
     }
 }

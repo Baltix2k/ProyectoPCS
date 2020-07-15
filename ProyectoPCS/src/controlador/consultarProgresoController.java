@@ -25,6 +25,7 @@ import modelo.EstudianteDAO;
 import modelo.EstudiantePOJO;
 import modelo.ReporteDAO;
 import modelo.ReportePOJO;
+import vista.AlertaFXML;
 
 /**
  * Clase controlador de la vista del consultarProgreso, pantalla que tiene como
@@ -140,62 +141,70 @@ public class consultarProgresoController implements Initializable {
      * @param ePOJO
      */
     void initData(EstudiantePOJO ePOJO) throws Exception {
-        this.eDAO = new EstudianteDAO();
-        this.rDAO = new ReporteDAO();
-        this.txtfdnomb.setText(ePOJO.getNombre() + " "
-                + ePOJO.getApellidoPaterno() + " "
-                + ePOJO.getApellidoMaterno());
-        this.txtfdmatr.setText(ePOJO.getMatricula());
-        this.txtfdorg.setText(this.eDAO.
-                recuperarNombreOrganizacion(ePOJO.getMatricula()));
-        this.txtfproyecto.setText(this.eDAO.
-                recuperarNombreProyecto(ePOJO.getMatricula()));
-        int horasCub = this.rDAO.recuperarHoras(ePOJO.getMatricula());
-        int horasPorCub = 200 - horasCub;
-        this.txtfdhorascub.setText(Integer.toString(horasCub));
-        this.txtfdhorasporcub.setText(Integer.toString(horasPorCub));
+        try{
+            this.eDAO = new EstudianteDAO();
+            this.rDAO = new ReporteDAO();
+            this.txtfdnomb.setText(ePOJO.getNombre() + " "
+                    + ePOJO.getApellidoPaterno() + " "
+                    + ePOJO.getApellidoMaterno());
+            this.txtfdmatr.setText(ePOJO.getMatricula());
+            this.txtfdorg.setText(this.eDAO.
+                    recuperarNombreOrganizacion(ePOJO.getMatricula()));
+            this.txtfproyecto.setText(this.eDAO.
+                    recuperarNombreProyecto(ePOJO.getMatricula()));
+            int horasCub = this.rDAO.recuperarHoras(ePOJO.getMatricula());
+            int horasPorCub = 200 - horasCub;
+            this.txtfdhorascub.setText(Integer.toString(horasCub));
+            this.txtfdhorasporcub.setText(Integer.toString(horasPorCub));
 
-        this.aDAO = new ArchivoDAO();
-        archivoId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
-        archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        archivoFecha.
-                setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+            this.aDAO = new ArchivoDAO();
+            archivoId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
+            archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+            archivoFecha.
+                    setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
 
-        ObservableList<ArchivoPOJO> obsArchivo = aDAO.
-                getArchivos(ePOJO.getMatricula());
-        this.tableArchivo.setItems(obsArchivo);
+            ObservableList<ArchivoPOJO> obsArchivo = aDAO.
+                    getArchivos(ePOJO.getMatricula());
+            this.tableArchivo.setItems(obsArchivo);
 
-        this.rDAO = new ReporteDAO();
-        reporteId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
-        reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        reporteFecha.
-                setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
-        reporteHoras.setCellValueFactory(
-                new PropertyValueFactory<>("horasReportadas"));
-        reporteTipo.
-                setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
+            this.rDAO = new ReporteDAO();
+            reporteId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
+            reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+            reporteFecha.
+                    setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+            reporteHoras.setCellValueFactory(
+                    new PropertyValueFactory<>("horasReportadas"));
+            reporteTipo.
+                    setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
 
-        ObservableList<ReportePOJO> obsReporte = rDAO.
-                getReportes(ePOJO.getMatricula());
-        this.tableReporte.setItems(obsReporte);
+            ObservableList<ReportePOJO> obsReporte = rDAO.
+                    getReportes(ePOJO.getMatricula());
+            this.tableReporte.setItems(obsReporte);
 
-        tableArchivo.getSelectionModel().selectedItemProperty().
-                addListener((obs, oldSelection, newSelectionArchivo) -> {
-                    if (newSelectionArchivo != null) {
-                        tableReporte.getSelectionModel().clearSelection();
-                        this.idArchivo = newSelectionArchivo.getIdArchivo();
-                        System.out.println("CLAVE: " + idArchivo);
-                    }
-                });
+            tableArchivo.getSelectionModel().selectedItemProperty().
+                    addListener((obs, oldSelection, newSelectionArchivo) -> {
+                        if (newSelectionArchivo != null) {
+                            tableReporte.getSelectionModel().clearSelection();
+                            this.idArchivo = newSelectionArchivo.getIdArchivo();
+                            System.out.println("CLAVE: " + idArchivo);
+                        }
+                    });
 
-        tableReporte.getSelectionModel().selectedItemProperty().
-                addListener((obs, oldSelection, newSelectionReporte) -> {
-                    if (newSelectionReporte != null) {
-                        tableArchivo.getSelectionModel().clearSelection();
-                        this.idArchivo = newSelectionReporte.getIdArchivo();
-                        System.out.println("CLAVE: " + idArchivo);
-                    }
-                });
+            tableReporte.getSelectionModel().selectedItemProperty().
+                    addListener((obs, oldSelection, newSelectionReporte) -> {
+                        if (newSelectionReporte != null) {
+                            tableArchivo.getSelectionModel().clearSelection();
+                            this.idArchivo = newSelectionReporte.getIdArchivo();
+                            System.out.println("CLAVE: " + idArchivo);
+                        }
+                    });
+        }catch (Exception ex) {
+            AlertaFXML alerta = new AlertaFXML(
+                    (Stage) this.btnsalir.getScene().
+                            getWindow());
+            alerta.alertaInformacion("Error", "Error de conexion" 
+                    ,"Ocurrio un error con la conexion a la base de datos");
+        }
     }
 
 }
