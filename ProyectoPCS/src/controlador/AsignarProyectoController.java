@@ -209,50 +209,58 @@ public class AsignarProyectoController implements Initializable {
      */
     @FXML
     private void aceptar(ActionEvent event) throws Exception {
-        System.out.println("Mensaje de confirmación");
-        Alert alertConfirmacion = new Alert(Alert.AlertType.NONE);
-        alertConfirmacion.setHeaderText(null);
-        alertConfirmacion.setTitle("Confirmación de acción");
-        alertConfirmacion.setContentText(
-                "¿Desea continuar con la asignación?");
-        ButtonType si = new ButtonType("Si");
-        ButtonType no = new ButtonType("No");
-        alertConfirmacion.getButtonTypes().clear();
-        alertConfirmacion.getButtonTypes().addAll(si, no);
-        Optional<ButtonType> opt = alertConfirmacion.showAndWait();
-        if (opt.get() == si) {
-            if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) 
-            {
-                eDAO.asginarProyecto(matriculaEstudianteElegido,
-                        claveProyectoElegido);
+        try{
+            System.out.println("Mensaje de confirmación");
+            Alert alertConfirmacion = new Alert(Alert.AlertType.NONE);
+            alertConfirmacion.setHeaderText(null);
+            alertConfirmacion.setTitle("Confirmación de acción");
+            alertConfirmacion.setContentText(
+                    "¿Desea continuar con la asignación?");
+            ButtonType si = new ButtonType("Si");
+            ButtonType no = new ButtonType("No");
+            alertConfirmacion.getButtonTypes().clear();
+            alertConfirmacion.getButtonTypes().addAll(si, no);
+            Optional<ButtonType> opt = alertConfirmacion.showAndWait();
+            if (opt.get() == si) {
+                if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) 
+                {
+                    eDAO.asginarProyecto(matriculaEstudianteElegido,
+                            claveProyectoElegido);
 
-                System.out.println("Asignación realizada");
-                Alert alert = new Alert(Alert.AlertType.NONE);
-                alert.setHeaderText(null);
-                alert.setTitle("Exito");
-                alert.setContentText("Asignación realizada");
-                //alert.showAndWait();
-                ButtonType generarOficio = new ButtonType(
-                        "Generar oficio de asignación");
-                ButtonType finalizar = new ButtonType("Finalizar");
-                alert.getButtonTypes().clear();
-                alert.getButtonTypes().addAll(generarOficio, finalizar);
-                Optional<ButtonType> option = alert.showAndWait();
-                if (option.get() == finalizar) {
-                    this.closeWindows();
-                } else if (option.get() == generarOficio) {
-                    System.out.println("Caso de uso no implementado");
-                    this.closeWindows();
+                    System.out.println("Asignación realizada");
+                    Alert alert = new Alert(Alert.AlertType.NONE);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Exito");
+                    alert.setContentText("Asignación realizada");
+                    //alert.showAndWait();
+                    ButtonType generarOficio = new ButtonType(
+                            "Generar oficio de asignación");
+                    ButtonType finalizar = new ButtonType("Finalizar");
+                    alert.getButtonTypes().clear();
+                    alert.getButtonTypes().addAll(generarOficio, finalizar);
+                    Optional<ButtonType> option = alert.showAndWait();
+                    if (option.get() == finalizar) {
+                        this.closeWindows();
+                    } else if (option.get() == generarOficio) {
+                        System.out.println("Caso de uso no implementado");
+                        this.closeWindows();
+                    }
+                } else if (opt.get() == no) {
+                    AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
+                        getScene().getWindow());
+                alerta.alertaInformacion("Error", "Opciones incompletas",
+                        "Faltan selecciones para realizar la asignacion");
                 }
-            } else if (opt.get() == no) {
-                AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
-                    getScene().getWindow());
-            alerta.alertaInformacion("Error", "Opciones incompletas",
-                    "Faltan selecciones para realizar la asignacion");
+            } else {
+                System.out.println("Esta implementandose....");
+
             }
-        } else {
-            System.out.println("Esta implementandose....");
-            
+        }catch (Exception ex) {
+            AlertaFXML alerta = new AlertaFXML(
+                    (Stage) this.BtnCancelar.getScene().
+                            getWindow());
+            alerta.alertaInformacion("Error", "Error de conexion" 
+                    ,"Ocurrio un error con la conexion a la base de datos");
         }
     }
 }
