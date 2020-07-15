@@ -173,7 +173,7 @@ public class SubirReporteController implements Initializable {
                             this.closeWindows();
                         } catch (IOException ex) {
                             archP.setArchivo(null);
-                        }catch(Exception ex){
+                        }catch(CJCommunicationsException ex){
                             AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
                                     getScene().getWindow());
                             alerta.alertaInformacion("Error", "Error de conexión"
