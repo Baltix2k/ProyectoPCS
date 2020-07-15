@@ -151,26 +151,32 @@ public class SubirReporteController implements Initializable {
                 repP.setHorasReportadas(Integer.parseInt(txtHoras.getText()));
                 repP.setTipoReporte(combxTipo.getValue());
 
-                if (this.validarArchivo()) {
-                    try {
-                        byte[] doc = new byte[(int) file.length()];
-                        InputStream input = new FileInputStream(file);
-                        input.read(doc);
-                        archP.setArchivo(doc);
-                    } catch (IOException ex) {
-                        archP.setArchivo(null);
-                    }
-                    arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.
-                            getText()));
-                    int idArch = arch.obtenerClaveArchivo();
+                if (this.validarArchivo()){
+                    if(this.getExtensionArchivo().equals(".pdf") || this.getExtensionArchivo().equals(".docx")) {
+                        try {
+                            byte[] doc = new byte[(int) file.length()];
+                            InputStream input = new FileInputStream(file);
+                            input.read(doc);
+                            archP.setArchivo(doc);
+                        } catch (IOException ex) {
+                            archP.setArchivo(null);
+                        }
+                        arch.subirArchivo(archP, Integer.parseInt(txtClaveExp.
+                                getText()));
+                        int idArch = arch.obtenerClaveArchivo();
 
-                    rep.subirReporte(repP, idArch);
-                    AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
-                            getScene().getWindow());
-                    alerta.alertaInformacion("Exito", "Archivo subido "
-                            + "exitosamente", "El archivo se ha cargado "
-                            + "correctamente al sistema");
-                    this.closeWindows();
+                        rep.subirReporte(repP, idArch);
+                        AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
+                                getScene().getWindow());
+                        alerta.alertaInformacion("Exito", "Archivo subido "
+                                + "exitosamente", "El archivo se ha cargado "
+                                + "correctamente al sistema");
+                        this.closeWindows();
+                    }else{
+                        AlertaFXML alerta = new AlertaFXML((Stage) this.btnCancelar.
+                    getScene().getWindow());
+                    alerta.alertaInformacion("Error", "Archivo invalido", "El sistema solo acepta PDF y DOCX");
+                    }
                 }
 
             } else {
@@ -270,15 +276,25 @@ public class SubirReporteController implements Initializable {
      */
     private boolean validarArchivo() {
         String errorMessage = "";
+        System.out.println(this.getExtensionArchivo());
         if (file.length() > Math.pow(2, 32)) {
             errorMessage = "El tamaño del archivo excede el limite soportado";
-        } else {
-            if (this.getExtensionArchivo() != ".pdf"
+        /*} else {
+            /*if (this.getExtensionArchivo() != ".pdf"
                     || this.getExtensionArchivo() != ".doc"
                     || this.getExtensionArchivo() != ".docx") {
                 errorMessage = "El tipo de archivo no es valido, "
                         + "el sistema solo acepta PDF y DOCX";
             }
+            if (this.getExtensionArchivo() != ".pdf" || this.getExtensionArchivo() != ".docx") {
+                errorMessage = "El tipo de archivo no es valido, "
+                        + "el sistema solo acepta PDF y DOCX";
+            }/*else{
+                if (this.getExtensionArchivo() != ".docx"){
+                    errorMessage = "El tipo de archivo no es valido, "
+                        + "el sistema solo acepta PDF y DOCX";
+                }
+            }*/
         }
 
         if (errorMessage.length() == 0) {

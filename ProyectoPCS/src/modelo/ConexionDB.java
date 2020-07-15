@@ -18,7 +18,7 @@ public class ConexionDB {
     public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database
             + "?useSSL=false";
     public String username = "root";
-    public String password = "gatodeportivo";
+    public String password = "Jinchuriki2k";
 
     /**
      * Genera conexion a la base de datos de acuerdo a los datos que se
