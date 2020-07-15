@@ -158,24 +158,28 @@ public class consultarProgresoController implements Initializable {
             this.txtfdhorasporcub.setText(Integer.toString(horasPorCub));
 
             this.aDAO = new ArchivoDAO();
-            archivoId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
-            archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-            archivoFecha.
-                    setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+            archivoId.setCellValueFactory(
+                    new PropertyValueFactory<>("idArchivo"));
+            archivoTitulo.setCellValueFactory(
+                    new PropertyValueFactory<>("titulo"));
+            archivoFecha.setCellValueFactory(
+                    new PropertyValueFactory<>("fechaEntrega"));
 
             ObservableList<ArchivoPOJO> obsArchivo = aDAO.
                     getArchivos(ePOJO.getMatricula());
             this.tableArchivo.setItems(obsArchivo);
 
             this.rDAO = new ReporteDAO();
-            reporteId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
-            reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-            reporteFecha.
-                    setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+            reporteId.setCellValueFactory(
+                    new PropertyValueFactory<>("idArchivo"));
+            reporteTitulo.setCellValueFactory(
+                    new PropertyValueFactory<>("titulo"));
+            reporteFecha.setCellValueFactory(
+                    new PropertyValueFactory<>("fechaEntrega"));
             reporteHoras.setCellValueFactory(
                     new PropertyValueFactory<>("horasReportadas"));
-            reporteTipo.
-                    setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
+            reporteTipo.setCellValueFactory(
+                    new PropertyValueFactory<>("tipoReporte"));
 
             ObservableList<ReportePOJO> obsReporte = rDAO.
                     getReportes(ePOJO.getMatricula());
