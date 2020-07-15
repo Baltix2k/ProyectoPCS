@@ -150,12 +150,12 @@ public class preConsultarProgresoController implements Initializable {
                             myStage.close();
                         }
                     }
-                } catch (IOException ex) {
-                    Logger.getLogger(preConsultarProgresoController.class.
-                            getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
-                    Logger.getLogger(preConsultarProgresoController.class.
-                            getName()).log(Level.SEVERE, null, ex);
+                    AlertaFXML alerta = new AlertaFXML(
+                            (Stage) this.btnconsultar.getScene().
+                                    getWindow());
+                    alerta.alertaInformacion("Error", "Error de conexion" 
+                            ,"Ocurrio un error con la conexion a la base de datos");
                 }
             }
         }
