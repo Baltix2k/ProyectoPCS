@@ -136,38 +136,43 @@ public class AsignarProyectoController implements Initializable {
 
         TblProyecto.getSelectionModel().selectedItemProperty().
                 addListener((obs, oldSelection, newSelectionProyecto) -> {
-            if (newSelectionProyecto != null) {
-                System.out.println(newSelectionProyecto.getNombre());
-                claveProyectoElegido = newSelectionProyecto.getClaveProyecto();
-                System.out.println("CLAVE: " + claveProyectoElegido);
-            }
-        });
+                    if (newSelectionProyecto != null) {
+                        System.out.println(newSelectionProyecto.getNombre());
+                        claveProyectoElegido = newSelectionProyecto.
+                                getClaveProyecto();
+                        System.out.println("CLAVE: " + claveProyectoElegido);
+                    }
+                });
 
         TblAlumno.getSelectionModel().selectedItemProperty().
                 addListener((obs, oldSelection, newSelectionEstudiante) -> {
-            if (newSelectionEstudiante != null) {
-                System.out.println(newSelectionEstudiante.getNombre());
-                try {
-                    selecciones = eDAO. 
-                            getSelecciones(newSelectionEstudiante.getMatricula());
-                } catch (Exception ex) {
-                    Logger.getLogger(AsignarProyectoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                int s1 = selecciones.get(0).getClaveProyecto();
-                int s2 = selecciones.get(1).getClaveProyecto();;
-                int s3 = selecciones.get(2).getClaveProyecto();;
-                try {
-                    this.LbOpcion1.setText(pDAO.recuperarNombre(s1));
-                    this.LbOpcion2.setText(pDAO.recuperarNombre(s2));
-                    this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
-                    matriculaEstudianteElegido = newSelectionEstudiante.
-                            getMatricula();
-                    System.out.println("MATRICULA: " + matriculaEstudianteElegido);
-                }catch (Exception ex) {
-                    Logger.getLogger(AsignarProyectoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
+                    if (newSelectionEstudiante != null) {
+                        System.out.println(newSelectionEstudiante.getNombre());
+                        try {
+                            selecciones = eDAO.
+                                    getSelecciones(newSelectionEstudiante.
+                                            getMatricula());
+                        } catch (Exception ex) {
+                            Logger.getLogger(AsignarProyectoController.class.
+                                    getName()).log(Level.SEVERE, null, ex);
+                        }
+                        int s1 = selecciones.get(0).getClaveProyecto();
+                        int s2 = selecciones.get(1).getClaveProyecto();
+                        int s3 = selecciones.get(2).getClaveProyecto();
+                        try {
+                            this.LbOpcion1.setText(pDAO.recuperarNombre(s1));
+                            this.LbOpcion2.setText(pDAO.recuperarNombre(s2));
+                            this.LbOpcion3.setText(pDAO.recuperarNombre(s3));
+                            matriculaEstudianteElegido = newSelectionEstudiante.
+                                    getMatricula();
+                            System.out.println("MATRICULA: " 
+                                    + matriculaEstudianteElegido);
+                        } catch (Exception ex) {
+                            Logger.getLogger(AsignarProyectoController.class.
+                                    getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
 
     }
 
@@ -197,15 +202,16 @@ public class AsignarProyectoController implements Initializable {
     }
 
     /**
-     * Recupera las selecciones de los listeners (ESTUDIANTE y PROYECTO) y 
+     * Recupera las selecciones de los listeners (ESTUDIANTE y PROYECTO) y
      * realiza la asociacion entre ellas generando asi una INSCRIPCIÓN.
-     * 
+     *
      * @param event
      */
     @FXML
     private void aceptar(ActionEvent event) throws Exception {
-        if(matriculaEstudianteElegido != null && claveProyectoElegido != 0){
-            eDAO.asginarProyecto(matriculaEstudianteElegido, claveProyectoElegido);
+        if (matriculaEstudianteElegido != null && claveProyectoElegido != 0) {
+            eDAO.asginarProyecto(matriculaEstudianteElegido, 
+                    claveProyectoElegido);
             System.out.println("Asignación realizada");
             Alert alert = new Alert(Alert.AlertType.NONE);
             alert.setHeaderText(null);
@@ -224,10 +230,11 @@ public class AsignarProyectoController implements Initializable {
                 System.out.println("Caso de uso no implementado");
                 this.closeWindows();
             }
-        }else{
-            AlertaFXML alerta = new AlertaFXML((Stage)this.BtnCancelar.getScene().getWindow());
-                            alerta.alertaInformacion("Error", "Opciones incompletas", 
-                                    "Faltan selecciones para realisar la asignacion");
+        } else {
+            AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
+                    getScene().getWindow());
+            alerta.alertaInformacion("Error", "Opciones incompletas",
+                    "Faltan selecciones para realisar la asignacion");
         }
     }
 }

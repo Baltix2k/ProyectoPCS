@@ -41,7 +41,8 @@ public class EstudianteDAO {
                         rs.getString(6), rs.getFloat(7), rs.getString(8));
             }
         } catch (SQLException ex) {
-            throw new Exception("Error en Clase EstudianteDAO, método recuperar: " + ex.getMessage());
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "recuperar: " + ex.getMessage());
         }finally{
             try { if (rs != null) rs.close(); } catch (Exception e) {};
             try { if (stm != null) stm.close(); } catch (Exception e) {};
@@ -62,8 +63,8 @@ public class EstudianteDAO {
         Statement stm = null;
         ResultSet rs = null;
         String nombreEstudiante = null;
-        String sql = "SELECT estudiante.nombre FROM estudiante WHERE matricula ="
-                + " '" + matricula + "';";
+        String sql = "SELECT estudiante.nombre FROM estudiante WHERE matricula"
+                + " = '" + matricula + "';";
         try {
             con = new ConexionDB().conectarMySQL();
             stm = con.createStatement();
@@ -72,8 +73,8 @@ public class EstudianteDAO {
                 nombreEstudiante = rs.getString(1);
             }
         } catch (SQLException ex) {
-            throw new Exception("Error en Clase EstudianteDAO, método recuperarNombreEstudiante: " 
-                    + ex.getMessage());
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "recuperarNombreEstudiante: " + ex.getMessage());
         }finally{
             try { if (rs != null) rs.close(); } catch (Exception e) {};
             try { if (stm != null) stm.close(); } catch (Exception e) {};
@@ -90,7 +91,8 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return nombreOrganizacion Nombre de la ORGANIZACION especificado.
      */
-    public String recuperarNombreOrganizacion(String matricula) throws Exception{
+    public String recuperarNombreOrganizacion(String matricula) 
+            throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -263,7 +265,8 @@ public class EstudianteDAO {
      * SELECCIONPROYECTO.
      * @return obs Lista contenedora de las SELECCIONPROYECTO.
      */
-    public ArrayList<SeleccionProyectoPOJO> getSelecciones(String matricula) throws Exception{
+    public ArrayList<SeleccionProyectoPOJO> getSelecciones(String matricula) 
+            throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -324,8 +327,8 @@ public class EstudianteDAO {
             stm.executeUpdate(sql2);
 ;
         } catch (SQLException e) {
-            throw new Exception("Error en Clase EstudianteDAO, método getSelecciones: " 
-                    + e.getMessage());
+            throw new Exception("Error en Clase EstudianteDAO, método "
+                    + "getSelecciones: " + e.getMessage());
         }finally{
             try { if (stm != null) stm.close(); } catch (Exception e) {};
             try { if (con!= null) con.close(); } catch (Exception e) {};

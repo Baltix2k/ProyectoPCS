@@ -26,7 +26,8 @@ public class ReporteDAO {
      * REPORTES.
      * @return obs Lista contenedora de los REPORTES del ESTUDIANTE.
      */
-    public ObservableList<ReportePOJO> getReportes(String matricula) throws Exception{
+    public ObservableList<ReportePOJO> getReportes(String matricula) 
+            throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;

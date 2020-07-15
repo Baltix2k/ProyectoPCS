@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,7 +20,7 @@ import vista.AlertaFXML;
 
 /**
  * Clase controlador de la vista del preConsultarProgreso, pantalla que tiene
- * como objetivo recuperar una matricula para poder cargar la consulta en la 
+ * como objetivo recuperar una matricula para poder cargar la consulta en la
  * vista consultarProgreso.
  *
  * @version 1.0
@@ -77,7 +76,8 @@ public class preConsultarProgresoController implements Initializable {
     @FXML
     private void cancelar(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -86,7 +86,8 @@ public class preConsultarProgresoController implements Initializable {
             Stage myStage = (Stage) this.btncancelar.getScene().getWindow();
             myStage.close();
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
@@ -103,65 +104,85 @@ public class preConsultarProgresoController implements Initializable {
     private void consultar(ActionEvent event) {
         this.eDAO = new EstudianteDAO();
         String matricula = this.txfdmatricula.getText();
-        if(this.matriculaValida()){
-            if(matricula.matches("[0-9]*")){
-                AlertaFXML alerta = new AlertaFXML((Stage)this.btnconsultar.getScene().getWindow());
-                alerta.alertaInformacion("Error", "Matricula invalida", 
+        if (this.matriculaValida()) {
+            if (matricula.matches("[0-9]*")) {
+                AlertaFXML alerta = new AlertaFXML((Stage) this.btnconsultar.
+                        getScene().getWindow());
+                alerta.alertaInformacion("Error", "Matricula invalida",
                         "La matricula debe comenzar con S");
-            }else{
+            } else {
                 try {
                     EstudiantePOJO ePOJO = eDAO.recuperar(matricula);
-                    if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) != null) {
-                        AlertaFXML alerta = new AlertaFXML((Stage)this.btnconsultar.getScene().getWindow());
-                        alerta.alertaInformacion("Error", "Estudiante sin expediente", 
-                                "El estudiante no cuenta con un expediente, se le debe asignar un proyecto");
+                    if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.
+                            recuperarNombreEstudiante(matricula) != null) {
+                        AlertaFXML alerta = new AlertaFXML(
+                                (Stage) this.btnconsultar.getScene().
+                                        getWindow());
+                        alerta.alertaInformacion("Error", "Estudiante sin exped"
+                                + "iente", "El estudiante no cuenta con un "
+                                + "expediente, se le debe asignar un proyecto");
                     } else {
-                        if (eDAO.recuperarNombreEstudiante(matricula) == null && eDAO.recuperaClaveExpediente(matricula) == 0) {
-                            AlertaFXML alerta = new AlertaFXML((Stage)this.btnconsultar.getScene().getWindow());
-                            alerta.alertaInformacion("Error", "Estudiante no encontrado", 
-                                    "El estudiante no se encuentra en la base de datos");
-                        }else{
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/consultarProgreso.fxml"));
+                        if (eDAO.recuperarNombreEstudiante(matricula) == null
+                                && eDAO.recuperaClaveExpediente(
+                                        matricula) == 0) {
+                            AlertaFXML alerta = new AlertaFXML(
+                                    (Stage) this.btnconsultar.getScene().
+                                            getWindow());
+                            alerta.alertaInformacion("Error", "Estudiante no "
+                                    + "encontrado", "El estudiante no se "
+                                    + "encuentra en la base de datos");
+                        } else {
+                            FXMLLoader loader = new FXMLLoader(getClass().
+                                    getResource(
+                                            "/vista/consultarProgreso.fxml"));
                             Parent root = loader.load();
-                            consultarProgresoController controlador = loader.getController();
+                            consultarProgresoController controlador = loader.
+                                    getController();
                             controlador.initData(ePOJO);
                             Scene scene = new Scene(root);
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             stage.show();
-                            stage.setOnCloseRequest(e -> controlador.closeWindows());
-                            Stage myStage = (Stage) this.btnconsultar.getScene().getWindow();
+                            stage.setOnCloseRequest(e -> controlador.
+                                    closeWindows());
+                            Stage myStage = (Stage) this.btnconsultar.
+                                    getScene().getWindow();
                             myStage.close();
                         }
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(preConsultarProgresoController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(preConsultarProgresoController.class.
+                            getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
-                    Logger.getLogger(preConsultarProgresoController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(preConsultarProgresoController.class.
+                            getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
     }
-    
+
     /**
-     * Permite validar si la matricula ingresda no contiene espacios o el campo esta vacio.
+     * Permite validar si la matricula ingresda no contiene espacios o el campo
+     * esta vacio.
+     *
      * @return boolean.
      *
      */
-    private boolean matriculaValida(){
+    private boolean matriculaValida() {
         String errorMessage = "";
-        
-        if(this.txfdmatricula.getText() == null || this.txfdmatricula.getText().length() == 0){
+        if (this.txfdmatricula.getText() == null
+                || this.txfdmatricula.getText().length() == 0) {
             errorMessage = "Campo vacio \n";
         }
-        if(this.txfdmatricula.getText().contains(" ")){
+        if (this.txfdmatricula.getText().contains(" ")) {
             errorMessage = "La matricula contiene espacios \n";
         }
-                
-        if(errorMessage.length() == 0){
+
+        if (errorMessage.length() == 0) {
             return true;
-        }else{
-            AlertaFXML alerta = new AlertaFXML((Stage)this.btnconsultar.getScene().getWindow());
+        } else {
+            AlertaFXML alerta = new AlertaFXML((Stage) this.btnconsultar.
+                    getScene().getWindow());
             alerta.alertaInformacion("Error", "Campo invalido", errorMessage);
             return false;
         }

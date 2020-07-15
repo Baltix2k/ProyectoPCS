@@ -95,7 +95,8 @@ public class ProyectoDAO {
      * la ORGANIZACIÓN.
      * @return nombreOrganizacion Nombre de la ORGANIZACIÓN.
      */
-    public String recuperarNombreOrganizacion(int claveProyecto) throws Exception{
+    public String recuperarNombreOrganizacion(int claveProyecto) 
+            throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;

@@ -96,14 +96,14 @@ public class MenuController implements Initializable {
     }
 
     /**
-     * Acción realizada al dar clic en el primer botón: Asignar proyecto a 
+     * Acción realizada al dar clic en el primer botón: Asignar proyecto a
      * estudiante. El parent carga la nueva vista de subirReporte, el cual se va
      * a cargar en el scene que esta asociado al stage.
      *
      * @param event El clic del botón.
      */
     @FXML
-    private void asignarProyecto(ActionEvent event) {
+    private void asignarProyecto(ActionEvent event) throws Exception {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().
                     getResource("/vista/AsignarProyecto.fxml"));
