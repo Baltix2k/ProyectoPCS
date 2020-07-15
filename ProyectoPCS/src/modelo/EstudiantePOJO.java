@@ -1,14 +1,12 @@
 package modelo;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 /**
  * Clase que representa como objeto los ESTUDIANTES registrados en la BD.
- * 
+ *
  * @version 1.0
  */
 public class EstudiantePOJO {
+
     String apellidoMaterno;
     String apellidoPaterno;
     String nombre;
@@ -17,9 +15,9 @@ public class EstudiantePOJO {
     String matricula;
     float promedio;
     String telefono;
-    
-    public EstudiantePOJO(String apellidoMaterno, String apellidoPaterno, 
-            String nombre, String correoPersonal, String estado, 
+
+    public EstudiantePOJO(String apellidoMaterno, String apellidoPaterno,
+            String nombre, String correoPersonal, String estado,
             String matricula, float promedio, String telefono) {
         this.apellidoMaterno = apellidoMaterno;
         this.apellidoPaterno = apellidoPaterno;
@@ -31,7 +29,7 @@ public class EstudiantePOJO {
         this.telefono = telefono;
     }
 
-    EstudiantePOJO(String nombre, String apellidoPaterno, 
+    EstudiantePOJO(String nombre, String apellidoPaterno,
             String apellidoMaterno, String matricula) {
         this.apellidoMaterno = apellidoMaterno;
         this.apellidoPaterno = apellidoPaterno;
@@ -46,7 +44,7 @@ public class EstudiantePOJO {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
@@ -102,5 +100,5 @@ public class EstudiantePOJO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-      
+
 }

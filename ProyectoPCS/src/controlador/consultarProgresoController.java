@@ -91,7 +91,7 @@ public class consultarProgresoController implements Initializable {
 
     /**
      * Regresa al menu principal.
-     * 
+     *
      * @param event
      */
     @FXML
@@ -133,17 +133,17 @@ public class consultarProgresoController implements Initializable {
     }
 
     /**
-     * Inicializa los textfield y las tablas mostrados en pantalla acorde al 
-     * ESTUDIANTE recibido de la pantalla anterior por medio de clases DAO y el 
+     * Inicializa los textfield y las tablas mostrados en pantalla acorde al
+     * ESTUDIANTE recibido de la pantalla anterior por medio de clases DAO y el
      * POJO.
-     * 
-     * @param ePOJO 
+     *
+     * @param ePOJO
      */
     void initData(EstudiantePOJO ePOJO) throws Exception {
         this.eDAO = new EstudianteDAO();
         this.rDAO = new ReporteDAO();
-        this.txtfdnomb.setText(ePOJO.getNombre() + " " 
-                + ePOJO.getApellidoPaterno() + " " 
+        this.txtfdnomb.setText(ePOJO.getNombre() + " "
+                + ePOJO.getApellidoPaterno() + " "
                 + ePOJO.getApellidoMaterno());
         this.txtfdmatr.setText(ePOJO.getMatricula());
         this.txtfdorg.setText(this.eDAO.
@@ -158,36 +158,44 @@ public class consultarProgresoController implements Initializable {
         this.aDAO = new ArchivoDAO();
         archivoId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
         archivoTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        archivoFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+        archivoFecha.
+                setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
 
-        ObservableList<ArchivoPOJO> obsArchivo = aDAO.getArchivos(ePOJO.getMatricula());
+        ObservableList<ArchivoPOJO> obsArchivo = aDAO.
+                getArchivos(ePOJO.getMatricula());
         this.tableArchivo.setItems(obsArchivo);
 
         this.rDAO = new ReporteDAO();
         reporteId.setCellValueFactory(new PropertyValueFactory<>("idArchivo"));
         reporteTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        reporteFecha.setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
-        reporteHoras.setCellValueFactory(new PropertyValueFactory<>("horasReportadas"));
-        reporteTipo.setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
+        reporteFecha.
+                setCellValueFactory(new PropertyValueFactory<>("fechaEntrega"));
+        reporteHoras.setCellValueFactory(
+                new PropertyValueFactory<>("horasReportadas"));
+        reporteTipo.
+                setCellValueFactory(new PropertyValueFactory<>("tipoReporte"));
 
-        ObservableList<ReportePOJO> obsReporte = rDAO.getReportes(ePOJO.getMatricula());
+        ObservableList<ReportePOJO> obsReporte = rDAO.
+                getReportes(ePOJO.getMatricula());
         this.tableReporte.setItems(obsReporte);
 
-        tableArchivo.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionArchivo) -> {
-            if (newSelectionArchivo != null) {
-                tableReporte.getSelectionModel().clearSelection();
-                this.idArchivo = newSelectionArchivo.getIdArchivo();
-                System.out.println("CLAVE: " + idArchivo);
-            }
-        });
+        tableArchivo.getSelectionModel().selectedItemProperty().
+                addListener((obs, oldSelection, newSelectionArchivo) -> {
+                    if (newSelectionArchivo != null) {
+                        tableReporte.getSelectionModel().clearSelection();
+                        this.idArchivo = newSelectionArchivo.getIdArchivo();
+                        System.out.println("CLAVE: " + idArchivo);
+                    }
+                });
 
-        tableReporte.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelectionReporte) -> {
-            if (newSelectionReporte != null) {
-                tableArchivo.getSelectionModel().clearSelection();
-                this.idArchivo = newSelectionReporte.getIdArchivo();
-                System.out.println("CLAVE: " + idArchivo);
-            }
-        });
+        tableReporte.getSelectionModel().selectedItemProperty().
+                addListener((obs, oldSelection, newSelectionReporte) -> {
+                    if (newSelectionReporte != null) {
+                        tableArchivo.getSelectionModel().clearSelection();
+                        this.idArchivo = newSelectionReporte.getIdArchivo();
+                        System.out.println("CLAVE: " + idArchivo);
+                    }
+                });
     }
 
 }

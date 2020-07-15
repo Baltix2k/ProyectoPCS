@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 /**
  * Clase que realiza la conexión con la base de datos.
- * 
+ *
  * @version 1.0
  */
 public class ConexionDB {
@@ -21,19 +21,20 @@ public class ConexionDB {
     public String password = "gatodeportivo";
 
     /**
-     * Genera conexion a la base de datos de acuerdo a los datos que se 
+     * Genera conexion a la base de datos de acuerdo a los datos que se
      * encuentran en los atributos.
-     * 
+     *
      * @return void
      */
-    public Connection conectarMySQL() throws Exception{
+    public Connection conectarMySQL() throws Exception {
         Connection conn = null;
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("Se establece la conexion a la base de datos");
         } catch (ClassNotFoundException | SQLException e) {
-            throw new Exception("Error en ConexionDB la causa es: " + e.getCause().toString());
+            throw new Exception("Error en ConexionDB la causa es: " + e.
+                    getCause().toString());
         }
         return conn;
     }

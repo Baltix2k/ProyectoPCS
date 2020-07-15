@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -41,7 +40,7 @@ public class preSubirReporteController implements Initializable {
      * Inicializa el controllador de la clase.
      *
      * @param url
-     * @param rb 
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,7 +51,8 @@ public class preSubirReporteController implements Initializable {
      */
     public void closeWindows() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -61,7 +61,8 @@ public class preSubirReporteController implements Initializable {
             Stage myStage = (Stage) this.btncancelar.getScene().getWindow();
             myStage.close();
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
 
@@ -69,9 +70,9 @@ public class preSubirReporteController implements Initializable {
      * Acción realizada al dar clic en el botón: Aceptar, el cual recupera la
      * cadena escrita en el textfield txtfdmatricula y carga la siguiente
      * pantalla,la cual inicializa con el ESTUDIANTE recuperado por medio de la
-     * matricula recuperada y le permitirá subir un archivo a su inscripción. 
-     * El parent carga la nueva vista de consultarProgreso, el cual se va a 
-     * cargar en el scene que esta asociado al stage.
+     * matricula recuperada y le permitirá subir un archivo a su inscripción. El
+     * parent carga la nueva vista de consultarProgreso, el cual se va a cargar
+     * en el scene que esta asociado al stage.
      *
      * @param event El clic del botón.
      */
@@ -79,41 +80,57 @@ public class preSubirReporteController implements Initializable {
     private void aceptar(ActionEvent event) {
         this.eDAO = new EstudianteDAO();
         String matricula = this.txfdmatricula.getText();
-        if(this.matriculaValida()){
-            if(matricula.matches("[0-9]*")){
-                AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
-                alerta.alertaInformacion("Error", "Matricula invalida", 
+        if (this.matriculaValida()) {
+            if (matricula.matches("[0-9]*")) {
+                AlertaFXML alerta = new AlertaFXML((Stage) this.btnAceptar.
+                        getScene().getWindow());
+                alerta.alertaInformacion("Error", "Matricula invalida",
                         "La matricula debe comenzar con S");
-            }else{
+            } else {
                 try {
                     EstudiantePOJO ePOJO = eDAO.recuperar(matricula);
-                    if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.recuperarNombreEstudiante(matricula) != null) {
-                        AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
-                        alerta.alertaInformacion("Error", "Estudiante sin expediente", 
-                                "El estudiante no cuenta con un expediente, se le debe asignar un proyecto");
+                    if (eDAO.recuperaClaveExpediente(matricula) == 0 && eDAO.
+                            recuperarNombreEstudiante(matricula) != null) {
+                        AlertaFXML alerta = new AlertaFXML(
+                                (Stage) this.btnAceptar.getScene().getWindow());
+                        alerta.alertaInformacion("Error", "Estudiante sin exped"
+                                + "iente", "El estudiante no cuenta con un "
+                                + "expediente, se le debe asignar un proyecto");
                     } else {
-                        if (eDAO.recuperarNombreEstudiante(matricula) == null && eDAO.recuperaClaveExpediente(matricula) == 0) {
-                            AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
-                            alerta.alertaInformacion("Error", "Estudiante no encontrado", 
-                                    "El estudiante no se encuentra en la base de datos");
-                        }else {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/SubirReporteVista.fxml"));
+                        if (eDAO.recuperarNombreEstudiante(matricula) == null
+                                && eDAO.recuperaClaveExpediente(
+                                        matricula) == 0) {
+                            AlertaFXML alerta = new AlertaFXML(
+                                    (Stage) this.btnAceptar.getScene().
+                                            getWindow());
+                            alerta.alertaInformacion("Error", "Estudiante no "
+                                    + "encontrado", "El estudiante no se "
+                                    + "encuentra en la base de datos");
+                        } else {
+                            FXMLLoader loader = new FXMLLoader(getClass().
+                                    getResource(
+                                            "/vista/SubirReporteVista.fxml"));
                             Parent root = loader.load();
-                            SubirReporteController controlador = loader.getController();
+                            SubirReporteController controlador = loader.
+                                    getController();
                             controlador.initData(ePOJO);
                             Scene scene = new Scene(root);
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             stage.show();
-                            stage.setOnCloseRequest(e -> controlador.closeWindows());
-                            Stage myStage = (Stage) this.btnAceptar.getScene().getWindow();
+                            stage.setOnCloseRequest(e -> controlador.
+                                    closeWindows());
+                            Stage myStage = (Stage) this.btnAceptar.getScene().
+                                    getWindow();
                             myStage.close();
                         }
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(preSubirReporteController.class.getName()).
+                            log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
-                    Logger.getLogger(preSubirReporteController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(preSubirReporteController.class.getName()).
+                            log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -129,7 +146,8 @@ public class preSubirReporteController implements Initializable {
     @FXML
     private void cancelar(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/MenuVista.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().
+                    getResource("/vista/MenuVista.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -138,33 +156,36 @@ public class preSubirReporteController implements Initializable {
             Stage myStage = (Stage) this.btncancelar.getScene().getWindow();
             myStage.close();
         } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuController.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
-     * Permite validar si la matricula ingresda no contiene espacios o el campo esta vacio.
+     * Permite validar si la matricula ingresda no contiene espacios o el campo
+     * esta vacio.
+     *
      * @return boolean.
      *
      */
-    private boolean matriculaValida(){
+    private boolean matriculaValida() {
         String errorMessage = "";
-        
-        if(this.txfdmatricula.getText() == null || this.txfdmatricula.getText().length() == 0){
+        if (this.txfdmatricula.getText() == null
+                || this.txfdmatricula.getText().length() == 0) {
             errorMessage = "Campo vacio \n";
         }
-        if(this.txfdmatricula.getText().contains(" ")){
+        if (this.txfdmatricula.getText().contains(" ")) {
             errorMessage = "La matricula contiene espacios \n";
         }
-                
-        if(errorMessage.length() == 0){
+
+        if (errorMessage.length() == 0) {
             return true;
-        }else{
-            AlertaFXML alerta = new AlertaFXML((Stage)this.btnAceptar.getScene().getWindow());
+        } else {
+            AlertaFXML alerta = new AlertaFXML((Stage) this.btnAceptar.
+                    getScene().getWindow());
             alerta.alertaInformacion("Error", "Campo invalido", errorMessage);
             return false;
         }
     }
-    
 
 }

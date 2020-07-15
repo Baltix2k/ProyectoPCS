@@ -5,16 +5,17 @@ import java.time.LocalDate;
 /**
  * Clase que representa como objeto los ARCHIVOS entregados por los ESTUDIANTES
  * registrados en la BD.
- * 
+ *
  * @version 1.0
  */
 public class ArchivoPOJO {
+
     int idArchivo;
     byte[] archivo;
     String titulo;
     LocalDate fechaEntrega;
 
-    public ArchivoPOJO(int idArchivo, String titulo,LocalDate fechaEntrega) {
+    public ArchivoPOJO(int idArchivo, String titulo, LocalDate fechaEntrega) {
         this.idArchivo = idArchivo;
         //this.archivo = archivo;
         this.fechaEntrega = fechaEntrega;
@@ -30,7 +31,7 @@ public class ArchivoPOJO {
     }
 
     public ArchivoPOJO() {
-        
+
     }
 
     public LocalDate getFechaEntrega() {
@@ -48,15 +49,13 @@ public class ArchivoPOJO {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-    
+
     public byte[] getArchivo() {
         return archivo;
     }
-    
+
     public void setArchivo(byte[] archivo) {
         this.archivo = archivo;
     }
-    
-    
-    
+
 }

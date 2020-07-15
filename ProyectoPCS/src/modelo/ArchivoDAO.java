@@ -24,10 +24,10 @@ public class ArchivoDAO {
      *
      * @param matricula Identificador del ESTUDIANTE de los que se obtendran los
      * ARCHIVOS.
-     * @return obs Lista contenedora de los ARCHIVOS del
-     * ESTUDIANTE.
+     * @return obs Lista contenedora de los ARCHIVOS del ESTUDIANTE.
      */
-    public ObservableList<ArchivoPOJO> getArchivos(String matricula) throws Exception{
+    public ObservableList<ArchivoPOJO> getArchivos(String matricula) 
+            throws Exception{
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
@@ -56,7 +56,8 @@ public class ArchivoDAO {
                 obs.add(c);
             }
         } catch (SQLException e) {           
-            throw new Exception("Error en create Clase ArchivoDAO, método readAll: " + e.getMessage());
+            throw new Exception("Error en create Clase ArchivoDAO, método "
+                    + "readAll: " + e.getMessage());
         }finally{
             try { if (rs != null) rs.close(); } catch (Exception e) {};
             try { if (stm != null) stm.close(); } catch (Exception e) {};
@@ -88,7 +89,8 @@ public class ArchivoDAO {
             ps.setString(4, arch.getFechaEntrega().toString());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new Exception("Error en Clase ArchivoDAO, metodo subirArchivo: " + e.getMessage());
+            throw new Exception("Error en Clase ArchivoDAO, metodo "
+                    + "subirArchivo: " + e.getMessage());
         }finally{
             try { if (ps != null) ps.close(); } catch (Exception e) {};
             try { if (con!= null) con.close(); } catch (Exception e) {};
