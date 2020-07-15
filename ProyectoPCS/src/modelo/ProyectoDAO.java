@@ -13,13 +13,14 @@ import javafx.collections.ObservableList;
  *
  * @version 1.0
  */
-public class ProyectoDAO {
+public class ProyectoDAO implements ProyectoDAO_Interfaz{
 
     /**
      * Recupera de la base de datos la lista de PROYECTOS registrados en la BD.
      *
      * @return obs Lista contenedora de los PROYECTOS.
      */
+    @Override
     public ObservableList<ProyectoPOJO> getProyectos() throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -63,6 +64,7 @@ public class ProyectoDAO {
      *
      * @return nombreProyecto Nombre del PROYECTO.
      */
+    @Override
     public String recuperarNombreProyecto() throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -95,6 +97,7 @@ public class ProyectoDAO {
      * la ORGANIZACIÓN.
      * @return nombreOrganizacion Nombre de la ORGANIZACIÓN.
      */
+    @Override
     public String recuperarNombreOrganizacion(int claveProyecto) 
             throws Exception{
         Connection con = null;
@@ -127,6 +130,7 @@ public class ProyectoDAO {
      * @param claveproyecto Clave del PROYECTO requerido.
      * @return nombreProyecto Nombre del PROYECTO.
      */
+    @Override
     public String recuperarNombre(int claveproyecto) throws Exception{
         Connection con = null;
         Statement stm = null;

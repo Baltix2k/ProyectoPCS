@@ -17,7 +17,7 @@ import javafx.scene.control.Alert;
  * 
  * @version 1.0
  */
-public class ArchivoDAO {
+public class ArchivoDAO implements ArchivoDAO_Interfaz{
 
     /**
      * Recupera de la base de datos una lista de ARCHIVOS por medio de la
@@ -27,6 +27,7 @@ public class ArchivoDAO {
      * ARCHIVOS.
      * @return obs Lista contenedora de los ARCHIVOS del ESTUDIANTE.
      */
+    @Override
     public ObservableList<ArchivoPOJO> getArchivos(String matricula) 
             throws Exception{
         Connection con = null;
@@ -75,6 +76,7 @@ public class ArchivoDAO {
      * @param arch Archivo a cargar.
      * @param claveExp Clave del expediente donde el archivo se va a cargar.
      */
+    @Override
     public void subirArchivo(ArchivoPOJO arch, int claveExp) throws Exception{
         Connection con = null;
         String sql = "INSERT INTO Archivo VALUES (NULL,?,?,?,?);";
@@ -103,6 +105,7 @@ public class ArchivoDAO {
      * 
      * @return clave Regresa la clase del archivo.
      */
+    @Override
     public int obtenerClaveArchivo() throws Exception{
         int clave = 0;
         Statement stm = null;

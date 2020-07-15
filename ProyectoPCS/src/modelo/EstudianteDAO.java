@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
  *
  * @version 1.0
  */
-public class EstudianteDAO {
+public class EstudianteDAO implements EstudianteDAO_Interfaz{
 
     /**
      * Recupera un objeto ESTUDIANTE por medio de una matricula especifica.
@@ -24,6 +24,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return EstudiantePOJO Objeto ESTUDIANTE.
      */
+    @Override
     public EstudiantePOJO recuperar(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -58,6 +59,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return nombreEstudiante Nombre del ESTUDIAIANTE especificado.
      */
+    @Override
     public String recuperarNombreEstudiante(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -91,6 +93,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return nombreOrganizacion Nombre de la ORGANIZACION especificado.
      */
+    @Override
     public String recuperarNombreOrganizacion(String matricula) 
             throws Exception{
         Connection con = null;
@@ -126,6 +129,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return nombreProyecto Nombre del PROYECTO especificado.
      */
+    @Override
     public String recuperarNombreProyecto(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -159,6 +163,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return claveProyecto Clave del PROYECTO especificado.
      */
+    @Override
     public int recuperarClaveProyecto(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -191,6 +196,7 @@ public class EstudianteDAO {
      * @param matricula Matricula del ESTUDIANTE a recuperar.
      * @return claveExpediente Clave del EXPEDIENTE especificado.
      */
+    @Override
     public int recuperaClaveExpediente(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -222,6 +228,7 @@ public class EstudianteDAO {
      * 
      * @return obs Lista contenedora de los ESTUDIANTES.
      */
+    @Override
     public ObservableList<EstudiantePOJO> getEstudiantes() throws Exception{
         Connection con = null;
         Statement stm = null;
@@ -265,6 +272,7 @@ public class EstudianteDAO {
      * SELECCIONPROYECTO.
      * @return obs Lista contenedora de las SELECCIONPROYECTO.
      */
+    @Override
     public ArrayList<SeleccionProyectoPOJO> getSelecciones(String matricula) 
             throws Exception{
         Connection con = null;
@@ -306,6 +314,7 @@ public class EstudianteDAO {
      * @param matriculaEstudianteElegido Matricula del ESTUDIANTE a asignar.
      * @param claveProyectoElegido Clave del PROYECTO a asignar.
      */
+    @Override
     public void asginarProyecto(String matriculaEstudianteElegido, 
             int claveProyectoElegido) throws Exception{
         Connection con = null;

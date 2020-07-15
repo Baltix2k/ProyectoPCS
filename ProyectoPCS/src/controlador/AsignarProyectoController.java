@@ -247,7 +247,7 @@ public class AsignarProyectoController implements Initializable {
                 AlertaFXML alerta = new AlertaFXML((Stage) this.BtnCancelar.
                     getScene().getWindow());
             alerta.alertaInformacion("Error", "Opciones incompletas",
-                    "Faltan selecciones para realisar la asignacion");
+                    "Faltan selecciones para realizar la asignacion");
             }
         } else {
             System.out.println("Esta implementandose....");

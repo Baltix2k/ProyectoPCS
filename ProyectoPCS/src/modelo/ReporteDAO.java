@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
  *
  * @version 1.0
  */
-public class ReporteDAO {
+public class ReporteDAO implements ReporteDAO_Interfaz{
 
     /**
      * Recupera de la base de datos una lista de REPORTES por medio de la
@@ -26,6 +26,7 @@ public class ReporteDAO {
      * REPORTES.
      * @return obs Lista contenedora de los REPORTES del ESTUDIANTE.
      */
+    @Override
     public ObservableList<ReportePOJO> getReportes(String matricula) 
             throws Exception{
         Connection con = null;
@@ -74,6 +75,7 @@ public class ReporteDAO {
      * @param report Objeto REPORTE a registrar.
      * @param idArch Id del ARCHIVO a donde pertenece el REPORTE.
      */
+    @Override
     public void subirReporte(ReportePOJO report, int idArch) throws Exception{
         Connection con = null;
         System.out.println(idArch + "-" + report.getHorasReportadas() + "-" 
@@ -104,6 +106,7 @@ public class ReporteDAO {
      * @param matricula Matricula del ESTUDIANTE especificado.
      * @return horas Numero de horas registradas.
      */
+    @Override
     public int recuperarHoras(String matricula) throws Exception{
         Connection con = null;
         Statement stm = null;
